@@ -1,0 +1,8 @@
+.flex-container {
+  display: flex;
+  flex-wrap: wrap; /* This will make the items wrap to the next line if the container width is not enough */
+}
+
+.flex-container > div {
+  flex-grow: 1;
+}
