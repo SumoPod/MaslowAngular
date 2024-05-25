@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ItemData } from '../item-data.model';
+import { ItemData, ItemDetailedData } from '../item-data.model';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -11,15 +11,22 @@ export class ItemDetailComponent {
 
   @Input() data: { key: string, itemData: ItemData };
 
+  topText:string;
   text:string;
+  imgSrc:string;
+
   constructor( private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.text = this.data.key + " " + this.data.itemData.name;
+    this.topText = this.data.key;
+    this.text = this.data.itemData.name;
+
+    this.imgSrc = this.data.itemData.image;
     // let keys = Object.keys(this.data)
     // console.log( this.data.key )
-    // this.http.get<ItemData[]>('https://blockchain-gateway-test.nursery.reitnorf.com/types/'+this.data.id).subscribe((response) => {
-    //   this.data = Object.values(response);
-    // });
+    this.http.get<ItemDetailedData>('https://blockchain-gateway-test.nursery.reitnorf.com/types/'+this.data.key).subscribe((response) => {
+      this.imgSrc = response.metadata.image;
+      console.log("Src: " + this.imgSrc)
+    });
   }
 }
