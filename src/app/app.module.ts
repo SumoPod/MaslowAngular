@@ -12,6 +12,7 @@ import { WebSocketComponent } from './web-socket/web-socket.component';
 import { ItemLedgerComponent } from './item-ledger/item-ledger.component';
 import { ItemDetailComponent } from './item-ledger/item-detail/item-detail.component';
 import { UserRankingComponent } from './user-ranking/user-ranking.component';
+import { WalletCheckComponent } from './wallet-check/wallet-check.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { UserRankingComponent } from './user-ranking/user-ranking.component';
     WebSocketComponent,
     ItemLedgerComponent,
     ItemDetailComponent,
-    UserRankingComponent
+    UserRankingComponent,
+    WalletCheckComponent
   ],
   imports: [
     BrowserModule,
