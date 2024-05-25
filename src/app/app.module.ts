@@ -8,6 +8,7 @@ import { DeployableJsonComponent } from './deployable-json/deployable-json.compo
 import { UserJsonComponent } from './user-json/user-json.component';
 import { HomeComponent } from './home/home.component';
 import { HttpClientModule } from '@angular/common/http';
+import { WebSocketComponent } from './web-socket/web-socket.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { HttpClientModule } from '@angular/common/http';
     SystemTrackerComponent,
     DeployableJsonComponent,
     UserJsonComponent,
-    HomeComponent
+    HomeComponent,
+    WebSocketComponent
   ],
   imports: [
     BrowserModule,

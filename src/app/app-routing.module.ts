@@ -4,11 +4,13 @@ import { SystemTrackerComponent } from './system-tracker/system-tracker.componen
 import { DeployableJsonComponent } from './deployable-json/deployable-json.component';
 import { UserJsonComponent } from './user-json/user-json.component';
 import { HomeComponent } from './home/home.component';
+import { WebSocketComponent } from './web-socket/web-socket.component';
 
 const appRoutes: Routes = [
   { path: 'sysTracker', component: SystemTrackerComponent },
   { path: 'depJson/:id', component: DeployableJsonComponent },
   { path: 'charJson/:id', component: UserJsonComponent },
+  { path: 'ws/:charId/:deployableId', component: WebSocketComponent },
   { path: '**', component: HomeComponent }
   // {
   //   path: 'recipes',
