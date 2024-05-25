@@ -9,6 +9,8 @@ import { UserJsonComponent } from './user-json/user-json.component';
 import { HomeComponent } from './home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { WebSocketComponent } from './web-socket/web-socket.component';
+import { ItemLedgerComponent } from './item-ledger/item-ledger.component';
+import { ItemDetailComponent } from './item-ledger/item-detail/item-detail.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { WebSocketComponent } from './web-socket/web-socket.component';
     DeployableJsonComponent,
     UserJsonComponent,
     HomeComponent,
-    WebSocketComponent
+    WebSocketComponent,
+    ItemLedgerComponent,
+    ItemDetailComponent
   ],
   imports: [
     BrowserModule,

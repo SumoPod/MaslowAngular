@@ -5,12 +5,14 @@ import { DeployableJsonComponent } from './deployable-json/deployable-json.compo
 import { UserJsonComponent } from './user-json/user-json.component';
 import { HomeComponent } from './home/home.component';
 import { WebSocketComponent } from './web-socket/web-socket.component';
+import { ItemLedgerComponent } from './item-ledger/item-ledger.component';
 
 const appRoutes: Routes = [
   { path: 'sysTracker', component: SystemTrackerComponent },
   { path: 'depJson/:id', component: DeployableJsonComponent },
   { path: 'charJson/:id', component: UserJsonComponent },
   { path: 'ws/:charId/:deployableId', component: WebSocketComponent },
+  { path: 'items', component: ItemLedgerComponent },
   { path: '**', component: HomeComponent }
   // {
   //   path: 'recipes',
