@@ -1,7 +1,10 @@
-tr {
-  display: table-row;
-}
-
 a {
   color: white;
+}
+
+.column-list {
+  column-count: 6; /* Adjust as needed */
+  column-gap: 0px; /* Adjust as needed */
+  height: 90vh; /* Adjust as needed */
+  overflow: auto;
 }

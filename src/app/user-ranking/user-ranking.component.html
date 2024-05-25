@@ -1,15 +1,6 @@
 <span>Click on a name to receive the live json info.</span><br>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Worth</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let item of shownData">
-      <td><a [routerLink]="['/charJson', item.id]">{{ item.name }}</a></td>
-      <td>{{ item.worth }}</td>
-    </tr>
-  </tbody>
-</table>
+<ul class="column-list">
+  <li *ngFor="let item of shownData">
+    {{ item.worth | number:'1.0-2' }} - <a [routerLink]="['/charJson', item.id]">{{ item.name }}</a>
+  </li>
+</ul>
