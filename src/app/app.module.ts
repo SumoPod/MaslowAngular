@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { WebSocketComponent } from './web-socket/web-socket.component';
 import { ItemLedgerComponent } from './item-ledger/item-ledger.component';
 import { ItemDetailComponent } from './item-ledger/item-detail/item-detail.component';
+import { UserRankingComponent } from './user-ranking/user-ranking.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { ItemDetailComponent } from './item-ledger/item-detail/item-detail.compo
     HomeComponent,
     WebSocketComponent,
     ItemLedgerComponent,
-    ItemDetailComponent
+    ItemDetailComponent,
+    UserRankingComponent
   ],
   imports: [
     BrowserModule,

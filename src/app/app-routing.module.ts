@@ -6,6 +6,7 @@ import { UserJsonComponent } from './user-json/user-json.component';
 import { HomeComponent } from './home/home.component';
 import { WebSocketComponent } from './web-socket/web-socket.component';
 import { ItemLedgerComponent } from './item-ledger/item-ledger.component';
+import { UserRankingComponent } from './user-ranking/user-ranking.component';
 
 const appRoutes: Routes = [
   { path: 'sysTracker', component: SystemTrackerComponent },
@@ -13,6 +14,7 @@ const appRoutes: Routes = [
   { path: 'charJson/:id', component: UserJsonComponent },
   { path: 'ws/:charId/:deployableId', component: WebSocketComponent },
   { path: 'items', component: ItemLedgerComponent },
+  { path: 'ranking', component: UserRankingComponent },
   { path: '**', component: HomeComponent }
   // {
   //   path: 'recipes',
