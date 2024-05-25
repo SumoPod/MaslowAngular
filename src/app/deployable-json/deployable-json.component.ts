@@ -9,6 +9,7 @@ import { WebSocketMessage } from '../web-socket/web-socket.model';
   styleUrl: './deployable-json.component.css'
 })
 export class DeployableJsonComponent implements OnInit {
+  counter: number = 0;
   id: string;
   text: string = "";
   ws: WebSocket;
@@ -27,10 +28,11 @@ export class DeployableJsonComponent implements OnInit {
     };
 
     this.ws.onmessage = (event) => {
-      console.log('WebSocket message received:', event.data);
+      // console.log('WebSocket message received:', event.data);
       // Save event.data as a WebSocketMessage
       const data: WebSocketMessage = JSON.parse(event.data);
       this.text = JSON.stringify(data.smartDeployable, null, 2);
+      this.counter++;
     };
 
     this.ws.onerror = (event) => {
