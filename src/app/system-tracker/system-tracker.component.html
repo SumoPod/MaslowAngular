@@ -1,0 +1,18 @@
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Owner</th>
+      <th>System</th>
+      <th>Worth</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of pData">
+      <td><a [routerLink]="['/depJson', item.id]">{{ item.deployableName }}</a></td>
+      <td><a [routerLink]="['/charJson', item.ownerId]">{{ item.ownerName }}</a></td>
+      <td>{{ item.solarSystemName }}</td>
+      <td>{{ item.worth }}</td>
+    </tr>
+  </tbody>
+</table>
