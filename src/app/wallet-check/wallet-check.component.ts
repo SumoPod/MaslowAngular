@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { SmartCharacterInfo } from '../web-socket/web-socket.model';
+import Web3, { Uint256 } from 'web3';
+import { ERC20_ABI } from './ERC20.abi';
 
 @Component({
   selector: 'app-wallet-check',
@@ -8,10 +10,20 @@ import { SmartCharacterInfo } from '../web-socket/web-socket.model';
   styleUrl: './wallet-check.component.css'
 })
 export class WalletCheckComponent implements OnInit{
-
+  readonly EVETokenContractAddress = '0xec79573FAC3b9C103819beBBD00143dfD67059DA';
+  public web3: Web3 = null;
   public walletAddress: string;
   public username: string;
-  constructor(private http:HttpClient) { }
+  public balance: number;
+  public eveTokenBalance: number;
+
+  constructor(private http:HttpClient)
+  {
+    if (typeof (window as any).ethereum !== 'undefined')
+    {
+      this.web3 = new Web3((window as any).ethereum);
+    }
+  }
 
   ngOnInit(): void {
     if ((window as any).ethereum) {
@@ -38,6 +50,24 @@ export class WalletCheckComponent implements OnInit{
       ).subscribe((response) => {
         // Handle the response here
         this.username = response.name;
+
+        this.getGasBalance(walletAddress);
+        this.getEVETokenBalance(walletAddress);
+    });
+  }
+
+  getGasBalance(walletAddress: string) {
+    this.web3.eth.getBalance(walletAddress).then((value: bigint) => {
+      this.balance = Number(value)/1e18;
+    });
+  }
+
+  getEVETokenBalance(walletAddress: string) {
+    let tokenContract = new this.web3.eth.Contract(ERC20_ABI, this.EVETokenContractAddress);
+
+    tokenContract.methods.balanceOf(walletAddress).call().then((value: any) => {
+      console.log('EVE Token Balance:', Number(value));
+      this.eveTokenBalance = Number(value)/1e18;
     });
   }
 }
