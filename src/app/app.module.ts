@@ -17,6 +17,7 @@ import { WalletDonationsComponent } from './wallet-donations/wallet-donations.co
 import { FormsModule } from '@angular/forms';
 import { VendingMachineComponent } from './vending-machine/vending-machine.component';
 import { RankingCsvComponent } from './ranking-csv/ranking-csv.component';
+import { DeployableCsvComponent } from './deployable-csv/deployable-csv.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { RankingCsvComponent } from './ranking-csv/ranking-csv.component';
     WalletCheckComponent,
     WalletDonationsComponent,
     VendingMachineComponent,
-    RankingCsvComponent
+    RankingCsvComponent,
+    DeployableCsvComponent
   ],
   imports: [
     BrowserModule,
