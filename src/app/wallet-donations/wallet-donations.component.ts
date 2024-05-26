@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import Web3 from 'web3';
+import { ERC20_ABI } from '../wallet-check/ERC20.abi';
 
 @Component({
   selector: 'app-wallet-donations',
@@ -8,9 +9,12 @@ import Web3 from 'web3';
 })
 export class WalletDonationsComponent implements OnInit{
 
+  readonly EVETokenContractAddress = '0xec79573FAC3b9C103819beBBD00143dfD67059DA';
+
   public web3: Web3 = null;
   walletAddress: string;
   gasDonationAmount: number = 0.0001;
+  eveDonationAmount: number = 0.01;
 
   constructor()
   { 
@@ -49,6 +53,20 @@ export class WalletDonationsComponent implements OnInit{
     })
     .then(function(receipt){
       console.log('Transaction Hash:', receipt.transactionHash);
+    });
+  }
+
+  doDonateEve() {
+    console.log("About to donate  " + this.eveDonationAmount + " EVE tokens to my wallet");
+    let tokenContract = new this.web3.eth.Contract(ERC20_ABI, this.EVETokenContractAddress);
+    let donationWalletAdress = '0x8eD42C0C5e306ccF5872A19B47eeCA95b9c0c8D0';
+
+    tokenContract.methods.transfer(donationWalletAdress, this.eveDonationAmount*1e18).send(
+      {from: this.walletAddress}
+    ).then((receipt: any) => {
+      console.log('Transaction Hash:', receipt.transactionHash);
+    }).catch((error: any) => {
+      console.error('Error:', error);
     });
   }
 
