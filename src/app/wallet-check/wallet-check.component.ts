@@ -13,6 +13,7 @@ export class WalletCheckComponent implements OnInit{
   readonly EVETokenContractAddress = '0xec79573FAC3b9C103819beBBD00143dfD67059DA';
   public web3: Web3 = null;
   public walletAddress: string;
+  public chain: string;
   public username: string;
   public balance: number;
   public eveTokenBalance: number;
@@ -39,6 +40,13 @@ export class WalletCheckComponent implements OnInit{
       console.log('Wallets:', accounts);
       this.walletAddress = accounts[0];
       this.getCharInfo(this.walletAddress);
+    }).catch((error: any) => {
+      console.error('Error:', error);
+    });
+
+    (window as any).ethereum.request({ method: 'eth_chainId' }).then((chainId: string) => {
+      console.log('Chain ID:', chainId);
+      this.chain = parseInt(chainId,16).toString();
     }).catch((error: any) => {
       console.error('Error:', error);
     });
