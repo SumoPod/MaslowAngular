@@ -46,7 +46,16 @@ export class WalletDonationsComponent implements OnInit{
     });
   }
 
+  clearDebugUI()
+  {
+    this.debugText = '---';
+    this.errorText = '---';
+    this.finalText = '---';
+    this.hashText = '---';
+  }
+
   doDonateGas() {
+    this.clearDebugUI();
     let amount: string = ( this.gasDonationAmount * 1e18).toString();
     console.log('Amount:', amount);
     this.web3.eth.sendTransaction({
@@ -61,6 +70,7 @@ export class WalletDonationsComponent implements OnInit{
   }
 
   doDonateEve() {
+    this.clearDebugUI();
     console.log("About to donate  " + this.eveDonationAmount + " EVE tokens to my wallet");
     let donationWalletAdress = '0x8eD42C0C5e306ccF5872A19B47eeCA95b9c0c8D0';
     this.debugText = 'Donating ' + this.eveDonationAmount + ' EVE tokens to ' + donationWalletAdress;
