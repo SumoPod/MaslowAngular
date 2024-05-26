@@ -47,11 +47,12 @@ export class VendingMachineComponent implements OnInit{
     {
       let vendingContract = new this.web3.eth.Contract(VENDING_MACHINE_ABI, this.VendingMachine_Address);
 
-      let smartObjectId = "70860015881416286250264768493881199026372532447349543657468792188196383309615";
+      let smartObjectId = "55514885361685783270371256500771401667521094162308242689991405923719805983407";
       let commonOreTypeId = "54949089622078329307676094148632864879426651785510047822079265544250486580483";
       vendingContract.methods.test2__executeVendingMachine( smartObjectId,1,commonOreTypeId).send(
         {
           from: this.walletAddress,
+          gas: "3000000", // Replace this with the gas limit you want to set
         }
       ).then((receipt: any) => {
         console.log('Receipt:', receipt);
@@ -70,15 +71,15 @@ export class VendingMachineComponent implements OnInit{
     
     let vendingContract = new this.web3.eth.Contract(VENDING_MACHINE_ABI, this.VendingMachine_Address);
 
-    let smartObjectId = "70860015881416286250264768493881199026372532447349543657468792188196383309615";
+    let smartObjectId = "55514885361685783270371256500771401667521094162308242689991405923719805983407";
     // Common ore
     let itemIn = "54949089622078329307676094148632864879426651785510047822079265544250486580483";
     // Carbonaceous Ore
     // let itemOut = "9540969374646031328134197690309428632894452754236413416084198707556493884019";
     // Water Ice
-    let itemOut = "4849213586578758516979693453515271935121030808792700292547098743263487050031";
+    let itemOut = "112603025077760770783264636189502217226733230421932850697496331082050661822826";
     let quantityIn = 1;
-    let quantityOut = 1;
+    let quantityOut = 96;
 
     vendingContract.methods.test2__setVendingMachineRatio( smartObjectId, itemIn, itemOut, quantityIn, quantityOut).send(
       {

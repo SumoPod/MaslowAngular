@@ -10,6 +10,7 @@ import { UserRankingComponent } from './user-ranking/user-ranking.component';
 import { WalletCheckComponent } from './wallet-check/wallet-check.component';
 import { WalletDonationsComponent } from './wallet-donations/wallet-donations.component';
 import { VendingMachineComponent } from './vending-machine/vending-machine.component';
+import { RankingCsvComponent } from './ranking-csv/ranking-csv.component';
 
 const appRoutes: Routes = [
   { path: 'sysTracker', component: SystemTrackerComponent },
@@ -21,6 +22,7 @@ const appRoutes: Routes = [
   { path: 'wallet', component: WalletCheckComponent },
   { path: 'donate', component: WalletDonationsComponent },
   { path: 'vending', component: VendingMachineComponent },
+  { path: 'rankingCsv', component: RankingCsvComponent },
   { path: '**', component: HomeComponent }
   // {
   //   path: 'recipes',
