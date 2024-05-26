@@ -11,7 +11,7 @@ import { SmartCharacterInfo } from '../web-socket/web-socket.model';
 export class RankingCsvComponent  implements OnInit{
   allUsers: User[] = [];
 
-  csv: string;
+  csv: string = "Name,Worth\n";
 
   dataTimeouts: any[] = [];
   sortTimeout: any;
