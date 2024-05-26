@@ -13,6 +13,8 @@ import { ItemLedgerComponent } from './item-ledger/item-ledger.component';
 import { ItemDetailComponent } from './item-ledger/item-detail/item-detail.component';
 import { UserRankingComponent } from './user-ranking/user-ranking.component';
 import { WalletCheckComponent } from './wallet-check/wallet-check.component';
+import { WalletDonationsComponent } from './wallet-donations/wallet-donations.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -25,12 +27,14 @@ import { WalletCheckComponent } from './wallet-check/wallet-check.component';
     ItemLedgerComponent,
     ItemDetailComponent,
     UserRankingComponent,
-    WalletCheckComponent
+    WalletCheckComponent,
+    WalletDonationsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

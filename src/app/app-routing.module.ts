@@ -8,6 +8,7 @@ import { WebSocketComponent } from './web-socket/web-socket.component';
 import { ItemLedgerComponent } from './item-ledger/item-ledger.component';
 import { UserRankingComponent } from './user-ranking/user-ranking.component';
 import { WalletCheckComponent } from './wallet-check/wallet-check.component';
+import { WalletDonationsComponent } from './wallet-donations/wallet-donations.component';
 
 const appRoutes: Routes = [
   { path: 'sysTracker', component: SystemTrackerComponent },
@@ -17,6 +18,7 @@ const appRoutes: Routes = [
   { path: 'items', component: ItemLedgerComponent },
   { path: 'ranking', component: UserRankingComponent },
   { path: 'wallet', component: WalletCheckComponent },
+  { path: 'donate', component: WalletDonationsComponent },
   { path: '**', component: HomeComponent }
   // {
   //   path: 'recipes',
