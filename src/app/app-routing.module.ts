@@ -9,6 +9,7 @@ import { ItemLedgerComponent } from './item-ledger/item-ledger.component';
 import { UserRankingComponent } from './user-ranking/user-ranking.component';
 import { WalletCheckComponent } from './wallet-check/wallet-check.component';
 import { WalletDonationsComponent } from './wallet-donations/wallet-donations.component';
+import { VendingMachineComponent } from './vending-machine/vending-machine.component';
 
 const appRoutes: Routes = [
   { path: 'sysTracker', component: SystemTrackerComponent },
@@ -19,6 +20,7 @@ const appRoutes: Routes = [
   { path: 'ranking', component: UserRankingComponent },
   { path: 'wallet', component: WalletCheckComponent },
   { path: 'donate', component: WalletDonationsComponent },
+  { path: 'vending', component: VendingMachineComponent },
   { path: '**', component: HomeComponent }
   // {
   //   path: 'recipes',
