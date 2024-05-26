@@ -9,6 +9,7 @@ import { ERC20_ABI } from '../wallet-check/ERC20.abi';
 })
 export class WalletDonationsComponent implements OnInit{
 
+  debugText: string = '---';
   readonly EVETokenContractAddress = '0xec79573FAC3b9C103819beBBD00143dfD67059DA';
 
   public web3: Web3 = null;
@@ -65,8 +66,10 @@ export class WalletDonationsComponent implements OnInit{
       {from: this.walletAddress}
     ).then((receipt: any) => {
       console.log('Transaction Hash:', receipt.transactionHash);
+      this.debugText = 'Transaction Hash: ' + receipt.transactionHash;
     }).catch((error: any) => {
       console.error('Error:', error);
+      this.debugText = 'Error: ' + error.error.message;
     });
   }
 
