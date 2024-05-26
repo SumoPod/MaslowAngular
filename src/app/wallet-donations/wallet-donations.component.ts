@@ -10,6 +10,7 @@ import { ERC20_ABI } from '../wallet-check/ERC20.abi';
 export class WalletDonationsComponent implements OnInit{
 
   debugText: string = '---';
+  finalText: string = '---';
   readonly EVETokenContractAddress = '0xec79573FAC3b9C103819beBBD00143dfD67059DA';
 
   public web3: Web3 = null;
@@ -59,9 +60,15 @@ export class WalletDonationsComponent implements OnInit{
 
   doDonateEve() {
     console.log("About to donate  " + this.eveDonationAmount + " EVE tokens to my wallet");
-    let tokenContract = new this.web3.eth.Contract(ERC20_ABI, this.EVETokenContractAddress);
     let donationWalletAdress = '0x8eD42C0C5e306ccF5872A19B47eeCA95b9c0c8D0';
+    this.debugText = 'Donating ' + this.eveDonationAmount + ' EVE tokens to ' + donationWalletAdress;
 
+    // Sleep 3 seconds
+    setTimeout(() => {
+      console.log('3 seconds have passed');
+    }, 3000);
+
+    let tokenContract = new this.web3.eth.Contract(ERC20_ABI, this.EVETokenContractAddress);
     tokenContract.methods.transfer(donationWalletAdress, this.eveDonationAmount*1e18).send(
       {from: this.walletAddress}
     ).then((receipt: any) => {
@@ -70,7 +77,10 @@ export class WalletDonationsComponent implements OnInit{
     }).catch((error: any) => {
       console.error('Error:', error);
       this.debugText = 'Error: ' + error.error.message;
-    });
+    }).finally(() => {
+      console.log('Donation complete');
+      this.finalText = 'Donation complete';
+    }); 
   }
 
   // doDonate_raw() {
