@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Web3 } from 'web3';
 import { VENDING_MACHINE_ABI } from './VendingMachine.abi';
+import { VEL_VENDING_MACHINE_ABI } from './VelVendingMachine.abi';
 
 @Component({
   selector: 'app-vending-machine',
@@ -45,11 +46,11 @@ export class VendingMachineComponent implements OnInit{
     console.log('Vending...');
     if(this.walletAddress != null)
     {
-      let vendingContract = new this.web3.eth.Contract(VENDING_MACHINE_ABI, this.VendingMachine_Address);
+      let vendingContract = new this.web3.eth.Contract(VEL_VENDING_MACHINE_ABI, this.VendingMachine_Address);
 
-      let smartObjectId = "55514885361685783270371256500771401667521094162308242689991405923719805983407";
+      let smartObjectId = "45228697695947564033082854924954193006092773360381611920298456273008413001782";
       let commonOreTypeId = "54949089622078329307676094148632864879426651785510047822079265544250486580483";
-      vendingContract.methods.test2__executeVendingMachine( smartObjectId,1,commonOreTypeId).send(
+      vendingContract.methods.velorumtest__executeVendingMachine( smartObjectId,1,commonOreTypeId).send(
         {
           from: this.walletAddress,
           gas: "3000000", // Replace this with the gas limit you want to set
@@ -69,19 +70,19 @@ export class VendingMachineComponent implements OnInit{
   {
     console.log('Config...');
     
-    let vendingContract = new this.web3.eth.Contract(VENDING_MACHINE_ABI, this.VendingMachine_Address);
+    let vendingContract = new this.web3.eth.Contract(VEL_VENDING_MACHINE_ABI, this.VendingMachine_Address);
 
-    let smartObjectId = "55514885361685783270371256500771401667521094162308242689991405923719805983407";
+    let smartObjectId = "45228697695947564033082854924954193006092773360381611920298456273008413001782";
     // Common ore
     let itemIn = "54949089622078329307676094148632864879426651785510047822079265544250486580483";
     // Carbonaceous Ore
-    // let itemOut = "9540969374646031328134197690309428632894452754236413416084198707556493884019";
+    let itemOut = "9540969374646031328134197690309428632894452754236413416084198707556493884019";
     // Water Ice
-    let itemOut = "112603025077760770783264636189502217226733230421932850697496331082050661822826";
+    // let itemOut = "112603025077760770783264636189502217226733230421932850697496331082050661822826";
     let quantityIn = 1;
-    let quantityOut = 96;
+    let quantityOut = 1;
 
-    vendingContract.methods.test2__setVendingMachineRatio( smartObjectId, itemIn, itemOut, quantityIn, quantityOut).send(
+    vendingContract.methods.velorumtest__setVendingMachineRatio( smartObjectId, itemIn, itemOut, quantityIn, quantityOut).send(
       {
         from: this.walletAddress,
       }

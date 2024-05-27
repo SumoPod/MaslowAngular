@@ -16,6 +16,8 @@ export class RankingCsvComponent  implements OnInit{
   dataTimeouts: any[] = [];
   sortTimeout: any;
 
+  ranking: { name: string; worth: string; }[] = [];
+
   constructor( private http: HttpClient)
   {
   }
@@ -53,9 +55,8 @@ export class RankingCsvComponent  implements OnInit{
         id: userData.address,
         worth: Number(userData.eveBalanceWei) / 1e18
       };
-    //Name,Owner,System,Worth<br>
-      this.csv += data.name + "," + data.worth + "\n";
-      
+      //Name,Worth
+      this.ranking.push({ name: data.name, worth: data.worth.toString() });
     });
   }
 }
