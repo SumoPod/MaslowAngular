@@ -18,6 +18,7 @@ export class DeployableCsvComponent {
 
   public pData: InfoICareAbout[] = [];
   csv: string = "Name,Owner,System,Worth\n";
+  jsonData: { name: string; owner: string, system: string, worth: number; }[] = [];
   constructor(private http: HttpClient) {
 
    }
@@ -46,6 +47,8 @@ export class DeployableCsvComponent {
           let worth = this.calculateInventoryValue(info.inventory);
           this.pData.push(new InfoICareAbout(deployable.id, info.name, info.ownerName, info.solarSystem.solarSystemName, worth, info.ownerId));
           this.csv += info.name + "," + info.ownerName + "," + info.solarSystem.solarSystemName + "," + worth + "\n";
+          // Add to json object
+          this.jsonData.push({ name: info.name, owner: info.ownerName, system: info.solarSystem.solarSystemName, worth: worth });
         });
     }
   }
