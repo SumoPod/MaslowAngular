@@ -9,8 +9,9 @@ import { VEL_TRADER_ABI } from './IItemSeller.abi';
   styleUrl: './trader-machine.component.css'
 })
 export class TraderMachineComponent implements OnInit{
-  readonly EVETokenContractAddress = '0xec79573FAC3b9C103819beBBD00143dfD67059DA';
-  readonly velTraderContractAddress:string = '0x04ABBD2F307F37367d3E05CaD0A3200790fDec9A';
+
+  readonly  EVETokenContractAddress = '0xec79573FAC3b9C103819beBBD00143dfD67059DA';
+  readonly velTraderContractAddress = '0x04ABBD2F307F37367d3E05CaD0A3200790fDec9A';
   
   web3: any;
   walletAddress: string;
@@ -44,9 +45,9 @@ export class TraderMachineComponent implements OnInit{
 
   purchaseCarbOre() {
     // Smart Object
-    let smartObject = "45228697695947564033082854924954193006092773360381611920298456273008413001782";
+    let smartObject = 45228697695947564033082854924954193006092773360381611920298456273008413001782;
     // ObjetId
-    let carbOreId = "9540969374646031328134197690309428632894452754236413416084198707556493884019";
+    let carbOreId = 9540969374646031328134197690309428632894452754236413416084198707556493884019;
     // Quantity
     let quantity = 1;
     // Price
@@ -57,68 +58,80 @@ export class TraderMachineComponent implements OnInit{
     this.approveAndPurchase(eveNeeded, smartObject, carbOreId, quantity);
   }
 
-  approveAndPurchase(amount: number /* in EVE */, smartObject: string, carbOreId: string, quantity: number)
+  approveAndPurchase(amount: number /* in EVE */, smartObject: number, carbOreId: number, quantity: number)
   {
     let EVEContract = new this.web3.eth.Contract(ERC20_ABI, this.EVETokenContractAddress);
 
     // Get approve
-    EVEContract.methods.approve(this.velTraderContractAddress, amount * 1e18).send({from: this.walletAddress})
+    EVEContract.methods.approve(this.velTraderContractAddress, 2 * amount * 1e18).send({from: this.walletAddress})
     .on('transactionHash', (hash) => {
       console.log('Approval Transaction Hash:', hash);
     })
     .then((receipt) => {
       console.log('Approval Receipt:', receipt);
+        this.checkAllowance(this.walletAddress, this.velTraderContractAddress);
       setTimeout(() => {
         this.purchaseItem(smartObject, carbOreId, quantity);
-      }, 10000);
+      }, 2000);
     })
     .catch((error) => {
       console.error('Approval Error:', error);
     });
   }
+
+  checkAllowance(walletAddress: string, velTraderContractAddress: string) {
+    let EVEContract = new this.web3.eth.Contract(ERC20_ABI, this.EVETokenContractAddress);
+    EVEContract.methods.allowance(walletAddress, velTraderContractAddress).call().then((value: any) => {
+      console.log('Allowance:', Number(value)/1e18);
+    });
+  }
   
-  purchaseItem( smartObject: string, carbOreId: string, quantity: number)
+  purchaseItem( smartObject: number, carbOreId: number, quantity: number)
   {
     console.log("Purchasing item");
     // Get contract.
     let contract = new this.web3.eth.Contract(VEL_TRADER_ABI, this.velTraderContractAddress);
   
     // Call purchaseItem
-    try {
-      contract.methods.velorumtest2__purchaseItem(smartObject, carbOreId, quantity).send({from: this.walletAddress})
-        .on('transactionHash', (hash) => {
-          console.log('Purchase Transaction Hash:', hash);
-        })
-        .then((receipt) => {
-          console.log('Purchase Receipt:', receipt);
-        })
-        .catch((error) => {
-          console.error('Purchase Error:', error);
-        });
-    } catch (error) {
-      console.error('Transaction Reverted:', error);
-    }
-
+    contract.methods.velorumtest2__purchaseItem(smartObject, carbOreId, quantity).send({from: this.walletAddress})
+      .on('transactionHash', (hash) => {
+        console.log('Purchase Transaction Hash:', hash);
+      })
+      .then((receipt) => {
+        console.log('Purchase Receipt:', receipt);
+      })
+      .catch((error) => {
+        console.error('Purchase Error:', error);
+      });
   }
 
+  getPrice()
+  {
+    // Maslows Pyramid
+    let smartObjectId = 45228697695947564033082854924954193006092773360381611920298456273008413001782;
+    // Carb Ore
+    let inventoryItemId = 9540969374646031328134197690309428632894452754236413416084198707556493884019;    
 
-  // "name": "velorumtest2__purchaseItem",
-  // "inputs": [
-  //   {
-  //     "name": "smartObjectId",
-  //     "type": "uint256",
-  //     "internalType": "uint256"
-  //   },
-  //   {
-  //     "name": "inventoryItemId",
-  //     "type": "uint256",
-  //     "internalType": "uint256"
-  //   },
-  //   {
-  //     "name": "quantity",
-  //     "type": "uint256",
-  //     "internalType": "uint256"
-  //   }
-  // ],
-  // "outputs": [],
+    // Call get price
+    let contract = new this.web3.eth.Contract(VEL_TRADER_ABI, this.velTraderContractAddress);
+    contract.methods.velorumtest2__getItemPriceData(smartObjectId, inventoryItemId).call()
+    .then((data: {isSet:boolean,price: number}) => {
+      console.log('Get item data:');
+      console.log(data);
+    })
+    .catch((error) => {
+      console.error('Price Error:', error);
+    });
+  }
+
+  getAddress()
+  {
+    let EVEcontract = new this.web3.eth.Contract(VEL_TRADER_ABI, this.velTraderContractAddress);
+    // call get adress
+    EVEcontract.methods.velorumtest2__getContractAddress().call()
+    .then((data: string) => {
+      console.log('Get address:');
+      console.log(data);
+    })
+  }
 }
