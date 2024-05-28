@@ -119,6 +119,7 @@ errorText: any;
     .then((data: {isSet:boolean,price: number}) => {
       console.log('Get item data:');
       console.log(data);
+      this.errorText = "Priced at " + data.price + " EVE tokens.";
     })
     .catch((error) => {
       console.error('Price Error:', error);
