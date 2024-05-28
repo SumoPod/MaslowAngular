@@ -11,13 +11,13 @@ import { VEL_TRADER_ABI } from './IItemSeller.abi';
 export class TraderMachineComponent implements OnInit{
 
   readonly  EVETokenContractAddress = '0xec79573FAC3b9C103819beBBD00143dfD67059DA';
-  readonly velTraderContractAddress = '0x04ABBD2F307F37367d3E05CaD0A3200790fDec9A';
+  readonly velTraderContractAddress = '0xC52C1B857266e6479B412AB6B1C270d0173e13d8';
   
   web3: any;
   walletAddress: string;
   
   numberOfOre: number;
-errorText: any;
+  errorText: any;
 
   constructor() {
     if (typeof (window as any).ethereum !== 'undefined')
@@ -33,6 +33,7 @@ errorText: any;
     } else {
       console.log('EIP-1193 compatible wallet not found');
     }
+    this.listenToEvents();
   }
 
   getWallets() {
@@ -94,7 +95,7 @@ errorText: any;
     let contract = new this.web3.eth.Contract(VEL_TRADER_ABI, this.velTraderContractAddress);
   
     // Call purchaseItem
-    contract.methods.velorumtest2__purchaseItem(smartObject, carbOreId, quantity).send({from: this.walletAddress})
+    contract.methods.velorumtest3__purchaseItem(smartObject, carbOreId, quantity).send({from: this.walletAddress})
       .on('transactionHash', (hash) => {
         console.log('Purchase Transaction Hash:', hash);
       })
@@ -115,15 +116,15 @@ errorText: any;
 
     // Call get price
     let contract = new this.web3.eth.Contract(VEL_TRADER_ABI, this.velTraderContractAddress);
-    contract.methods.velorumtest2__getItemPriceData(smartObjectId, inventoryItemId).call()
+    contract.methods.velorumtest3__getItemPriceData(smartObjectId, inventoryItemId).call()
     .then((data: {isSet:boolean,price: number}) => {
       console.log('Get item data:');
       console.log(data);
       this.errorText = "Priced at " + data.price + " EVE tokens.";
     })
     .catch((error) => {
-      console.error('Price Error:', error);
-      this.errorText = error.error.message;
+      console.error(error);
+      // this.errorText = error.message;
     });
   }
 
@@ -131,10 +132,24 @@ errorText: any;
   {
     let EVEcontract = new this.web3.eth.Contract(VEL_TRADER_ABI, this.velTraderContractAddress);
     // call get adress
-    EVEcontract.methods.velorumtest2__getContractAddress().call()
+    EVEcontract.methods.velorumtest3__getContractAddress().call()
     .then((data: string) => {
       console.log('Get address:');
       console.log(data);
     })
+  }
+
+  listenToEvents()
+  {
+    let contract = new this.web3.eth.Contract(VEL_TRADER_ABI, this.velTraderContractAddress);
+    let subs = contract.events.allEvents();
+    subs.on('data', (event: any) => {
+      console.log('Event data:')
+      console.log(event);
+    });
+    subs.on('error', (error: any) => {
+      console.error('Event Error:')
+      console.error(error);
+    });
   }
 }

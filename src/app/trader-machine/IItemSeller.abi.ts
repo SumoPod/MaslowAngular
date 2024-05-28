@@ -1,7 +1,7 @@
 export const VEL_TRADER_ABI = [
   {
     "type": "function",
-    "name": "velorumtest2__collectTokens",
+    "name": "velorumtest3__collectTokens",
     "inputs": [
       {
         "name": "smartObjectId",
@@ -14,7 +14,7 @@ export const VEL_TRADER_ABI = [
   },
   {
     "type": "function",
-    "name": "velorumtest2__getContractAddress",
+    "name": "velorumtest3__getContractAddress",
     "inputs": [],
     "outputs": [
       {
@@ -27,7 +27,7 @@ export const VEL_TRADER_ABI = [
   },
   {
     "type": "function",
-    "name": "velorumtest2__getERC20Data",
+    "name": "velorumtest3__getERC20Data",
     "inputs": [
       {
         "name": "smartObjectId",
@@ -63,7 +63,7 @@ export const VEL_TRADER_ABI = [
   },
   {
     "type": "function",
-    "name": "velorumtest2__getItemPriceData",
+    "name": "velorumtest3__getItemPriceData",
     "inputs": [
       {
         "name": "smartObjectId",
@@ -99,7 +99,7 @@ export const VEL_TRADER_ABI = [
   },
   {
     "type": "function",
-    "name": "velorumtest2__purchaseItem",
+    "name": "velorumtest3__purchaseItem",
     "inputs": [
       {
         "name": "smartObjectId",
@@ -122,7 +122,7 @@ export const VEL_TRADER_ABI = [
   },
   {
     "type": "function",
-    "name": "velorumtest2__registerERC20Token",
+    "name": "velorumtest3__registerERC20Token",
     "inputs": [
       {
         "name": "smartObjectId",
@@ -145,7 +145,7 @@ export const VEL_TRADER_ABI = [
   },
   {
     "type": "function",
-    "name": "velorumtest2__setItemPrice",
+    "name": "velorumtest3__setItemPrice",
     "inputs": [
       {
         "name": "smartObjectId",
@@ -168,7 +168,7 @@ export const VEL_TRADER_ABI = [
   },
   {
     "type": "function",
-    "name": "velorumtest2__unsetItemPrice",
+    "name": "velorumtest3__unsetItemPrice",
     "inputs": [
       {
         "name": "smartObjectId",
@@ -186,7 +186,7 @@ export const VEL_TRADER_ABI = [
   },
   {
     "type": "function",
-    "name": "velorumtest2__updateERC20Receiver",
+    "name": "velorumtest3__updateERC20Receiver",
     "inputs": [
       {
         "name": "smartObjectId",
