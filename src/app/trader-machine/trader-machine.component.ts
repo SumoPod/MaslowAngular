@@ -17,6 +17,7 @@ export class TraderMachineComponent implements OnInit{
   walletAddress: string;
   
   numberOfOre: number;
+errorText: any;
 
   constructor() {
     if (typeof (window as any).ethereum !== 'undefined')
@@ -121,6 +122,7 @@ export class TraderMachineComponent implements OnInit{
     })
     .catch((error) => {
       console.error('Price Error:', error);
+      this.errorText = error.error.message;
     });
   }
 
