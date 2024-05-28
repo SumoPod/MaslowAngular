@@ -18,6 +18,7 @@ import { FormsModule } from '@angular/forms';
 import { VendingMachineComponent } from './vending-machine/vending-machine.component';
 import { RankingCsvComponent } from './ranking-csv/ranking-csv.component';
 import { DeployableCsvComponent } from './deployable-csv/deployable-csv.component';
+import { TraderMachineComponent } from './trader-machine/trader-machine.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { DeployableCsvComponent } from './deployable-csv/deployable-csv.componen
     WalletDonationsComponent,
     VendingMachineComponent,
     RankingCsvComponent,
-    DeployableCsvComponent
+    DeployableCsvComponent,
+    TraderMachineComponent
   ],
   imports: [
     BrowserModule,
