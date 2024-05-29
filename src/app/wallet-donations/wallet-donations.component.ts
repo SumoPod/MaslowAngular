@@ -14,6 +14,7 @@ export class WalletDonationsComponent implements OnInit{
   finalText: string = '---';
   hashText: string = '---';
   readonly EVETokenContractAddress = '0xec79573FAC3b9C103819beBBD00143dfD67059DA';
+  readonly worldAddress = '0x8dc9cab3e97da6df615a8a24cc07baf110d63071';
 
   public web3: Web3 = null;
   walletAddress: string;

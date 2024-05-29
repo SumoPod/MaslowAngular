@@ -12,6 +12,7 @@ export class TraderMachineComponent implements OnInit{
 
   readonly  EVETokenContractAddress = '0xec79573FAC3b9C103819beBBD00143dfD67059DA';
   readonly velTraderContractAddress = '0xC52C1B857266e6479B412AB6B1C270d0173e13d8';
+  readonly worldAddress = '0x8dc9cab3e97da6df615a8a24cc07baf110d63071';
   
   web3: any;
   walletAddress: string;
@@ -47,9 +48,9 @@ export class TraderMachineComponent implements OnInit{
 
   purchaseCarbOre() {
     // Smart Object
-    let smartObject = 45228697695947564033082854924954193006092773360381611920298456273008413001782;
+    let smartObject = '45228697695947564033082854924954193006092773360381611920298456273008413001782';
     // ObjetId
-    let carbOreId = 9540969374646031328134197690309428632894452754236413416084198707556493884019;
+    let carbOreId = '9540969374646031328134197690309428632894452754236413416084198707556493884019';
     // Quantity
     let quantity = 1;
     // Price
@@ -60,7 +61,7 @@ export class TraderMachineComponent implements OnInit{
     this.approveAndPurchase(eveNeeded, smartObject, carbOreId, quantity);
   }
 
-  approveAndPurchase(amount: number /* in EVE */, smartObject: number, carbOreId: number, quantity: number)
+  approveAndPurchase(amount: number /* in EVE */, smartObject: string, carbOreId: string, quantity: number)
   {
     let EVEContract = new this.web3.eth.Contract(ERC20_ABI, this.EVETokenContractAddress);
 
@@ -88,11 +89,11 @@ export class TraderMachineComponent implements OnInit{
     });
   }
   
-  purchaseItem( smartObject: number, carbOreId: number, quantity: number)
+  purchaseItem( smartObject: string, carbOreId: string, quantity: number)
   {
     console.log("Purchasing item");
     // Get contract.
-    let contract = new this.web3.eth.Contract(VEL_TRADER_ABI, this.velTraderContractAddress);
+    let contract = new this.web3.eth.Contract(VEL_TRADER_ABI, this.worldAddress);
   
     // Call purchaseItem
     contract.methods.velorumtest3__purchaseItem(smartObject, carbOreId, quantity).send({from: this.walletAddress})
@@ -110,14 +111,14 @@ export class TraderMachineComponent implements OnInit{
   getPrice()
   {
     // Maslows Pyramid
-    let smartObjectId = 45228697695947564033082854924954193006092773360381611920298456273008413001782;
+    let smartObjectId = `45228697695947564033082854924954193006092773360381611920298456273008413001782`;
     // Carb Ore
-    let inventoryItemId = 9540969374646031328134197690309428632894452754236413416084198707556493884019;    
+    let inventoryItemId = `9540969374646031328134197690309428632894452754236413416084198707556493884019`;    
 
     // Call get price
-    let contract = new this.web3.eth.Contract(VEL_TRADER_ABI, this.velTraderContractAddress);
+    let contract = new this.web3.eth.Contract(VEL_TRADER_ABI, this.worldAddress);
     contract.methods.velorumtest3__getItemPriceData(smartObjectId, inventoryItemId).call()
-    .then((data: {isSet:boolean,price: number}) => {
+    .then((data) => {
       console.log('Get item data:');
       console.log(data);
       this.errorText = "Priced at " + data.price + " EVE tokens.";
@@ -130,7 +131,7 @@ export class TraderMachineComponent implements OnInit{
 
   getAddress()
   {
-    let EVEcontract = new this.web3.eth.Contract(VEL_TRADER_ABI, this.velTraderContractAddress);
+    let EVEcontract = new this.web3.eth.Contract(VEL_TRADER_ABI, this.worldAddress);
     // call get adress
     EVEcontract.methods.velorumtest3__getContractAddress().call()
     .then((data: string) => {
@@ -141,7 +142,7 @@ export class TraderMachineComponent implements OnInit{
 
   listenToEvents()
   {
-    let contract = new this.web3.eth.Contract(VEL_TRADER_ABI, this.velTraderContractAddress);
+    let contract = new this.web3.eth.Contract(VEL_TRADER_ABI, this.worldAddress);
     let subs = contract.events.allEvents();
     subs.on('data', (event: any) => {
       console.log('Event data:')
