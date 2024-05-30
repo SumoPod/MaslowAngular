@@ -3,6 +3,7 @@ import { Web3 } from 'web3';
 import { ERC20_ABI } from '../wallet-check/ERC20.abi';
 import { VEL_TRADER_ABI } from './IItemSeller.abi';
 import { SellableItem } from './sellable-item/sellable-item.component';
+import { WebSocketMessage } from '../web-socket/web-socket.model';
 
 @Component({
   selector: 'app-trader-machine',
@@ -18,6 +19,7 @@ export class TraderMachineComponent implements OnInit{
   readonly worldAddress = '0x8dc9cab3e97da6df615a8a24cc07baf110d63071';
   
   web3: any;
+  ws: WebSocket;
   walletAddress: string;
   
   numberOfOre: number;
@@ -64,17 +66,41 @@ export class TraderMachineComponent implements OnInit{
     let contract = new this.web3.eth.Contract(VEL_TRADER_ABI, this.worldAddress);
     contract.methods.velorumtest7__getItemPriceData(smartObject,carbOreId).call()
     .then((data: any) => {
-      console.log('Get selling data:');
-      console.log(data);
       this.sellableItems.push({
         id: carbOreId,
         name: this.getNameFromID(carbOreId),
         price: Number( data.price),
         quantity: 0 // Read from json.
-      }); 
+      });
+      // Start ws connection
+      this.startWSConnection( smartObject );
     }).catch((error: any) => {
       console.error(error);
     });
+  }
+  startWSConnection( deployableId: string) {
+    // ws connection using walletAdress and smartDeployable id
+    this.ws = new WebSocket('wss://blockchain-gateway-test.nursery.reitnorf.com/ws/'+ this.walletAddress + '/' + deployableId);
+
+    this.ws.onmessage = (event) => {
+      this.updateWSocketData(JSON.parse(event.data));
+    };
+  }
+
+  updateWSocketData(data: WebSocketMessage)
+  {
+    // Acces smartdeployable inventory
+    let inventory = data.smartDeployable.inventory.storageItems;
+    //Iterate the stored items and look for the ones in the sellable items to update the quantity
+    for (let i = 0; i < this.sellableItems.length; ++i)
+    {
+      let sellingItem = this.sellableItems[i];
+      // find the item in the inventory with same id
+      let inventoryItem = inventory.find((element) => element.itemId == sellingItem.id);
+
+      sellingItem.quantity = inventoryItem ? inventoryItem.quantity : 0;
+    }
+
   }
 
   getNameFromID(id: string): string
