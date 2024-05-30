@@ -1,0 +1,14 @@
+.fix-width-1 {
+  width: 75px;
+  text-align: right;
+  overflow-x: auto;
+}
+
+.fix-width-2 {
+  width: 300px;
+}
+
+.fix-width-2 input,
+.fix-width-2 button {
+  display: inline-block;
+}

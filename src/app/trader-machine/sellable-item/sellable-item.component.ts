@@ -17,6 +17,7 @@ export class SellableItemComponent {
   @ViewChild('buyInput') myInput: ElementRef;
 
   get totalValue(): number {
+    if(! this.myInput ) return 0;
     return this.data ? this.data.price * this.myInput?.nativeElement.value / 1e18: 0;
   }
 
