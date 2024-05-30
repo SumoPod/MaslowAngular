@@ -3,7 +3,7 @@
   <td>{{data.price / 1e18}} EVE</td>
   <td>{{data.quantity}}</td>
   <td>
-    <input type="number" min="0" value="0">
+    <input type="number" min="0" [max]="data.quantity" value="0" (input)="validateMax($event, data.quantity)">
     <button>Buy</button>
   </td>
 </tr><br>

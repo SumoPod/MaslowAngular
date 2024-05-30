@@ -14,4 +14,12 @@ export interface SellableItem {
 })
 export class SellableItemComponent {
   @Input() data: SellableItem;
+
+  validateMax(inputEvent: any, max: number)
+  {
+    if (inputEvent.target.value > max)
+    {
+      inputEvent.target.value = max;
+    }
+  }
 }
