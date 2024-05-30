@@ -5,6 +5,6 @@
   <td class="fix-width-1">{{ totalValue }} EVE</td>
   <td class="fix-width-2">
     <input #buyInput type="number" min="0" [max]="data.quantity" value="0" (input)="validateMax($event, data.quantity)">
-    <button>Buy</button>
+    <button (click)="doSellItems()">Buy</button>
   </td>
 </tr><br>
