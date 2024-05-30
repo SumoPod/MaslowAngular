@@ -19,6 +19,7 @@ import { VendingMachineComponent } from './vending-machine/vending-machine.compo
 import { RankingCsvComponent } from './ranking-csv/ranking-csv.component';
 import { DeployableCsvComponent } from './deployable-csv/deployable-csv.component';
 import { TraderMachineComponent } from './trader-machine/trader-machine.component';
+import { SellableItemComponent } from './trader-machine/sellable-item/sellable-item.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { TraderMachineComponent } from './trader-machine/trader-machine.componen
     VendingMachineComponent,
     RankingCsvComponent,
     DeployableCsvComponent,
-    TraderMachineComponent
+    TraderMachineComponent,
+    SellableItemComponent
   ],
   imports: [
     BrowserModule,

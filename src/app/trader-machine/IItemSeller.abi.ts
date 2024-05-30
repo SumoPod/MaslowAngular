@@ -1,7 +1,7 @@
 export const VEL_TRADER_ABI = [
   {
     "type": "function",
-    "name": "velorumtest3__collectTokens",
+    "name": "velorumtest7__collectTokens",
     "inputs": [
       {
         "name": "smartObjectId",
@@ -14,7 +14,7 @@ export const VEL_TRADER_ABI = [
   },
   {
     "type": "function",
-    "name": "velorumtest3__getContractAddress",
+    "name": "velorumtest7__getContractAddress",
     "inputs": [],
     "outputs": [
       {
@@ -27,7 +27,7 @@ export const VEL_TRADER_ABI = [
   },
   {
     "type": "function",
-    "name": "velorumtest3__getERC20Data",
+    "name": "velorumtest7__getERC20Data",
     "inputs": [
       {
         "name": "smartObjectId",
@@ -63,7 +63,7 @@ export const VEL_TRADER_ABI = [
   },
   {
     "type": "function",
-    "name": "velorumtest3__getItemPriceData",
+    "name": "velorumtest7__getItemPriceData",
     "inputs": [
       {
         "name": "smartObjectId",
@@ -99,7 +99,7 @@ export const VEL_TRADER_ABI = [
   },
   {
     "type": "function",
-    "name": "velorumtest3__purchaseItem",
+    "name": "velorumtest7__purchaseItem",
     "inputs": [
       {
         "name": "smartObjectId",
@@ -122,7 +122,7 @@ export const VEL_TRADER_ABI = [
   },
   {
     "type": "function",
-    "name": "velorumtest3__registerERC20Token",
+    "name": "velorumtest7__registerERC20Token",
     "inputs": [
       {
         "name": "smartObjectId",
@@ -145,7 +145,30 @@ export const VEL_TRADER_ABI = [
   },
   {
     "type": "function",
-    "name": "velorumtest3__setItemPrice",
+    "name": "velorumtest7__sellItem",
+    "inputs": [
+      {
+        "name": "smartObjectId",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "inventoryItemId",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "quantity",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "velorumtest7__setItemPrice",
     "inputs": [
       {
         "name": "smartObjectId",
@@ -168,7 +191,7 @@ export const VEL_TRADER_ABI = [
   },
   {
     "type": "function",
-    "name": "velorumtest3__unsetItemPrice",
+    "name": "velorumtest7__unsetItemPrice",
     "inputs": [
       {
         "name": "smartObjectId",
@@ -186,7 +209,7 @@ export const VEL_TRADER_ABI = [
   },
   {
     "type": "function",
-    "name": "velorumtest3__updateERC20Receiver",
+    "name": "velorumtest7__updateERC20Receiver",
     "inputs": [
       {
         "name": "smartObjectId",

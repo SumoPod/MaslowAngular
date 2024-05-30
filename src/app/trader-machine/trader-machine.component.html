@@ -1,5 +1,13 @@
-<!-- <input type="number-of-ore" (value)="numberOfOre" min="1" max="10"> -->
-<button (click)="purchaseCarbOre()">Purchase Carbonaceous Ore</button><br>
-<button (click)="getPrice()">Get Item Price</button><br>
-<button (click)="getAddress()">Get Address</button><br>
-{{errorText}}
+<table>
+  <thead>
+    <tr>
+      <th>Item Name</th>
+      <th>Price</th>
+      <th>Available Amount</th>
+      <th>Purchase</th>
+    </tr>
+  </thead>
+  <tbody>
+    <app-sellable-item *ngFor="let item of sellableItems" [data]="item" ></app-sellable-item>
+  </tbody>
+</table>

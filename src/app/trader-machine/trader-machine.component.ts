@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Web3 } from 'web3';
 import { ERC20_ABI } from '../wallet-check/ERC20.abi';
 import { VEL_TRADER_ABI } from './IItemSeller.abi';
+import { SellableItem } from './sellable-item/sellable-item.component';
 
 @Component({
   selector: 'app-trader-machine',
@@ -9,6 +10,8 @@ import { VEL_TRADER_ABI } from './IItemSeller.abi';
   styleUrl: './trader-machine.component.css'
 })
 export class TraderMachineComponent implements OnInit{
+
+  sellableItems: SellableItem[] = [];
 
   readonly  EVETokenContractAddress = '0xec79573FAC3b9C103819beBBD00143dfD67059DA';
   readonly velTraderContractAddress = '0xC52C1B857266e6479B412AB6B1C270d0173e13d8';
@@ -41,9 +44,52 @@ export class TraderMachineComponent implements OnInit{
     (window as any).ethereum.request({ method: 'eth_requestAccounts' }).then((accounts: string[]) => {
       console.log('Wallets:', accounts);
       this.walletAddress = accounts[0];
+
+      this.getSellingData();
+
     }).catch((error: any) => {
       console.error('Error:', error);
     });
+  }
+
+  getSellingData()
+  {
+    // Hardcoded values because the contract doesn't support this yet.
+    let carbOreId = '9540969374646031328134197690309428632894452754236413416084198707556493884019';
+    // MAslow pyramid id
+    let smartObject = '45228697695947564033082854924954193006092773360381611920298456273008413001782';
+
+
+    // Get from contract available items and prices
+    let contract = new this.web3.eth.Contract(VEL_TRADER_ABI, this.worldAddress);
+    contract.methods.velorumtest7__getItemPriceData(smartObject,carbOreId).call()
+    .then((data: any) => {
+      console.log('Get selling data:');
+      console.log(data);
+      this.sellableItems.push({
+        id: carbOreId,
+        name: this.getNameFromID(carbOreId),
+        price: Number( data.price),
+        quantity: 0 // Read from json.
+      }); 
+    }).catch((error: any) => {
+      console.error(error);
+    });
+  }
+
+  getNameFromID(id: string): string
+  {
+    switch (id)
+    {
+      case '9540969374646031328134197690309428632894452754236413416084198707556493884019':
+        return 'Carb Ore';
+      case '45228697695947564033082854924954193006092773360381611920298456273008413001782':
+        return 'Maslow Pyramid';
+      case '0xec79573FAC3b9C103819beBBD00143dfD67059DA':
+        return 'EVE Token';
+      default:
+        return 'Unknown';
+    }
   }
 
   purchaseCarbOre() {
