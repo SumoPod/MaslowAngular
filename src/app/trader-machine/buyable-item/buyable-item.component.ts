@@ -1,21 +1,23 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import Web3 from 'web3';
 import { ERC20_ABI } from '../../wallet-check/ERC20.abi';
 import { VEL_TRADER_ABI } from '../IItemSeller.abi';
-import { Web3 } from 'web3';
+import { SellableItem } from '../sellable-item/sellable-item.component';
 
-export interface SellableItem {
+export interface BuyableItem {
   itemId: string; // BlockChain Id
+  typeId: string; // Eve Id.
   name: string;
   price: number; // with all decimals
-  quantity: number; // How many in station inventory to be bought by player
+  quantity: number; // How many in player inventory to be sold.
 }
 
 @Component({
-  selector: 'app-sellable-item',
-  templateUrl: './sellable-item.component.html',
-  styleUrl: './sellable-item.component.css'
+  selector: 'app-buyable-item',
+  templateUrl: './buyable-item.component.html',
+  styleUrl: './buyable-item.component.css'
 })
-export class SellableItemComponent {
+export class BuyableItemComponent {
 
   smartObject = '45228697695947564033082854924954193006092773360381611920298456273008413001782';
   readonly worldAddress = '0x8dc9cab3e97da6df615a8a24cc07baf110d63071';
@@ -24,7 +26,7 @@ export class SellableItemComponent {
 
 
   @Input() data: SellableItem;
-  @ViewChild('buyInput') myInput: ElementRef;
+  @ViewChild('sellInput') myInput: ElementRef;
   web3: any;
   walletAddress: any;
   
@@ -44,12 +46,11 @@ export class SellableItemComponent {
     }
   }
 
-
-  getWallets()
-  {
+  getWallets() {
     (window as any).ethereum.request({ method: 'eth_requestAccounts' }).then((accounts: string[]) => {
       console.log('Wallets:', accounts);
       this.walletAddress = accounts[0];
+
     }).catch((error: any) => {
       console.error('Error:', error);
     });
@@ -60,7 +61,7 @@ export class SellableItemComponent {
     return this.data ? this.data.price * this.myInput?.nativeElement.value / 1e18: 0;
   }
 
-  doSellItems()
+  doBuyItems()
   {
     // Purchase items in the abi
     let EVEContract = new this.web3.eth.Contract(ERC20_ABI, this.EVETokenContractAddress);
@@ -71,14 +72,14 @@ export class SellableItemComponent {
       console.log('Approval Transaction Hash:', hash);
     })
     .then((receipt) => {
-        this.purchaseItem(this.smartObject, this.data.itemId, this.myInput?.nativeElement.value);
+        this.buyItem(this.smartObject, this.data.itemId, this.myInput?.nativeElement.value);
     })
     .catch((error) => {
       console.error('Approval Error:', error);
     });
   }
 
-  purchaseItem(smartObject: any, carbOreId: any, quantity: any)
+  buyItem(smartObject: any, carbOreId: any, quantity: any)
   {
     console.log("Purchasing item");
     // Get contract.

@@ -23,7 +23,15 @@ export interface Inventory {
   storageCapacity: number;
   usedCapacity: number;
   storageItems: StorageItem[];
-  ephemeralInventoryList: any[];
+  ephemeralInventoryList: EphemeralInventory[];
+}
+
+export interface EphemeralInventory {
+  ephemeralInventoryItems: StorageItem[];
+  ownerId: string;
+  ownerName: string;
+  storageCapacity: number;
+  usedCapacity: number;
 }
 
 export interface Gatekeeper {

@@ -20,6 +20,7 @@ import { RankingCsvComponent } from './ranking-csv/ranking-csv.component';
 import { DeployableCsvComponent } from './deployable-csv/deployable-csv.component';
 import { TraderMachineComponent } from './trader-machine/trader-machine.component';
 import { SellableItemComponent } from './trader-machine/sellable-item/sellable-item.component';
+import { BuyableItemComponent } from './trader-machine/buyable-item/buyable-item.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { SellableItemComponent } from './trader-machine/sellable-item/sellable-i
     RankingCsvComponent,
     DeployableCsvComponent,
     TraderMachineComponent,
-    SellableItemComponent
+    SellableItemComponent,
+    BuyableItemComponent
   ],
   imports: [
     BrowserModule,

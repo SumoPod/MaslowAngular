@@ -4,6 +4,8 @@ import { ERC20_ABI } from '../wallet-check/ERC20.abi';
 import { VEL_TRADER_ABI } from './IItemSeller.abi';
 import { SellableItem } from './sellable-item/sellable-item.component';
 import { WebSocketMessage } from '../web-socket/web-socket.model';
+import { BuyableItem } from './buyable-item/buyable-item.component';
+import { EphemeralInventory } from '../system-tracker/deployable-data.model';
 
 @Component({
   selector: 'app-trader-machine',
@@ -13,6 +15,7 @@ import { WebSocketMessage } from '../web-socket/web-socket.model';
 export class TraderMachineComponent implements OnInit{
 
   sellableItems: SellableItem[] = [];
+  buyableItems: BuyableItem[] = [];
 
   readonly  EVETokenContractAddress = '0xec79573FAC3b9C103819beBBD00143dfD67059DA';
   readonly velTraderContractAddress = '0xC52C1B857266e6479B412AB6B1C270d0173e13d8';
@@ -67,17 +70,27 @@ export class TraderMachineComponent implements OnInit{
     contract.methods.velorumtest7__getItemPriceData(smartObject,carbOreId).call()
     .then((data: any) => {
       this.sellableItems.push({
-        id: carbOreId,
+        itemId: carbOreId,
         name: this.getNameFromID(carbOreId),
         price: Number( data.price),
         quantity: 0 // Read from json.
       });
+      // Same for buyables
+      this.buyableItems.push({
+        itemId: carbOreId,
+        typeId: '77811',
+        name: this.getNameFromID(carbOreId),
+        price: Number( data.price), // It's the same for buy/sell.
+        quantity: 0 // Read from json
+      });
+
       // Start ws connection
       this.startWSConnection( smartObject );
     }).catch((error: any) => {
       console.error(error);
     });
   }
+
   startWSConnection( deployableId: string) {
     // ws connection using walletAdress and smartDeployable id
     this.ws = new WebSocket('wss://blockchain-gateway-test.nursery.reitnorf.com/ws/'+ this.walletAddress + '/' + deployableId);
@@ -89,6 +102,8 @@ export class TraderMachineComponent implements OnInit{
 
   updateWSocketData(data: WebSocketMessage)
   {
+    console.log('WSocket data:');
+    console.log(data);
     // Access smartdeployable inventory
     let inventory = data.smartDeployable.inventory.storageItems;
 
@@ -97,9 +112,43 @@ export class TraderMachineComponent implements OnInit{
     {
       let sellingItem = this.sellableItems[i];
       // Find the item in the inventory with the same id
-      let inventoryItem = inventory.find((element) => element.itemId == sellingItem.id);
+      let inventoryItem = inventory.find((element) => element.itemId == sellingItem.itemId);
 
       sellingItem.quantity = inventoryItem ? inventoryItem.quantity : 0;
+    }
+
+    // Access player ephemeral inventory
+    let ephemeralInventory:EphemeralInventory = data.smartDeployable.inventory.ephemeralInventoryList.find((element) => element.ownerId == this.walletAddress);
+
+    // Loop through items.
+    if (ephemeralInventory)
+    {
+      console.log('Ephemeral inventory of ' + ephemeralInventory.ownerName + ' found');
+      let ephemeralItems = ephemeralInventory.ephemeralInventoryItems;
+
+      for (let i = 0; i < ephemeralItems.length; ++i)
+      {
+        let ephemeralItem = ephemeralItems[i];
+        
+        console.log('idId: ' + ephemeralItem.itemId);
+        // Find the item in the inventory with the same id
+        let buyableItem = this.buyableItems.find((element) => element.itemId == ephemeralItem.itemId);
+
+        if (buyableItem)
+        {
+          console.log('Updating buyable item quantity' + ephemeralItem.quantity);
+          buyableItem.quantity = ephemeralItem.quantity;
+        }
+        else
+        {
+          console.log('Item not found in buyable items');
+        }
+      }
+      console.log("end of loop")
+    }
+    else
+    {
+      console.log('Ephemeral inventory not found');
     }
   }
 
