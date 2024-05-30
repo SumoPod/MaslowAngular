@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 
 export interface SellableItem {
   id: string;
@@ -14,6 +14,11 @@ export interface SellableItem {
 })
 export class SellableItemComponent {
   @Input() data: SellableItem;
+  @ViewChild('buyInput') myInput: ElementRef;
+
+  get totalValue(): number {
+    return this.data ? this.data.price * this.myInput?.nativeElement.value / 1e18: 0;
+  }
 
   validateMax(inputEvent: any, max: number)
   {

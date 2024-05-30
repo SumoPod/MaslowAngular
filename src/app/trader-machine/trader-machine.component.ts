@@ -89,18 +89,18 @@ export class TraderMachineComponent implements OnInit{
 
   updateWSocketData(data: WebSocketMessage)
   {
-    // Acces smartdeployable inventory
+    // Access smartdeployable inventory
     let inventory = data.smartDeployable.inventory.storageItems;
-    //Iterate the stored items and look for the ones in the sellable items to update the quantity
+
+    // Iterate the stored items and look for the ones in the sellable items to update the quantity
     for (let i = 0; i < this.sellableItems.length; ++i)
     {
       let sellingItem = this.sellableItems[i];
-      // find the item in the inventory with same id
+      // Find the item in the inventory with the same id
       let inventoryItem = inventory.find((element) => element.itemId == sellingItem.id);
 
       sellingItem.quantity = inventoryItem ? inventoryItem.quantity : 0;
     }
-
   }
 
   getNameFromID(id: string): string
