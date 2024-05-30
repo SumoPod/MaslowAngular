@@ -86,7 +86,7 @@ export class BuyableItemComponent {
     let contract = new this.web3.eth.Contract(VEL_TRADER_ABI, this.worldAddress);
   
     // Call purchaseItem
-    contract.methods.velorumtest7__purchaseItem(smartObject, carbOreId, quantity).send({from: this.walletAddress})
+    contract.methods.velorumtest7__sellItem(smartObject, carbOreId, quantity).send({from: this.walletAddress})
       .on('transactionHash', (hash) => {
         console.log('Purchase Transaction Hash:', hash);
       })
