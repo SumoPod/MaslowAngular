@@ -107,14 +107,14 @@ export class TraderMachineComponent implements OnInit{
     // Access smartdeployable inventory
     let inventory = data.smartDeployable.inventory.storageItems;
 
-    // Iterate the stored items and look for the ones in the sellable items to update the quantity
-    for (let i = 0; i < this.sellableItems.length; ++i)
+    // Iterate the stored items and look for the ones in the station-buyable items to update the quantity
+    for (let i = 0; i < this.buyableItems.length; ++i)
     {
-      let sellingItem = this.sellableItems[i];
+      let buyableItem = this.buyableItems[i];
       // Find the item in the inventory with the same id
-      let inventoryItem = inventory.find((element) => element.itemId == sellingItem.itemId);
+      let inventoryItem = inventory.find((element) => element.itemId == buyableItem.itemId);
 
-      sellingItem.quantity = inventoryItem ? inventoryItem.quantity : 0;
+      buyableItem.quantity = inventoryItem ? inventoryItem.quantity : 0;
     }
 
     // Access player ephemeral inventory
@@ -132,12 +132,12 @@ export class TraderMachineComponent implements OnInit{
         
         console.log('idId: ' + ephemeralItem.itemId);
         // Find the item in the inventory with the same id
-        let buyableItem = this.buyableItems.find((element) => element.itemId == ephemeralItem.itemId);
+        let sellableItem = this.sellableItems.find((element) => element.itemId == ephemeralItem.itemId);
 
-        if (buyableItem)
+        if (sellableItem)
         {
           console.log('Updating buyable item quantity' + ephemeralItem.quantity);
-          buyableItem.quantity = ephemeralItem.quantity;
+          sellableItem.quantity = ephemeralItem.quantity;
         }
         else
         {

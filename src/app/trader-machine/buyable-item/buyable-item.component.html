@@ -1,10 +1,5 @@
-<tr>
-  <td class="fix-width-1">{{data.name}}</td>
-  <td class="fix-width-1">{{data.price / 1e18}} EVE</td>
-  <td class="fix-width-1">{{data.quantity}}</td>
-  <td class="fix-width-1">{{ totalValue }} EVE</td>
-  <td class="fix-width-2">
-    <input #sellInput type="number" min="0" [max]="data.quantity" value="0" (input)="validateMax($event, data.quantity)">
-    <button (click)="doBuyItems()">Sell</button>
-  </td>
-</tr><br>
+{{data.quantity}} - {{data.name}} at {{data.price / 1e18}} EVE each <br>
+Amount to sell: <input #sellInput type="number" min="0" [max]="data.quantity" value="0" (input)="validateMax($event, data.quantity)"><br>
+Total paid to you: {{ totalValue }} EVE<br>
+<button (click)="doBuyItems()">Sell</button>
+-------------------------------

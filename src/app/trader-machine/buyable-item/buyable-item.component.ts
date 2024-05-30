@@ -18,14 +18,13 @@ export interface BuyableItem {
   styleUrl: './buyable-item.component.css'
 })
 export class BuyableItemComponent {
-
   smartObject = '45228697695947564033082854924954193006092773360381611920298456273008413001782';
   readonly worldAddress = '0x8dc9cab3e97da6df615a8a24cc07baf110d63071';
   readonly velTraderContractAddress = '0x113BD5002A8b24d7113dB3E721cae943524ea43b';
   readonly  EVETokenContractAddress = '0xec79573FAC3b9C103819beBBD00143dfD67059DA';
 
 
-  @Input() data: SellableItem;
+  @Input() data: BuyableItem;
   @ViewChild('sellInput') myInput: ElementRef;
   web3: any;
   walletAddress: any;
@@ -87,15 +86,15 @@ export class BuyableItemComponent {
   
     // Call purchaseItem
     contract.methods.velorumtest7__sellItem(smartObject, carbOreId, quantity).send({from: this.walletAddress})
-      .on('transactionHash', (hash) => {
-        console.log('Purchase Transaction Hash:', hash);
-      })
-      .then((receipt) => {
-        console.log('Purchase Receipt:', receipt);
-      })
-      .catch((error) => {
-        console.error('Purchase Error:', error);
-      });
+    .on('transactionHash', (hash) => {
+      console.log('Purchase Transaction Hash:', hash);
+    })
+    .then((receipt) => {
+      console.log('Purchase Receipt:', receipt);
+    })
+    .catch((error) => {
+      console.error('Purchase Error:', error);
+    });
   }
 
   validateMax(inputEvent: any, max: number)

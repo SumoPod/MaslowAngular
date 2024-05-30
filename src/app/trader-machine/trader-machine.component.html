@@ -1,30 +1,23 @@
+<!-- Sellable from the station pov. -->
+<!-- But the web user buys them -->
 <h2>Items to Buy</h2>
+<h3>This is that you pay money to get our items.</h3>
 <table>
-  <thead>
-    <tr>
-      <th>Item Name</th>
-      <th>Price</th>
-      <th>Available Amount</th>
-      <th>Total Price</th>
-      <th>Purchase</th>
-    </tr>
-  </thead>
   <tbody>
-    <app-sellable-item *ngFor="let item of sellableItems" [data]="item" ></app-sellable-item>
+    <tr *ngFor="let item of buyableItems">
+      <app-sellable-item [data]="item"></app-sellable-item>
+    </tr>
   </tbody>
 </table>
 -------------------------------------------------------<br>
+<!-- Sellable from the station pov. -->
+<!-- But the web user sells them -->
 <h2>Items to Sell</h2>
+<h3>This is that you get money for your items.</h3>
 <table>
-  <thead>
-    <tr>
-      <th>Item Name</th>
-      <th>Price</th>
-      <th>Total Earnings</th>
-      <th>Purchase</th>
-    </tr>
-  </thead>
   <tbody>
-    <app-buyable-item *ngFor="let item of buyableItems" [data]="item" ></app-buyable-item>
+    <tr *ngFor="let item of sellableItems">
+      <app-buyable-item [data]="item"></app-buyable-item>
+    </tr>
   </tbody>
 </table>
