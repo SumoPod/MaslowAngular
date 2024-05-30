@@ -2,7 +2,7 @@ import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import Web3 from 'web3';
 import { ERC20_ABI } from '../../wallet-check/ERC20.abi';
 import { VEL_TRADER_ABI } from '../IItemSeller.abi';
-import { SellableItem } from '../sellable-item/sellable-item.component';
+import { EVETokenContractAddress, MaslowPyramidID, WorldAddress } from '../../eve-wallet-service/eve-wallet-constants';
 
 export interface BuyableItem {
   itemId: string; // BlockChain Id
@@ -18,11 +18,6 @@ export interface BuyableItem {
   styleUrl: './buyable-item.component.css'
 })
 export class BuyableItemComponent {
-  smartObject = '45228697695947564033082854924954193006092773360381611920298456273008413001782';
-  readonly worldAddress = '0x8dc9cab3e97da6df615a8a24cc07baf110d63071';
-  readonly velTraderContractAddress = '0x113BD5002A8b24d7113dB3E721cae943524ea43b';
-  readonly  EVETokenContractAddress = '0xec79573FAC3b9C103819beBBD00143dfD67059DA';
-
 
   @Input() data: BuyableItem;
   @ViewChild('sellInput') sellInput: ElementRef;
@@ -63,17 +58,17 @@ export class BuyableItemComponent {
   doBuyItems()
   {
     // Purchase items in the abi
-    let EVEContract = new this.web3.eth.Contract(ERC20_ABI, this.EVETokenContractAddress);
+    let EVEContract = new this.web3.eth.Contract(ERC20_ABI, EVETokenContractAddress);
     console.log("Approving")
 
-    this.buyItem(this.smartObject, this.data.itemId, this.sellInput?.nativeElement.value);
+    this.buyItem(MaslowPyramidID, this.data.itemId, this.sellInput?.nativeElement.value);
   }
 
   buyItem(smartObject: any, carbOreId: any, quantity: any)
   {
     console.log("Purchasing item");
     // Get contract.
-    let contract = new this.web3.eth.Contract(VEL_TRADER_ABI, this.worldAddress);
+    let contract = new this.web3.eth.Contract(VEL_TRADER_ABI, WorldAddress);
   
     // Call purchaseItem
     contract.methods.velorumtest7__sellItem(smartObject, carbOreId, quantity).send({from: this.walletAddress})

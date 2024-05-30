@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { SmartCharacterInfo } from '../web-socket/web-socket.model';
 import Web3, { Uint256 } from 'web3';
 import { ERC20_ABI } from './ERC20.abi';
+import { EVETokenContractAddress } from '../eve-wallet-service/eve-wallet-constants';
 
 @Component({
   selector: 'app-wallet-check',
@@ -10,7 +11,6 @@ import { ERC20_ABI } from './ERC20.abi';
   styleUrl: './wallet-check.component.css'
 })
 export class WalletCheckComponent implements OnInit{
-  readonly EVETokenContractAddress = '0xec79573FAC3b9C103819beBBD00143dfD67059DA';
   public web3: Web3 = null;
   public walletAddress: string;
   public chain: string;
@@ -71,7 +71,7 @@ export class WalletCheckComponent implements OnInit{
   }
 
   getEVETokenBalance(walletAddress: string) {
-    let tokenContract = new this.web3.eth.Contract(ERC20_ABI, this.EVETokenContractAddress);
+    let tokenContract = new this.web3.eth.Contract(ERC20_ABI, EVETokenContractAddress);
 
     tokenContract.methods.balanceOf(walletAddress).call().then((value: any) => {
       console.log('EVE Token Balance:', Number(value));

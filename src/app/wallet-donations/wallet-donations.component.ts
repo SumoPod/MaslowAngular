@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import Web3 from 'web3';
 import { ERC20_ABI } from '../wallet-check/ERC20.abi';
+import { EVETokenContractAddress } from '../eve-wallet-service/eve-wallet-constants';
 
 @Component({
   selector: 'app-wallet-donations',
@@ -13,8 +14,6 @@ export class WalletDonationsComponent implements OnInit{
   errorText: string = '---';
   finalText: string = '---';
   hashText: string = '---';
-  readonly EVETokenContractAddress = '0xec79573FAC3b9C103819beBBD00143dfD67059DA';
-  readonly worldAddress = '0x8dc9cab3e97da6df615a8a24cc07baf110d63071';
 
   public web3: Web3 = null;
   walletAddress: string;
@@ -76,7 +75,7 @@ export class WalletDonationsComponent implements OnInit{
     let donationWalletAdress = '0x8eD42C0C5e306ccF5872A19B47eeCA95b9c0c8D0';
     this.debugText = 'Donating ' + this.eveDonationAmount + ' EVE tokens to ' + donationWalletAdress;
 
-    let tokenContract = new this.web3.eth.Contract(ERC20_ABI, this.EVETokenContractAddress);
+    let tokenContract = new this.web3.eth.Contract(ERC20_ABI, EVETokenContractAddress);
     tokenContract.methods.transfer(donationWalletAdress, this.eveDonationAmount*1e18).send(
       {from: this.walletAddress}
     ).on('transactionHash', (hash: string) => {
@@ -94,24 +93,4 @@ export class WalletDonationsComponent implements OnInit{
       this.finalText = 'Donation complete';
     });
   }
-
-  // doDonate_raw() {
-  //   let amount = (0.01 * 1e18).toString(16);
-
-  //   (window as any).ethereum.request({
-  //     method: 'eth_sendTransaction',
-  //     params: [
-  //       {
-  //         // Balifeq's wallet address
-  //         to: '0xA30CB273ef44EBfbfc228FA7EEc8DFE2439E8900',
-  //         from: this.walletAddress,
-  //         value: amount
-  //       }
-  //     ]
-  //   }).then((txHash: string) => {
-  //     console.log('Transaction Hash:', txHash);
-  //   }).catch((error: any) => {
-  //     console.error('Error:', error);
-  //   });
-  // }
 }

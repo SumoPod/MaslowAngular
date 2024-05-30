@@ -2,6 +2,7 @@ import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { ERC20_ABI } from '../../wallet-check/ERC20.abi';
 import { VEL_TRADER_ABI } from '../IItemSeller.abi';
 import { Web3 } from 'web3';
+import { EVETokenContractAddress, MaslowPyramidID, VelTraderContractAddress_v7, WorldAddress } from '../../eve-wallet-service/eve-wallet-constants';
 
 export interface SellableItem {
   itemId: string; // BlockChain Id
@@ -17,9 +18,7 @@ export interface SellableItem {
 })
 export class SellableItemComponent {
 
-  smartObject = '45228697695947564033082854924954193006092773360381611920298456273008413001782';
-  readonly worldAddress = '0x8dc9cab3e97da6df615a8a24cc07baf110d63071';
-  readonly velTraderContractAddress = '0x113BD5002A8b24d7113dB3E721cae943524ea43b';
+  readonly svelTraderContractAddress = '0x113BD5002A8b24d7113dB3E721cae943524ea43b';
   readonly  EVETokenContractAddress = '0xec79573FAC3b9C103819beBBD00143dfD67059DA';
 
 
@@ -63,15 +62,15 @@ export class SellableItemComponent {
   doSellItems()
   {
     // Purchase items in the abi
-    let EVEContract = new this.web3.eth.Contract(ERC20_ABI, this.EVETokenContractAddress);
+    let EVEContract = new this.web3.eth.Contract(ERC20_ABI, EVETokenContractAddress);
     console.log("Approving")
     // Get approve
-    EVEContract.methods.approve(this.velTraderContractAddress, this.totalValue * 1e18 ).send({from: this.walletAddress})
+    EVEContract.methods.approve(VelTraderContractAddress_v7, this.totalValue * 1e18 ).send({from: this.walletAddress})
     .on('transactionHash', (hash) => {
       console.log('Approval Transaction Hash:', hash);
     })
     .then((receipt) => {
-        this.purchaseItem(this.smartObject, this.data.itemId, this.myInput?.nativeElement.value);
+        this.purchaseItem(MaslowPyramidID, this.data.itemId, this.myInput?.nativeElement.value);
     })
     .catch((error) => {
       console.error('Approval Error:', error);
@@ -82,7 +81,7 @@ export class SellableItemComponent {
   {
     console.log("Purchasing item");
     // Get contract.
-    let contract = new this.web3.eth.Contract(VEL_TRADER_ABI, this.worldAddress);
+    let contract = new this.web3.eth.Contract(VEL_TRADER_ABI, WorldAddress);
   
     // Call purchaseItem
     // Player purchases from station
