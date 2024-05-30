@@ -25,7 +25,7 @@ export class BuyableItemComponent {
 
 
   @Input() data: BuyableItem;
-  @ViewChild('sellInput') myInput: ElementRef;
+  @ViewChild('sellInput') sellInput: ElementRef;
   web3: any;
   walletAddress: any;
   
@@ -56,8 +56,8 @@ export class BuyableItemComponent {
   }
 
   get totalValue(): number {
-    if(! this.myInput ) return 0;
-    return this.data ? this.data.price * this.myInput?.nativeElement.value / 1e18: 0;
+    if(! this.sellInput ) return 0;
+    return this.data ? this.data.price * this.sellInput?.nativeElement.value / 1e18: 0;
   }
 
   doBuyItems()
@@ -65,17 +65,8 @@ export class BuyableItemComponent {
     // Purchase items in the abi
     let EVEContract = new this.web3.eth.Contract(ERC20_ABI, this.EVETokenContractAddress);
     console.log("Approving")
-    // Get approve
-    EVEContract.methods.approve(this.velTraderContractAddress, this.totalValue * 1e18 ).send({from: this.walletAddress})
-    .on('transactionHash', (hash) => {
-      console.log('Approval Transaction Hash:', hash);
-    })
-    .then((receipt) => {
-        this.buyItem(this.smartObject, this.data.itemId, this.myInput?.nativeElement.value);
-    })
-    .catch((error) => {
-      console.error('Approval Error:', error);
-    });
+
+    this.buyItem(this.smartObject, this.data.itemId, this.sellInput?.nativeElement.value);
   }
 
   buyItem(smartObject: any, carbOreId: any, quantity: any)
