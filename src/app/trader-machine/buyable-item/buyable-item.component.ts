@@ -1,7 +1,7 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import Web3 from 'web3';
 import { ERC20_ABI } from '../../eve-wallet-service/ABIs/ERC20.abi';
-import { VEL_TRADER_ABI } from '../IItemSeller.abi';
+import { VEL_TRADER_ABI } from '../../eve-wallet-service/ABIs/IItemSeller.abi';
 import { EVETokenContractAddress, MaslowPyramidID, WorldAddress } from '../../eve-wallet-service/eve-wallet-constants';
 
 export interface BuyableItem {

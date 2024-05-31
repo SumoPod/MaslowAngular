@@ -106,6 +106,8 @@ export class EveWalletService {
   }
 
   //-- Chain Operations.
+
+  
   transferGas(gasToTransfer: string /*all decimals*/, toAddress: string, gasLimit: number = 210000): Promise<TransactionReceipt>
   {
     return this.web3.eth.sendTransaction({
@@ -115,9 +117,18 @@ export class EveWalletService {
       gas: gasLimit
     })
   }
-
+  
   // Should find a way for each token. Currently, only EVE.
   // Amount with all decimals.
+  approveEVE( toAddress:string, amount: number)
+  {
+    let tokenContract = new this.web3.eth.Contract(ERC20_ABI, EVETokenContractAddress);
+
+    return tokenContract.methods.approve(toAddress, amount).send(
+      {from: this.activeWallet.address}
+    );
+  }
+
   transferEVE(toAddress: string, amount: number): Promise<TransactionReceipt>
   {
     let tokenContract = new this.web3.eth.Contract(ERC20_ABI, EVETokenContractAddress);
@@ -125,5 +136,17 @@ export class EveWalletService {
     return tokenContract.methods.transfer(toAddress, amount).send(
       {from: this.activeWallet.address}
     );
+  }
+
+  getEVEAllowance(spenderAddress: string)
+  {
+    let tokenContract = new this.web3.eth.Contract(ERC20_ABI, EVETokenContractAddress);
+
+    return tokenContract.methods.allowance(this.activeWallet.address, spenderAddress).call();
+  }
+  // TODO: Remove.
+  getContract(contractABI: any, contractAddress: string)
+  {
+    return new this.web3.eth.Contract(contractABI, contractAddress);
   }
 }

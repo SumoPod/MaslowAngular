@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Web3 } from 'web3';
 import { ERC20_ABI } from '../eve-wallet-service/ABIs/ERC20.abi';
-import { VEL_TRADER_ABI } from './IItemSeller.abi';
+import { VEL_TRADER_ABI } from '../eve-wallet-service/ABIs/IItemSeller.abi';
 import { SellableItem } from './sellable-item/sellable-item.component';
 import { WebSocketMessage } from '../web-socket/web-socket.model';
 import { BuyableItem } from './buyable-item/buyable-item.component';
 import { EphemeralInventory } from '../system-tracker/deployable-data.model';
 import { CarbonaceousOreTypeId, EVETokenContractAddress, MaslowPyramidID, VelTraderContractAddress_v3, WorldAddress, getNameFromID } from '../eve-wallet-service/eve-wallet-constants';
 import { EveWalletService } from '../eve-wallet-service/eve-wallet.service';
+import { MaslowService } from '../eve-wallet-service/maslow.service';
 
 @Component({
   selector: 'app-trader-machine',
@@ -20,12 +21,11 @@ export class TraderMachineComponent implements OnInit{
   buyableItems: BuyableItem[] = [];
  
   ws: WebSocket;
-  walletAddress: string;
   
   numberOfOre: number;
   errorText: any;
 
-  constructor( private wallet: EveWalletService) {
+  constructor( private maslowService: MaslowService) {
   }
 
   ngOnInit(): void
@@ -33,23 +33,11 @@ export class TraderMachineComponent implements OnInit{
     this.getSellingData();
   }
 
-  getWallets() {
-    (window as any).ethereum.request({ method: 'eth_requestAccounts' }).then((accounts: string[]) => {
-      console.log('Wallets:', accounts);
-      this.walletAddress = accounts[0];
-
-
-    }).catch((error: any) => {
-      console.error('Error:', error);
-    });
-  }
-
   getSellingData()
   {
     // Hardcoded values because the contract doesn't support this yet.
     // Get from contract available items and prices
-    let contract = new this.web3.eth.Contract(VEL_TRADER_ABI, WorldAddress);
-    contract.methods.velorumtest7__getItemPriceData(MaslowPyramidID,CarbonaceousOreTypeId).call()
+    this.maslowService.getPriceData(MaslowPyramidID, CarbonaceousOreTypeId)
     .then((data: any) => {
       this.sellableItems.push({
         itemId: CarbonaceousOreTypeId,
@@ -75,7 +63,7 @@ export class TraderMachineComponent implements OnInit{
 
   startWSConnection( deployableId: string) {
     // ws connection using walletAdress and smartDeployable id
-    this.ws = new WebSocket('wss://blockchain-gateway-test.nursery.reitnorf.com/ws/'+ this.walletAddress + '/' + deployableId);
+    this.ws = new WebSocket('wss://blockchain-gateway-test.nursery.reitnorf.com/ws/'+ this.maslowService.wallet.activeWallet.address + '/' + deployableId);
 
     this.ws.onmessage = (event) => {
       this.updateWSocketData(JSON.parse(event.data));
@@ -100,7 +88,7 @@ export class TraderMachineComponent implements OnInit{
     }
 
     // Access player ephemeral inventory
-    let ephemeralInventory:EphemeralInventory = data.smartDeployable.inventory.ephemeralInventoryList.find((element) => element.ownerId == this.walletAddress);
+    let ephemeralInventory:EphemeralInventory = data.smartDeployable.inventory.ephemeralInventoryList.find((element) => element.ownerId == this.maslowService.wallet.activeWallet.address);
 
     // Loop through items.
     if (ephemeralInventory)
@@ -147,10 +135,8 @@ export class TraderMachineComponent implements OnInit{
 
   approveAndPurchase(amount: number /* in EVE */, smartObject: string, carbOreId: string, quantity: number)
   {
-    let EVEContract = new this.web3.eth.Contract(ERC20_ABI, EVETokenContractAddress);
-
-    // Get approve
-    EVEContract.methods.approve(VelTraderContractAddress_v3, 2 * amount * 1e18).send({from: this.walletAddress})
+    // // Get approve
+    this.maslowService.wallet.approveEVE(VelTraderContractAddress_v3, amount * 1e18)
     .on('transactionHash', (hash) => {
       console.log('Approval Transaction Hash:', hash);
     })
@@ -167,8 +153,8 @@ export class TraderMachineComponent implements OnInit{
   }
 
   checkAllowance(walletAddress: string, velTraderContractAddress: string) {
-    let EVEContract = new this.web3.eth.Contract(ERC20_ABI, EVETokenContractAddress);
-    EVEContract.methods.allowance(walletAddress, velTraderContractAddress).call().then((value: any) => {
+    this.maslowService.wallet.getEVEAllowance(VelTraderContractAddress_v3)
+    .then((value: any) => {
       console.log('Allowance:', Number(value)/1e18);
     });
   }
@@ -176,35 +162,17 @@ export class TraderMachineComponent implements OnInit{
   purchaseItem( smartObject: string, carbOreId: string, quantity: number)
   {
     console.log("Purchasing item");
-    // Get contract.
-    let contract = new this.web3.eth.Contract(VEL_TRADER_ABI, WorldAddress);
+    // // Get contract.
+    // let contract = new this.web3.eth.Contract(VEL_TRADER_ABI, WorldAddress);
   
-    // Call purchaseItem
-    contract.methods.velorumtest3__purchaseItem(smartObject, carbOreId, quantity).send({from: this.walletAddress})
-      .on('transactionHash', (hash) => {
-        console.log('Purchase Transaction Hash:', hash);
-      })
-      .then((receipt) => {
-        console.log('Purchase Receipt:', receipt);
-      })
-      .catch((error) => {
-        console.error('Purchase Error:', error);
-      });
-  }
-
-  getPrice()
-  {
-    // Call get price
-    let contract = new this.web3.eth.Contract(VEL_TRADER_ABI, WorldAddress);
-    contract.methods.velorumtest3__getItemPriceData(MaslowPyramidID, CarbonaceousOreTypeId).call()
-    .then((data) => {
-      console.log('Get item data:');
-      console.log(data);
-      this.errorText = "Priced at " + data.price + " EVE tokens.";
+    // // Call purchaseItem
+    // contract.methods.velorumtest3__purchaseItem(smartObject, carbOreId, quantity).send({from: this.walletAddress})
+    this.maslowService.puchaseItem(smartObject, carbOreId, quantity)
+    .then((receipt) => {
+      console.log('Purchase Receipt:', receipt);
     })
     .catch((error) => {
-      console.error(error);
-      // this.errorText = error.message;
+      console.error('Purchase Error:', error);
     });
   }
 }
