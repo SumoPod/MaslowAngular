@@ -31,6 +31,12 @@ export class EveWalletService {
     console.log(this.activeWallet);
   }
 
+  getWalletInfo()
+  {
+    // Return a copy of the active wallet data.
+    return {...this.activeWallet};
+  }
+
   getWallets()
   {
     (window as any).ethereum.request({ method: 'eth_requestAccounts' }).then((accounts: string[]) => {

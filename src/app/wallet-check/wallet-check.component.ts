@@ -1,81 +1,25 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { SmartCharacterInfo } from '../web-socket/web-socket.model';
-import Web3, { Uint256 } from 'web3';
-import { ERC20_ABI } from '../eve-wallet-service/ABIs/ERC20.abi';
-import { EVETokenContractAddress } from '../eve-wallet-service/eve-wallet-constants';
+import { Component } from '@angular/core';
+import { EveWalletService } from '../eve-wallet-service/eve-wallet.service';
+import { EveWalletData } from '../eve-wallet-service/eve-wallet-data.interface';
 
 @Component({
   selector: 'app-wallet-check',
   templateUrl: './wallet-check.component.html',
   styleUrl: './wallet-check.component.css'
 })
-export class WalletCheckComponent implements OnInit{
-  public web3: Web3 = null;
+export class WalletCheckComponent{
   public walletAddress: string;
   public chain: string;
   public username: string;
   public balance: number;
   public eveTokenBalance: number;
 
-  constructor(private http:HttpClient)
+  walletData: EveWalletData;
+
+  constructor(private wallet: EveWalletService){}
+
+  ngOnInit()
   {
-    if (typeof (window as any).ethereum !== 'undefined')
-    {
-      this.web3 = new Web3((window as any).ethereum);
-    }
-  }
-
-  ngOnInit(): void {
-    if ((window as any).ethereum) {
-      console.log('EIP-1193 compatible wallet detected');
-      this.getWallets();
-    } else {
-      console.log('EIP-1193 compatible wallet not found');
-    }
-  }
-
-  getWallets() {
-    (window as any).ethereum.request({ method: 'eth_requestAccounts' }).then((accounts: string[]) => {
-      console.log('Wallets:', accounts);
-      this.walletAddress = accounts[0];
-      this.getCharInfo(this.walletAddress);
-    }).catch((error: any) => {
-      console.error('Error:', error);
-    });
-
-    (window as any).ethereum.request({ method: 'eth_chainId' }).then((chainId: string) => {
-      console.log('Chain ID:', chainId);
-      this.chain = parseInt(chainId,16).toString();
-    }).catch((error: any) => {
-      console.error('Error:', error);
-    });
-  }
-
-  getCharInfo(walletAddress: string) {
-      this.http.get<SmartCharacterInfo>(
-        'https://blockchain-gateway-test.nursery.reitnorf.com/smartcharacters/' + this.walletAddress,
-      ).subscribe((response) => {
-        // Handle the response here
-        this.username = response.name;
-
-        this.getGasBalance(walletAddress);
-        this.getEVETokenBalance(walletAddress);
-    });
-  }
-
-  getGasBalance(walletAddress: string) {
-    this.web3.eth.getBalance(walletAddress).then((value: bigint) => {
-      this.balance = Number(value)/1e18;
-    });
-  }
-
-  getEVETokenBalance(walletAddress: string) {
-    let tokenContract = new this.web3.eth.Contract(ERC20_ABI, EVETokenContractAddress);
-
-    tokenContract.methods.balanceOf(walletAddress).call().then((value: any) => {
-      console.log('EVE Token Balance:', Number(value));
-      this.eveTokenBalance = Number(value)/1e18;
-    });
+    this.walletData = this.wallet.getWalletInfo();  
   }
 }
