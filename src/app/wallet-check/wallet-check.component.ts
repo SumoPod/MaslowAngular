@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { SmartCharacterInfo } from '../web-socket/web-socket.model';
 import Web3, { Uint256 } from 'web3';
-import { ERC20_ABI } from './ERC20.abi';
+import { ERC20_ABI } from '../eve-wallet-service/ABIs/ERC20.abi';
 import { EVETokenContractAddress } from '../eve-wallet-service/eve-wallet-constants';
 
 @Component({

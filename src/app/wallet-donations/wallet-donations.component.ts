@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import Web3 from 'web3';
-import { ERC20_ABI } from '../wallet-check/ERC20.abi';
+import { ERC20_ABI } from '../eve-wallet-service/ABIs/ERC20.abi';
 import { EVETokenContractAddress } from '../eve-wallet-service/eve-wallet-constants';
 
 @Component({

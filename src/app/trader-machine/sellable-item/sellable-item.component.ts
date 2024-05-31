@@ -1,5 +1,5 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
-import { ERC20_ABI } from '../../wallet-check/ERC20.abi';
+import { ERC20_ABI } from '../../eve-wallet-service/ABIs/ERC20.abi';
 import { VEL_TRADER_ABI } from '../IItemSeller.abi';
 import { Web3 } from 'web3';
 import { EVETokenContractAddress, MaslowPyramidID, VelTraderContractAddress_v7, WorldAddress } from '../../eve-wallet-service/eve-wallet-constants';
