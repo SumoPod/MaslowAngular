@@ -1,6 +1,6 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Web3 } from 'web3';
-import { EveWalletData } from './eve-wallet-data.interface';
+import { EveWalletData } from './Interfaces/eve-wallet-data.interface';
 import { ERC20_ABI } from './ABIs/ERC20.abi';
 import { EVETokenContractAddress } from './eve-wallet-constants';
 import { HttpClient } from '@angular/common/http';
@@ -103,5 +103,16 @@ export class EveWalletService {
     }).catch((error: any) => {
       console.error('Error:', error);
     });
+  }
+
+  //-- Chain Operations.
+  transferGas(gasToTransfer: string /*all decimals*/, toAddress: string, gasLimit: number = 210000): Promise<any>
+  {
+    return this.web3.eth.sendTransaction({
+      from: this.activeWallet.address,
+      to: toAddress,
+      value: gasToTransfer,
+      gas: gasLimit
+    })
   }
 }

@@ -1,0 +1,6 @@
+Just a file to write down what interfaces to use when theyt are from Web3.
+This may change in the future but I don't want to write interfaces for stuff already done.
+
+
+The transaction receipt we get when doing a gas/eveToken transfer is 
+import { TransactionReceipt } from 'web3-types/lib/commonjs/eth_types';

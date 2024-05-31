@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { EveWalletService } from '../eve-wallet-service/eve-wallet.service';
-import { EveWalletData } from '../eve-wallet-service/eve-wallet-data.interface';
+import { EveWalletData } from '../eve-wallet-service/Interfaces/eve-wallet-data.interface';
 
 @Component({
   selector: 'app-wallet-check',
