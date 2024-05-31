@@ -7,6 +7,7 @@ import { WebSocketMessage } from '../web-socket/web-socket.model';
 import { BuyableItem } from './buyable-item/buyable-item.component';
 import { EphemeralInventory } from '../system-tracker/deployable-data.model';
 import { CarbonaceousOreTypeId, EVETokenContractAddress, MaslowPyramidID, VelTraderContractAddress_v3, WorldAddress, getNameFromID } from '../eve-wallet-service/eve-wallet-constants';
+import { EveWalletService } from '../eve-wallet-service/eve-wallet.service';
 
 @Component({
   selector: 'app-trader-machine',
@@ -18,28 +19,18 @@ export class TraderMachineComponent implements OnInit{
   sellableItems: SellableItem[] = [];
   buyableItems: BuyableItem[] = [];
  
-  web3: any;
   ws: WebSocket;
   walletAddress: string;
   
   numberOfOre: number;
   errorText: any;
 
-  constructor() {
-    if (typeof (window as any).ethereum !== 'undefined')
-      {
-        this.web3 = new Web3((window as any).ethereum);
-      }
+  constructor( private wallet: EveWalletService) {
   }
 
-  ngOnInit(): void {
-    if ((window as any).ethereum) {
-      console.log('EIP-1193 compatible wallet detected');
-      this.getWallets();
-    } else {
-      console.log('EIP-1193 compatible wallet not found');
-    }
-    this.listenToEvents();
+  ngOnInit(): void
+  {
+    this.getSellingData();
   }
 
   getWallets() {
@@ -47,7 +38,6 @@ export class TraderMachineComponent implements OnInit{
       console.log('Wallets:', accounts);
       this.walletAddress = accounts[0];
 
-      this.getSellingData();
 
     }).catch((error: any) => {
       console.error('Error:', error);
@@ -215,31 +205,6 @@ export class TraderMachineComponent implements OnInit{
     .catch((error) => {
       console.error(error);
       // this.errorText = error.message;
-    });
-  }
-
-  getAddress()
-  {
-    let EVEcontract = new this.web3.eth.Contract(VEL_TRADER_ABI, WorldAddress);
-    // call get adress
-    EVEcontract.methods.velorumtest3__getContractAddress().call()
-    .then((data: string) => {
-      console.log('Get address:');
-      console.log(data);
-    })
-  }
-
-  listenToEvents()
-  {
-    let contract = new this.web3.eth.Contract(VEL_TRADER_ABI, WorldAddress);
-    let subs = contract.events.allEvents();
-    subs.on('data', (event: any) => {
-      console.log('Event data:')
-      console.log(event);
-    });
-    subs.on('error', (error: any) => {
-      console.error('Event Error:')
-      console.error(error);
     });
   }
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Web3 } from 'web3';
+import { TransactionReceipt, Web3 } from 'web3';
 import { EveWalletData } from './Interfaces/eve-wallet-data.interface';
 import { ERC20_ABI } from './ABIs/ERC20.abi';
 import { EVETokenContractAddress } from './eve-wallet-constants';
@@ -106,7 +106,7 @@ export class EveWalletService {
   }
 
   //-- Chain Operations.
-  transferGas(gasToTransfer: string /*all decimals*/, toAddress: string, gasLimit: number = 210000): Promise<any>
+  transferGas(gasToTransfer: string /*all decimals*/, toAddress: string, gasLimit: number = 210000): Promise<TransactionReceipt>
   {
     return this.web3.eth.sendTransaction({
       from: this.activeWallet.address,
@@ -114,5 +114,16 @@ export class EveWalletService {
       value: gasToTransfer,
       gas: gasLimit
     })
+  }
+
+  // Should find a way for each token. Currently, only EVE.
+  // Amount with all decimals.
+  transferEVE(toAddress: string, amount: number): Promise<TransactionReceipt>
+  {
+    let tokenContract = new this.web3.eth.Contract(ERC20_ABI, EVETokenContractAddress);
+
+    return tokenContract.methods.transfer(toAddress, amount).send(
+      {from: this.activeWallet.address}
+    );
   }
 }

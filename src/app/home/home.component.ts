@@ -7,5 +7,5 @@ import { EveWalletService } from '../eve-wallet-service/eve-wallet.service';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-  constructor( eveWallet: EveWalletService ) {}
+  constructor() {}
 }

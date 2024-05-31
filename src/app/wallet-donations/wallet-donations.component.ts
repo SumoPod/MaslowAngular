@@ -45,31 +45,33 @@ export class WalletDonationsComponent implements OnInit{
     .then((receipt: TransactionReceipt) => {
       console.log('Transaction Hash:', receipt.transactionHash);
       this.debugText = 'Complete! Hash: ' + receipt.transactionHash;
+    }).catch((error: any) => {
+      console.error('Error:', error);
+      this.errorText = 'Error: ' + error.error.message;
+    }).finally(() => {
+      console.log('Donation complete');
+      this.finalText = 'Donation complete';
     });
   }
 
-  doDonateEve() {
-    // this.clearDebugUI();
-    // console.log("About to donate  " + this.eveDonationAmount + " EVE tokens to my wallet");
-    // let donationWalletAdress = '0x8eD42C0C5e306ccF5872A19B47eeCA95b9c0c8D0';
-    // this.debugText = 'Donating ' + this.eveDonationAmount + ' EVE tokens to ' + donationWalletAdress;
+  doDonateEve()
+  {
+    this.clearDebugUI();
+    
+    console.log("About to donate  " + this.eveDonationAmount + " EVE tokens to my wallet");
+    let donationWalletAdress = '0x8eD42C0C5e306ccF5872A19B47eeCA95b9c0c8D0';
+    this.debugText = 'Donating ' + this.eveDonationAmount + ' EVE tokens to ' + donationWalletAdress;
 
-    // let tokenContract = new this.web3.eth.Contract(ERC20_ABI, EVETokenContractAddress);
-    // tokenContract.methods.transfer(donationWalletAdress, this.eveDonationAmount*1e18).send(
-    //   {from: this.walletAddress}
-    // ).on('transactionHash', (hash: string) => {
-    //   console.log('Transaction Hash:', hash);
-    //   this.hashText = 'Transaction Hash: ' + hash;
-    // })
-    // .then((receipt: any) => {
-    //   console.log('Transaction Hash:', receipt.transactionHash);
-    //   this.debugText = 'Complete! Hash: ' + receipt.transactionHash;
-    // }).catch((error: any) => {
-    //   console.error('Error:', error);
-    //   this.errorText = 'Error: ' + error.error.message;
-    // }).finally(() => {
-    //   console.log('Donation complete');
-    //   this.finalText = 'Donation complete';
-    // });
+    this.wallet.transferEVE(donationWalletAdress, this.eveDonationAmount*1e18)
+    .then((receipt: TransactionReceipt) => {
+      console.log('Transaction Hash:', receipt.transactionHash);
+      this.debugText = 'Complete! Hash: ' + receipt.transactionHash;
+    }).catch((error: any) => {
+      console.error('Error:', error);
+      this.errorText = 'Error: ' + error.error.message;
+    }).finally(() => {
+      console.log('Donation complete');
+      this.finalText = 'Donation complete';
+    });
   }
 }
