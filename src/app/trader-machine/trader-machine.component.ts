@@ -141,11 +141,8 @@ export class TraderMachineComponent implements OnInit{
       console.log('Approval Transaction Hash:', hash);
     })
     .then((receipt) => {
-      console.log('Approval Receipt:', receipt);
-        this.checkAllowance(this.walletAddress, VelTraderContractAddress_v3);
-      setTimeout(() => {
-        this.purchaseItem(smartObject, carbOreId, quantity);
-      }, 2000);
+      console.log('Approval Receipt:', receipt.transactionHash);
+      this.purchaseItem(smartObject, carbOreId, quantity);
     })
     .catch((error) => {
       console.error('Approval Error:', error);
