@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs';
 import { DetailedDeployableInfo, Inventory } from '../eve-wallet-service/Interfaces/deployable-data.model';
 import { SmartDeployable } from '../eve-wallet-service/Interfaces/smart-deployable.model';
 import { EveApiService } from '../eve-wallet-service/eve-api.service';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatSort, Sort, MatSortModule } from '@angular/material/sort';
 
 export class InfoICareAbout {
   public id: string;
@@ -26,12 +29,15 @@ export class InfoICareAbout {
 @Component({
   selector: 'app-system-tracker',
   templateUrl: './system-tracker.component.html',
-  styleUrl: './system-tracker.component.css'
+  styleUrl: './system-tracker.component.css',
 })
 export class SystemTrackerComponent implements OnInit {
   readonly price:number = 1;
   public systemDeployables: SmartDeployable[] = [];
-  public pData: InfoICareAbout[] = [];
+  pData = new MatTableDataSource<InfoICareAbout>([]);
+  displayedColumns: string[] = ['deployableName', 'ownerName', 'solarSystemName', 'worth'];
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(private eveApi: EveApiService) {}
 
@@ -46,6 +52,11 @@ export class SystemTrackerComponent implements OnInit {
       });
   }
 
+  ngAfterViewInit() {
+    this.pData.paginator = this.paginator;
+    this.pData.sort = this.sort;
+  }
+
   requestSpecificInfo()
   {
     for(let deployable of this.systemDeployables)
@@ -53,8 +64,9 @@ export class SystemTrackerComponent implements OnInit {
         this.eveApi.getSmartDeployableInfo(deployable.id)
         .subscribe((info) => {
           let worth = this.calculateInventoryValue(info.inventory);
-          this.pData.push(new InfoICareAbout(deployable.id, info.name, info.ownerName, info.solarSystem.solarSystemName, worth, info.ownerId));
-          this.sortDeployables();
+          this.pData.data = [...this.pData.data, new InfoICareAbout(deployable.id, info.name, info.ownerName, info.solarSystem.solarSystemName, worth, info.ownerId)];
+          // this.pData.push(new InfoICareAbout(deployable.id, info.name, info.ownerName, info.solarSystem.solarSystemName, worth, info.ownerId));
+          // this.sortDeployables();
         });
     }
   }
@@ -67,22 +79,22 @@ export class SystemTrackerComponent implements OnInit {
     }, 0);
   }
 
-  sortDeployables()
-  {
-    // Sort pdata by worth
-    this.pData.sort((a, b) => {
-      if (a.deployableName.startsWith("Maslow"))
-      {
-        return -1; // "Maslow" comes first
-      }
-      else if (b.deployableName.startsWith("Maslow"))
-      {
-        return 1; // "Maslow" comes first
-      }
-      else
-      {
-        return b.worth - a.worth; // sort by worth
-      }
-    });
-  }
+  // sortDeployables()
+  // {
+  //   // Sort pdata by worth
+  //   this.pData.sort((a, b) => {
+  //     if (a.deployableName.startsWith("Maslow"))
+  //     {
+  //       return -1; // "Maslow" comes first
+  //     }
+  //     else if (b.deployableName.startsWith("Maslow"))
+  //     {
+  //       return 1; // "Maslow" comes first
+  //     }
+  //     else
+  //     {
+  //       return b.worth - a.worth; // sort by worth
+  //     }
+  //   });
+  // }
 }

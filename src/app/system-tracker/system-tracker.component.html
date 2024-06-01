@@ -1,19 +1,49 @@
-<span>Click on a name to receive the live json info.</span>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Owner</th>
-      <th>System</th>
-      <th>Worth</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let item of pData">
-      <td><a [routerLink]="['/depJson', item.id]">{{ item.deployableName }}</a></td>
-      <td><a [routerLink]="['/charJson', item.ownerId]">{{ item.ownerName }}</a></td>
-      <td>{{ item.solarSystemName }}</td>
-      <td>{{ item.worth }}</td>
-    </tr>
-  </tbody>
-</table>
+
+<mat-toolbar>
+  <mat-toolbar-row>
+    <a mat-stroked-button [routerLink]="['/home']" color="accent"><mat-icon>home</mat-icon> Home</a>
+    <h1 class="Title">&nbsp;System Tracker</h1>
+  </mat-toolbar-row>
+</mat-toolbar>
+<h2>Click on a name to receive the live json info</h2>
+<div class="table-wrapper">
+  <table mat-table [dataSource]="pData" matSort >
+    <!-- Name Column -->
+    <ng-container matColumnDef="deployableName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Deployable </th>
+      <td mat-cell *matCellDef="let element">
+        <a [routerLink]="['/depJson', element.id]">{{ element.deployableName }}</a>
+      </td>
+    </ng-container>
+
+    <!-- Owner Column -->
+    <ng-container matColumnDef="ownerName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Owner </th>
+      <td mat-cell *matCellDef="let element">
+        <a [routerLink]="['/charJson', element.ownerId]">{{ element.ownerName }}</a>
+      </td>
+    </ng-container>
+
+    <!-- System Column -->
+    <ng-container matColumnDef="solarSystemName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> System </th>
+      <td mat-cell *matCellDef="let element"> {{element.solarSystemName}} </td>
+    </ng-container>
+
+    <!-- Worth Column -->
+    <ng-container matColumnDef="worth">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Worth </th>
+      <td mat-cell *matCellDef="let element"> {{element.worth}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[10, 20, 50]"
+    showFirstLastButtons
+    aria-label="Select page of deployables">
+  </mat-paginator>
+</div>
+<footer>
+  <p>Developed by Maslow Team. Sumo Podenco v10.0</p>
+</footer>

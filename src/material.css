@@ -1,0 +1,75 @@
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+.table-wrapper {
+  margin: 0 2em;
+  position: relative;
+
+  a {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    @apply text-brightquantum;
+  }
+
+  img {
+    width: 60px;
+    height: 60px;
+    margin: .5em;
+  }
+
+  mat-progress-bar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+  }
+}
+
+h2 {
+  margin: 1em 2em;
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  margin: 1em 0;
+}
+
+mat-toolbar {
+  .Title {
+    padding: 0;
+  }
+  em {
+    font-size: smaller;
+    color: darkgray;
+  }
+
+  [mat-stroked-button] + .Title {
+    margin-left: 1em;
+  }
+}
+
+mat-grid-list {
+  height: 100vh;
+  margin: 0 2em;
+  mat-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    mat-card-header {
+      flex: none;
+      font-weight: bold;
+      font-size: larger;
+      line-height: 1.5;
+    }
+    mat-card-content {
+      flex: 1 1 auto;
+    }
+    mat-card-actions {
+      flex: none;
+      justify-content: flex-end;
+    }
+  }
+}

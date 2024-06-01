@@ -1,6 +1,41 @@
-<span>Click on a name to receive the live json info.</span><br>
-<ul class="column-list">
-  <li *ngFor="let item of shownData">
-    {{ item.worth | number:'1.0-2' }} - <a [routerLink]="['/charJson', item.id]">{{ item.name }}</a>
-  </li>
-</ul>
+<mat-toolbar>
+  <mat-toolbar-row>
+    <a mat-stroked-button [routerLink]="['/home']" color="accent"><mat-icon>home</mat-icon> Home</a>
+    <h1 class="Title">&nbsp;Rich People List</h1>
+  </mat-toolbar-row>
+</mat-toolbar>
+<h2>Click on a name to receive the live json info</h2>
+<div class="table-wrapper">
+  <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+  <table mat-table [dataSource]="shownData" matSort>
+    <!-- Worth Column -->
+    <ng-container matColumnDef="image">
+      <th mat-header-cell *matHeaderCellDef> &nbsp; </th>
+      <td mat-cell *matCellDef="let element"><img [src]="element.image" /></td>
+    </ng-container>
+
+    <!-- Worth Column -->
+    <ng-container matColumnDef="worth">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Worth </th>
+      <td mat-cell *matCellDef="let element"> {{element.worth | number:'1.0-2'}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+      <td mat-cell *matCellDef="let element">
+        <a [routerLink]="['/charJson', element.id]">{{ element.name }}</a>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[10, 20, 50]"
+    showFirstLastButtons
+    aria-label="Select page of deployables">
+  </mat-paginator>
+</div>
+<footer>
+  <p>Developed by Maslow Team. Sumo Podenco v10.0</p>
+</footer>
