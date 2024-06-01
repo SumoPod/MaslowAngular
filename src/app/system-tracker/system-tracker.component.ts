@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs';
-import { DetailedDeployableInfo, Inventory } from './deployable-data.model';
+import { DetailedDeployableInfo, Inventory } from '../eve-wallet-service/Interfaces/deployable-data.model';
 import { SmartDeployable } from '../eve-wallet-service/Interfaces/smart-deployable.model';
 
 export class InfoICareAbout {

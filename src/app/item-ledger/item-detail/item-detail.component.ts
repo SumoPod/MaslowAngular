@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { ItemData, ItemDetailedData } from '../item-data.model';
-import { HttpClient } from '@angular/common/http';
+import { ItemData } from '../../eve-wallet-service/Interfaces/item-data.model';
+import { EveApiService } from '../../eve-wallet-service/eve-api.service';
 
 @Component({
   selector: 'app-item-detail',
@@ -15,18 +15,16 @@ export class ItemDetailComponent {
   text:string;
   imgSrc:string;
 
-  constructor( private http: HttpClient) { }
+  constructor( private eveApi: EveApiService) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void
+  {
     this.topText = this.data.key;
     this.text = this.data.itemData.name;
 
-    this.imgSrc = this.data.itemData.image;
-    // let keys = Object.keys(this.data)
-    // console.log( this.data.key )
-    this.http.get<ItemDetailedData>('https://blockchain-gateway-test.nursery.reitnorf.com/types/'+this.data.key).subscribe((response) => {
+    this.eveApi.getItem( this.data.key )
+    .subscribe((response) => {
       this.imgSrc = response.metadata.image;
-      console.log("Src: " + this.imgSrc)
     });
   }
 }

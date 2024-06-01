@@ -1,6 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { DetailedDeployableInfo, Inventory } from '../system-tracker/deployable-data.model';
+import { Inventory } from '../eve-wallet-service/Interfaces/deployable-data.model';
 import { map } from 'rxjs';
 import { SmartDeployable } from '../eve-wallet-service/Interfaces/smart-deployable.model';
 import { InfoICareAbout } from '../system-tracker/system-tracker.component';

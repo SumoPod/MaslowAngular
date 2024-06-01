@@ -5,7 +5,7 @@ import { VEL_TRADER_ABI } from '../eve-wallet-service/ABIs/IItemSeller.abi';
 import { SellableItem } from './sellable-item/sellable-item.component';
 import { WebSocketMessage } from '../web-socket/web-socket.model';
 import { BuyableItem } from './buyable-item/buyable-item.component';
-import { EphemeralInventory } from '../system-tracker/deployable-data.model';
+import { EphemeralInventory } from '../eve-wallet-service/Interfaces/deployable-data.model';
 import { CarbonaceousOreTypeId, EVETokenContractAddress, MaslowPyramidID, VelTraderContractAddress_v3, WorldAddress, getNameFromID } from '../eve-wallet-service/eve-wallet-constants';
 import { EveWalletService } from '../eve-wallet-service/eve-wallet.service';
 import { MaslowService } from '../eve-wallet-service/maslow.service';

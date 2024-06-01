@@ -1,13 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { SmartCharacterInfo } from '../web-socket/web-socket.model';
+import { User } from '../eve-wallet-service/Interfaces/user.model';
 
-export interface User {
-  address: string;
-  id: number;
-  name: string;
-  image: string;
-}
+
 
 export interface ShownData {
   name: string;

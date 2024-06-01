@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { User, ShownData } from '../user-ranking/user-ranking.component';
 import { SmartCharacterInfo } from '../web-socket/web-socket.model';
+import { EveApiService } from '../eve-wallet-service/eve-api.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-ranking-csv',
@@ -18,17 +19,18 @@ export class RankingCsvComponent  implements OnInit{
 
   ranking: { name: string; worth: string; }[] = [];
 
-  constructor( private http: HttpClient)
+  constructor( private eveApi: EveApiService)
   {
   }
 
   ngOnInit(): void {
-    this.http.get<User[]>('https://blockchain-gateway-test.nursery.reitnorf.com/smartcharacters')
+    this.eveApi.getSmartCharacters()
     .subscribe((users) => {
       let i = 0;
       let batchSize = 25;
 
-      while (i < users.length) {
+      while (i < users.length)
+      {
         let batch = users.slice(i, i + batchSize);
         this.dataTimeouts.push( setTimeout(() => {
             batch.forEach(element => {
@@ -48,15 +50,15 @@ export class RankingCsvComponent  implements OnInit{
   }
 
   getUserData(user: User) {
-    this.http.get<SmartCharacterInfo>('https://blockchain-gateway-test.nursery.reitnorf.com/smartcharacters/' + user.address)
-    .subscribe((userData) => {
-      let data: ShownData = {
-        name: userData.name,
-        id: userData.address,
-        worth: Number(userData.eveBalanceWei) / 1e18
-      };
-      //Name,Worth
-      this.ranking.push({ name: data.name, worth: data.worth.toString() });
-    });
+    this.eveApi.getSmartCharacter(user.address)
+      .pipe(
+        map(userData => ({
+          name: userData.name,
+          worth: (Number(userData.eveBalanceWei) / 1e18).toString()
+        }))
+      )
+      .subscribe(data => {
+        this.ranking.push(data);
+      });
   }
 }
