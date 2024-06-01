@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { WebSocketMessage } from '../web-socket/web-socket.model';
+import { WebSocketMessage } from '../eve-wallet-service/Interfaces/web-socket.model';
 
 @Component({
   selector: 'app-user-json',

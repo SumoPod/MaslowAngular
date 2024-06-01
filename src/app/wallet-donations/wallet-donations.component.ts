@@ -59,7 +59,7 @@ export class WalletDonationsComponent implements OnInit{
     this.clearDebugUI();
     
     console.log("About to donate  " + this.eveDonationAmount + " EVE tokens to my wallet");
-    let donationWalletAdress = '0x8eD42C0C5e306ccF5872A19B47eeCA95b9c0c8D0';
+    let donationWalletAdress = '0x51Dc9419BdC4fD0220e496149CAe464c597E9f35';
     this.debugText = 'Donating ' + this.eveDonationAmount + ' EVE tokens to ' + donationWalletAdress;
 
     this.wallet.transferEVE(donationWalletAdress, this.eveDonationAmount*1e18)

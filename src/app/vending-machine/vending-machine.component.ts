@@ -3,6 +3,8 @@ import { Web3 } from 'web3';
 import { VEL_VENDING_MACHINE_ABI } from './VelVendingMachine.abi';
 import { CarbonaceousOreTypeId, CommonOreTypeId, MaslowPyramidID, WorldAddress } from '../eve-wallet-service/eve-wallet-constants';
 
+// This was used to test some security stuff so I don't really want to maintain it.
+
 @Component({
   selector: 'app-vending-machine',
   templateUrl: './vending-machine.component.html',

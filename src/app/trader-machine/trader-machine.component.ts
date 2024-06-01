@@ -3,7 +3,7 @@ import { Web3 } from 'web3';
 import { ERC20_ABI } from '../eve-wallet-service/ABIs/ERC20.abi';
 import { VEL_TRADER_ABI } from '../eve-wallet-service/ABIs/IItemSeller.abi';
 import { SellableItem } from './sellable-item/sellable-item.component';
-import { WebSocketMessage } from '../web-socket/web-socket.model';
+import { WebSocketMessage } from '../eve-wallet-service/Interfaces/web-socket.model';
 import { BuyableItem } from './buyable-item/buyable-item.component';
 import { EphemeralInventory } from '../eve-wallet-service/Interfaces/deployable-data.model';
 import { CarbonaceousOreTypeId, EVETokenContractAddress, MaslowPyramidID, VelTraderContractAddress_v3, WorldAddress, getNameFromID } from '../eve-wallet-service/eve-wallet-constants';

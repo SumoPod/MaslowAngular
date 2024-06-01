@@ -4,7 +4,7 @@ import { EveWalletData } from './Interfaces/eve-wallet-data.interface';
 import { ERC20_ABI } from './ABIs/ERC20.abi';
 import { EVETokenContractAddress } from './eve-wallet-constants';
 import { HttpClient } from '@angular/common/http';
-import { SmartCharacterInfo } from '../web-socket/web-socket.model';
+import { SmartCharacterInfo } from './Interfaces/web-socket.model';
 
 @Injectable({
   providedIn: 'root'

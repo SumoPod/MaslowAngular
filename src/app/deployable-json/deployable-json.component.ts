@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { WebSocketMessage } from '../web-socket/web-socket.model';
+import { WebSocketMessage } from '../eve-wallet-service/Interfaces/web-socket.model';
 import { EveApiService } from '../eve-wallet-service/eve-api.service';
 
 @Component({

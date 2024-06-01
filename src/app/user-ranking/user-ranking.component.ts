@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { SmartCharacterInfo } from '../web-socket/web-socket.model';
+import { SmartCharacterInfo } from '../eve-wallet-service/Interfaces/web-socket.model';
 import { User } from '../eve-wallet-service/Interfaces/user.model';
 
 
