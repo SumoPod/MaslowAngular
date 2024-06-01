@@ -86,5 +86,4 @@ export class UserRankingComponent implements OnInit{
       return b.worth - a.worth;
     });
   }
-
 }

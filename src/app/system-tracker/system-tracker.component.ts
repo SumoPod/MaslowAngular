@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs';
 import { DetailedDeployableInfo, Inventory } from '../eve-wallet-service/Interfaces/deployable-data.model';
 import { SmartDeployable } from '../eve-wallet-service/Interfaces/smart-deployable.model';
+import { EveApiService } from '../eve-wallet-service/eve-api.service';
 
 export class InfoICareAbout {
   public id: string;
@@ -28,37 +29,28 @@ export class InfoICareAbout {
   styleUrl: './system-tracker.component.css'
 })
 export class SystemTrackerComponent implements OnInit {
-
-
   readonly price:number = 1;
   public systemDeployables: SmartDeployable[] = [];
-
   public pData: InfoICareAbout[] = [];
 
-  constructor(private http: HttpClient) {
-
-   }
+  constructor(private eveApi: EveApiService) {}
 
   ngOnInit() {
-    this.http
-          .get<SmartDeployable[]>(
-            'https://blockchain-gateway-test.nursery.reitnorf.com/smartdeployables',
-          )
-          .pipe(
-            map((deployables) => deployables.filter((deployable) => deployable.isOnline))
-          )
-          .subscribe((deployables) => {
-            this.systemDeployables = deployables;
-            this.requestSpecificInfo();
-          });
+    this.eveApi.getSmartDeployables()
+      .pipe(
+        map((deployables) => deployables.filter((deployable) => deployable.isOnline))
+      )
+      .subscribe((deployables) => {
+        this.systemDeployables = deployables;
+        this.requestSpecificInfo();
+      });
   }
 
-  requestSpecificInfo() {
-    for(let deployable of this.systemDeployables) {
-      this.http
-        .get<DetailedDeployableInfo>(
-          'https://blockchain-gateway-test.nursery.reitnorf.com/smartdeployables/'+deployable.id,
-        )
+  requestSpecificInfo()
+  {
+    for(let deployable of this.systemDeployables)
+      {
+        this.eveApi.getSmartDeployableInfo(deployable.id)
         .subscribe((info) => {
           let worth = this.calculateInventoryValue(info.inventory);
           this.pData.push(new InfoICareAbout(deployable.id, info.name, info.ownerName, info.solarSystem.solarSystemName, worth, info.ownerId));
@@ -67,15 +59,17 @@ export class SystemTrackerComponent implements OnInit {
     }
   }
 
-  calculateInventoryValue(inventory: Inventory) {
-      return inventory.storageItems.reduce((acc, item) => {
-        return acc + (item.quantity * this.price);
-      }, 0);
+  calculateInventoryValue(inventory: Inventory)
+  {
+    // Each item is worth 1 because there's no way to know prices.
+    return inventory.storageItems.reduce((acc, item) => {
+      return acc + (item.quantity * this.price);
+    }, 0);
   }
 
   sortDeployables()
   {
-    // sort pdata by worth
+    // Sort pdata by worth
     this.pData.sort((a, b) => {
       if (a.deployableName.startsWith("Maslow"))
       {
@@ -83,7 +77,7 @@ export class SystemTrackerComponent implements OnInit {
       }
       else if (b.deployableName.startsWith("Maslow"))
       {
-        return 1; // "Maslow" comes second
+        return 1; // "Maslow" comes first
       }
       else
       {

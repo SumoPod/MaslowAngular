@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { User, ShownData } from '../user-ranking/user-ranking.component';
-import { SmartCharacterInfo } from '../web-socket/web-socket.model';
 import { EveApiService } from '../eve-wallet-service/eve-api.service';
 import { map } from 'rxjs/operators';
+import { User } from '../eve-wallet-service/Interfaces/user.model';
 
 @Component({
   selector: 'app-ranking-csv',
