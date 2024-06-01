@@ -9,6 +9,7 @@ import { EphemeralInventory } from '../eve-wallet-service/Interfaces/deployable-
 import { CarbonaceousOreTypeId, EVETokenContractAddress, MaslowPyramidID, VelTraderContractAddress_v3, WorldAddress, getNameFromID } from '../eve-wallet-service/eve-wallet-constants';
 import { EveWalletService } from '../eve-wallet-service/eve-wallet.service';
 import { MaslowService } from '../eve-wallet-service/maslow.service';
+import { EveApiService } from '../eve-wallet-service/eve-api.service';
 
 @Component({
   selector: 'app-trader-machine',
@@ -25,7 +26,7 @@ export class TraderMachineComponent implements OnInit{
   numberOfOre: number;
   errorText: any;
 
-  constructor( private maslowService: MaslowService) {
+  constructor( private maslowService: MaslowService, private eveApi: EveApiService) {
   }
 
   ngOnInit(): void
@@ -55,15 +56,15 @@ export class TraderMachineComponent implements OnInit{
       });
 
       // Start ws connection
-      this.startWSConnection( MaslowPyramidID );
+      this.startWSConnection();
     }).catch((error: any) => {
       console.error(error);
     });
   }
 
-  startWSConnection( deployableId: string) {
-    // ws connection using walletAdress and smartDeployable id
-    this.ws = new WebSocket('wss://blockchain-gateway-test.nursery.reitnorf.com/ws/'+ this.maslowService.wallet.activeWallet.address + '/' + deployableId);
+  startWSConnection()
+  {
+    this.ws = this.eveApi.getUserDeployableWS(this.maslowService.wallet.activeWallet.address, MaslowPyramidID);
 
     this.ws.onmessage = (event) => {
       this.updateWSocketData(JSON.parse(event.data));
@@ -107,7 +108,8 @@ export class TraderMachineComponent implements OnInit{
     }
   }
 
-  purchaseCarbOre() {
+  purchaseCarbOre()
+  {
     // Quantity
     let quantity = 1;
     // Price
@@ -127,6 +129,7 @@ export class TraderMachineComponent implements OnInit{
     })
     .then((receipt) => {
       console.log('Approval Receipt:', receipt.transactionHash);
+      // Then buy.
       this.purchaseItem(smartObject, carbOreId, quantity);
     })
     .catch((error) => {
@@ -134,7 +137,8 @@ export class TraderMachineComponent implements OnInit{
     });
   }
 
-  checkAllowance(walletAddress: string, velTraderContractAddress: string) {
+  checkAllowance()
+  {
     this.maslowService.wallet.getEVEAllowance(VelTraderContractAddress_v3)
     .then((value: any) => {
       console.log('Allowance:', Number(value)/1e18);
@@ -143,12 +147,6 @@ export class TraderMachineComponent implements OnInit{
   
   purchaseItem( smartObject: string, carbOreId: string, quantity: number)
   {
-    console.log("Purchasing item");
-    // // Get contract.
-    // let contract = new this.web3.eth.Contract(VEL_TRADER_ABI, WorldAddress);
-  
-    // // Call purchaseItem
-    // contract.methods.velorumtest3__purchaseItem(smartObject, carbOreId, quantity).send({from: this.walletAddress})
     this.maslowService.purchaseItem(smartObject, carbOreId, quantity)
     .then((receipt) => {
       console.log('Purchase Receipt:', receipt);
