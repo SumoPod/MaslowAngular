@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs';
 import { DetailedDeployableInfo, Inventory } from './deployable-data.model';
-import { SmartDeployable } from './smart-deployable.model';
+import { SmartDeployable } from '../eve-wallet-service/Interfaces/smart-deployable.model';
 
 export class InfoICareAbout {
   public id: string;

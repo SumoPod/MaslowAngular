@@ -1,5 +1,5 @@
 import { DetailedDeployableInfo } from "../system-tracker/deployable-data.model";
-import { SmartDeployable } from "../system-tracker/smart-deployable.model";
+import { SmartDeployable } from "../eve-wallet-service/Interfaces/smart-deployable.model";
 
 export interface SmartCharacterInfo {
   address: string;
