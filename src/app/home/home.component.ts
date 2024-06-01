@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { EveWalletService } from '../eve-wallet-service/eve-wallet.service';
 
 @Component({
   selector: 'app-home',
