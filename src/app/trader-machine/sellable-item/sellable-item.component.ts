@@ -7,6 +7,7 @@ import { MaslowService } from '../../eve-wallet-service/maslow.service';
 
 export interface SellableItem {
   itemId: string; // BlockChain Id
+  typeId: string; // Eve Online Id
   name: string;
   price: number; // with all decimals
   quantity: number; // How many in station inventory to be bought by player
@@ -18,10 +19,6 @@ export interface SellableItem {
   styleUrl: './sellable-item.component.css'
 })
 export class SellableItemComponent {
-
-  // readonly svelTraderContractAddress = '0x113BD5002A8b24d7113dB3E721cae943524ea43b';
-  // readonly  EVETokenContractAddress = '0xec79573FAC3b9C103819beBBD00143dfD67059DA';
-
   @Input() data: SellableItem;
   @ViewChild('buyInput') myInput: ElementRef;
   
