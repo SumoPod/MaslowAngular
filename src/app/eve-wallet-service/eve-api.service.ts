@@ -23,4 +23,8 @@ export class EveApiService {
     return this.http.get<DetailedDeployableInfo>('https://blockchain-gateway-test.nursery.reitnorf.com/smartdeployables/' + id);
   }
 
+  getDeployableWS( id: string ): WebSocket
+  {
+      return new WebSocket('wss://blockchain-gateway-test.nursery.reitnorf.com/ws/0/'+ id );
+  }
 }
