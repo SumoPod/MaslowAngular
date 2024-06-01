@@ -18,10 +18,17 @@ export class MaslowService {
     return contract.methods.velorumtest7__getItemPriceData(stationID,typeID).call();
   }
 
-  puchaseItem( stationID: string, typeID: string, quantity: number ): Promise<TransactionReceipt>
+  purchaseItem( stationID: string, typeID: string, quantity: number ): Promise<TransactionReceipt>
   {
     let contract = this.wallet.getContract( VEL_TRADER_ABI, WorldAddress );
     
     return contract.methods.velorumtest7__purchaseItem(stationID,typeID,quantity).send({from: this.wallet.activeWallet.address});
+  }
+
+  sellItem( stationID: string, typeID: string, quantity: number ): Promise<TransactionReceipt>
+  {
+    let contract = this.wallet.getContract( VEL_TRADER_ABI, WorldAddress );
+    
+    return contract.methods.velorumtest7__sellItem(stationID,typeID,quantity).send({from: this.wallet.activeWallet.address});
   }
 }

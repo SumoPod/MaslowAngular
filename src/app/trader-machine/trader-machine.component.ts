@@ -72,8 +72,6 @@ export class TraderMachineComponent implements OnInit{
 
   updateWSocketData(data: WebSocketMessage)
   {
-    console.log('WSocket data:');
-    console.log(data);
     // Access smartdeployable inventory
     let inventory = data.smartDeployable.inventory.storageItems;
 
@@ -93,32 +91,19 @@ export class TraderMachineComponent implements OnInit{
     // Loop through items.
     if (ephemeralInventory)
     {
-      console.log('Ephemeral inventory of ' + ephemeralInventory.ownerName + ' found');
       let ephemeralItems = ephemeralInventory.ephemeralInventoryItems;
 
       for (let i = 0; i < ephemeralItems.length; ++i)
       {
         let ephemeralItem = ephemeralItems[i];
-        
-        console.log('idId: ' + ephemeralItem.itemId);
         // Find the item in the inventory with the same id
         let sellableItem = this.sellableItems.find((element) => element.itemId == ephemeralItem.itemId);
 
         if (sellableItem)
         {
-          console.log('Updating buyable item quantity' + ephemeralItem.quantity);
           sellableItem.quantity = ephemeralItem.quantity;
         }
-        else
-        {
-          console.log('Item not found in buyable items');
-        }
       }
-      console.log("end of loop")
-    }
-    else
-    {
-      console.log('Ephemeral inventory not found');
     }
   }
 
@@ -164,7 +149,7 @@ export class TraderMachineComponent implements OnInit{
   
     // // Call purchaseItem
     // contract.methods.velorumtest3__purchaseItem(smartObject, carbOreId, quantity).send({from: this.walletAddress})
-    this.maslowService.puchaseItem(smartObject, carbOreId, quantity)
+    this.maslowService.purchaseItem(smartObject, carbOreId, quantity)
     .then((receipt) => {
       console.log('Purchase Receipt:', receipt);
     })
