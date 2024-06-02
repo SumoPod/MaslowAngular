@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SmartCharacterInfo } from '../eve-wallet-service/Interfaces/web-socket.model';
 import { User } from '../eve-wallet-service/Interfaces/user.model';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatSort, Sort, MatSortModule } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
 
 export interface ShownData {
   name: string;
@@ -43,9 +43,8 @@ export class UserRankingComponent implements OnInit{
       let i = 0;
       let batchSize = 25;
 
-      // this.startSorting();
-
-      while (i < users.length) {
+      while (i < users.length)
+      {
         let batch = users.slice(i, i + batchSize);
         this.dataTimeouts.push( setTimeout(() => {
             batch.forEach(element => {
@@ -77,27 +76,6 @@ export class UserRankingComponent implements OnInit{
         image: userData.image
       };
       this.shownData.data = [...this.shownData.data, data];
-      // this.shownData.push(data);
     });
   }
-
-  // startSorting()
-  // {
-  //   let prevAmount = 0;
-  //   this.sortTimeout = setInterval(() => {
-  //     this.sortData();
-  //     if(prevAmount == this.shownData.length)
-  //     {
-  //       clearInterval(this.sortTimeout);
-  //     }
-  //     prevAmount = this.shownData.length;
-  //   }, 1500);
-  // }
-
-  // sortData() {
-  //   console.log('Sorting data');
-  //   this.shownData.sort((a, b) => {
-  //     return b.worth - a.worth;
-  //   });
-  // }
 }

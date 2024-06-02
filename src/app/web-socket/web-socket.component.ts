@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EveApiService } from '../eve-wallet-service/eve-api.service';
 
@@ -7,7 +7,7 @@ import { EveApiService } from '../eve-wallet-service/eve-api.service';
   templateUrl: './web-socket.component.html',
   styleUrls: ['./web-socket.component.css']
 })
-export class WebSocketComponent implements OnInit {
+export class WebSocketComponent implements OnInit, OnDestroy {
   charId: string;
   deployableId: string;
   ws: WebSocket;
@@ -37,5 +37,9 @@ export class WebSocketComponent implements OnInit {
     this.ws.onclose = (event) => {
       console.log('WebSocket is closed now.');
     };
+  }
+
+  ngOnDestroy(): void {
+    this.ws.close();
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { SellableItem } from './sellable-item/sellable-item.component';
 import { WebSocketMessage } from '../eve-wallet-service/Interfaces/web-socket.model';
 import { BuyableItem } from './buyable-item/buyable-item.component';
@@ -12,7 +12,7 @@ import { EveApiService } from '../eve-wallet-service/eve-api.service';
   templateUrl: './trader-machine.component.html',
   styleUrl: './trader-machine.component.css'
 })
-export class TraderMachineComponent implements OnInit{
+export class TraderMachineComponent implements OnInit, OnDestroy{
 
   sellableItems: SellableItem[] = [];
   buyableItems: BuyableItem[] = [];
@@ -28,6 +28,10 @@ export class TraderMachineComponent implements OnInit{
   ngOnInit(): void
   {
     this.getSellingData();
+  }
+
+  ngOnDestroy(): void {
+    this.ws.close();
   }
 
   getSellingData()
