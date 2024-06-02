@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-home',
@@ -7,14 +7,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit{
   brightQuantumColor = 'hsla(26, 85%, 58%, 1)';
-  text: string = "";
   constructor() {}
 
-  ngOnInit() {
+  ngOnInit()
+  {
     console.log('Home Component Initialized');
-    window.addEventListener("eip6963:announceProvider", (event: any) => {
-      console.log("EIP6963 Provider Announced");
-      this.text = JSON.stringify( this.text )
-    });
+    // window.dispatchEvent(new Event("eip6963:requestProvider"));
   }
+  
+  // @HostListener('window:eip6963:announceProvider', ['$event'])
+  // onProviderAnnounced(event: any) {
+  //   console.log("EIP6963 Provider Announced");
+  //   console.log(event);
+  //   this.text = JSON.stringify( event.detail.info);
+  // }
 }
