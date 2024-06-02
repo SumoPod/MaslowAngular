@@ -1,4 +1,6 @@
-/*
+@tailwind base;
+@tailwind components;
+@tailwind utilities;/*
 ! tailwindcss v3.4.3 | MIT License | https://tailwindcss.com
 *//*
 1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
@@ -255,7 +257,16 @@ video {
   height: auto;
 }/* Make elements with the HTML hidden attribute stay hidden by default */[hidden] {
   display: none;
-}*, ::before, ::after {
+}svg{
+  fill: inherit;
+  color: inherit;
+}button{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}*, ::before, ::after{
   --tw-border-spacing-x: 0;
   --tw-border-spacing-y: 0;
   --tw-translate-x: 0;
@@ -307,7 +318,7 @@ video {
   --tw-contain-layout:  ;
   --tw-contain-paint:  ;
   --tw-contain-style:  ;
-}::backdrop {
+}::backdrop{
   --tw-border-spacing-x: 0;
   --tw-border-spacing-y: 0;
   --tw-translate-x: 0;
@@ -359,25 +370,128 @@ video {
   --tw-contain-layout:  ;
   --tw-contain-paint:  ;
   --tw-contain-style:  ;
-}.container {
+}
+.container{
   width: 100%;
-}@media (min-width: 640px) {.container {
+}
+@media (min-width: 640px){.container{
     max-width: 640px;
   }
-}@media (min-width: 768px) {.container {
+}
+@media (min-width: 768px){.container{
     max-width: 768px;
   }
-}@media (min-width: 1024px) {.container {
+}
+@media (min-width: 1024px){.container{
     max-width: 1024px;
   }
-}@media (min-width: 1280px) {.container {
+}
+@media (min-width: 1280px){.container{
     max-width: 1280px;
   }
-}@media (min-width: 1536px) {.container {
+}
+@media (min-width: 1536px){.container{
     max-width: 1536px;
   }
-}.table {
+}
+button.active{
+  background-color: crude;
+  text-transform: uppercase;
+}
+a{
+  letter-spacing: 0.05em;
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+a.active,
+  a::hover{
+  text-decoration-line: underline;
+}
+.table{
   display: table;
-}.filter {
+}
+.filter{
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
+.active{
+  font-weight: 700;
+  text-decoration-line: underline;
+}
+.Title{
+  padding: 0.5rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+#header div{
+  display: flex;
+  gap: 0.5rem;
+  white-space: nowrap;
+  border-width: 1px;
+  border-color: brightquantum;
+  padding: 0.43rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  line-height: 1rem;
+  letter-spacing: 0.025em;
+  color: brightquantum;
+}
+@media (min-width: 640px){#header div{
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 0; /* Remove scrollbar space */
+  background: transparent; /* Optional: just make scrollbar invisible */
+  border: 1px solid hsla(26, 85%, 58%, 1);
+}
+::-webkit-scrollbar-thumb {
+  background: hsla(26, 85%, 58%, 1);
+  padding: 1px;
+}
+
+*::focus,
+*::focus-visible {
+  outline: none !important;
+}
+
+.animated-box {
+  animation: colorChange 3s infinite;
+  animation-timing-function: steps(1, end);
+}
+
+@keyframes colorChange {
+  0% {
+    background-color: hsla(26, 85%, 58%, 0.5);
+  }
+  80% {
+    background-color: hsla(26, 85%, 58%, 1);
+  }
+}
+
+body {
+  margin: 0;
+  font-family: "Sometype Mono", Roboto, "Helvetica Neue", sans-serif;
+  font-size: 16px;
+  color: hsla(26, 85%, 58%, 1);
+  background-color: hsla(20, 65%, 5%, 1);
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+mat-toolbar p {
+  margin: 0;
+  font-size: smaller;
+  color: darkgray;
+}@use '@angular/material' as mat;
+
+@include mat.core();

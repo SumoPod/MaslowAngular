@@ -8,6 +8,18 @@ import { DeployableJsonComponent } from './deployable-json/deployable-json.compo
 import { UserJsonComponent } from './user-json/user-json.component';
 import { HomeComponent } from './home/home.component';
 import { HttpClientModule } from '@angular/common/http';
+/** Angular Material */
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatRippleModule } from '@angular/material/core';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatSort, Sort, MatSortModule } from '@angular/material/sort';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+/** App components */
 import { WebSocketComponent } from './web-socket/web-socket.component';
 import { ItemLedgerComponent } from './item-ledger/item-ledger.component';
 import { ItemDetailComponent } from './item-ledger/item-detail/item-detail.component';
@@ -21,6 +33,9 @@ import { DeployableCsvComponent } from './deployable-csv/deployable-csv.componen
 import { TraderMachineComponent } from './trader-machine/trader-machine.component';
 import { SellableItemComponent } from './trader-machine/sellable-item/sellable-item.component';
 import { BuyableItemComponent } from './trader-machine/buyable-item/buyable-item.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -46,9 +61,25 @@ import { BuyableItemComponent } from './trader-machine/buyable-item/buyable-item
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    MatSlideToggleModule,
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule,
+    MatGridListModule,
+    MatRippleModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatPaginator,
+    MatSort,
+    MatSortModule,
+    MatProgressBarModule,
   ],
-  providers: [],
+  providers: [
+    provideAnimationsAsync()
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

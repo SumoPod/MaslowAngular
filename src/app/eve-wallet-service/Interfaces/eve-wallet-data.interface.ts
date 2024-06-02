@@ -2,6 +2,7 @@ export class EveWalletData {
   address: string;
   username: string;
   chain: string;
+  image: string;
   // -- Tokens are stored with all decimals.
   gasBalance: number;
   // This should be array because there is lots of token.
@@ -14,5 +15,6 @@ export class EveWalletData {
     this.username = null;
     this.gasBalance = null;
     this.eveTokenBalance = null;
+    this.image = null;
   }
 }

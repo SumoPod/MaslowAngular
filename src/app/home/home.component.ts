@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
+  brightQuantumColor = 'hsla(26, 85%, 58%, 1)';
   constructor() {}
 }

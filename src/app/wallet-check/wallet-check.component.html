@@ -1,5 +1,20 @@
-<p>You are: {{walletData.address}}</p>
-<p>Your chain: {{walletData.chain}}</p>
-<p>Your name: {{walletData.username}}</p>
-<p>Your GAS balance: {{walletData.gasBalance}}</p>
-<p>Your EVE balance: {{walletData.eveTokenBalance}}</p>
+<mat-toolbar>
+  <mat-toolbar-row>
+    <a mat-stroked-button [routerLink]="['/home']" color="accent"><mat-icon>home</mat-icon> Home</a>
+    <h1 class="Title">&nbsp;Wallet Check</h1>
+  </mat-toolbar-row>
+</mat-toolbar>
+<mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+<mat-card class="wallet-card" *ngIf="!loading">
+  <mat-card-header>
+    <img mat-card-avatar [src]="walletData.image">
+    <mat-card-title>{{walletData.username}}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p>You are: {{walletData.address}}</p>
+    <p>Your chain: {{walletData.chain}}</p>
+    <p>Your name: {{walletData.username}}</p>
+    <p>Your GAS balance: {{walletData.gasBalance}}</p>
+    <p>Your EVE balance: {{walletData.eveTokenBalance}}</p>
+  </mat-card-content>
+</mat-card>
