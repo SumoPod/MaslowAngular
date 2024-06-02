@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { TransactionReceipt, Web3 } from 'web3';
 import { EveWalletData } from './Interfaces/eve-wallet-data.interface';
 import { ERC20_ABI } from './ABIs/ERC20.abi';
-import { EVETokenContractAddress } from './eve-wallet-constants';
+import { EVETokenContractAddress, WorldChainId } from './eve-wallet-constants';
 import { HttpClient } from '@angular/common/http';
 import { SmartCharacterInfo } from './Interfaces/web-socket.model';
 
@@ -29,6 +29,13 @@ export class EveWalletService {
   dumpWalletInfo()
   {
     console.log(this.activeWallet);
+  }
+
+  isWalletValid()
+  {
+    // Should check chain and FoF.
+    let isValid = this.activeWallet.address != null && this.activeWallet.chain == WorldChainId;
+    return isValid;
   }
 
   getWalletInfo()
@@ -145,7 +152,7 @@ export class EveWalletService {
 
     return tokenContract.methods.allowance(this.activeWallet.address, spenderAddress).call();
   }
-  // TODO: Remove.
+
   getContract(contractABI: any, contractAddress: string)
   {
     return new this.web3.eth.Contract(contractABI, contractAddress);
