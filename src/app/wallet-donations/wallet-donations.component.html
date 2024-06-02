@@ -1,21 +1,39 @@
-<p class="center-text">Hello Survivor! {{walletData.address}}</p>
-<p class="center-text">Would you like to donate some gas or EVE to the wallet?</p>
-<p class="center-text">Gas is used to pay for transactions on the blockchain</p>
-<p class="center-text">EVE is used to pay our hard workers.</p>
-<p class="center-text">Donations are greatly appreciated!</p>
-<p class="center-text">Thank you for your support!</p>
-<br>
-<div class="center-text">
-  <input type="number" [(ngModel)]="gasDonationAmount" step="0.000000000000000001">
-  <button (click)="doDonateGas()">Donate Gas</button>
-</div>
-<br>
-<div class="center-text">
-  <input type="number" [(ngModel)]="eveDonationAmount" step="0.000000000000000001">
-  <button (click)="doDonateEve()">Donate EVE</button>
-</div>
-
-<p class="center-text">{{debugText}}</p>
-<p class="center-text">{{errorText}}</p>
-<p class="center-text">{{finalText}}</p>
-<p class="center-text">{{hashText}}</p>
+<mat-toolbar>
+  <mat-toolbar-row>
+    <a mat-stroked-button [routerLink]="['/home']" color="accent"><mat-icon>home</mat-icon> Home</a>
+    <h1 class="Title">&nbsp;Donations</h1>
+  </mat-toolbar-row>
+</mat-toolbar>
+<h2>Hello Survivor!</h2>
+<mat-card class="donation-card">
+  <mat-card-header>
+    <mat-card-title>Would you like to donate some gas or EVE to the wallet?</mat-card-title>
+    <mat-card-subtitle>Gas is used to pay for transactions on the blockchain</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p>EVE is used to pay our hard workers. Donations are greatly appreciated!</p>
+    <p>Thank you for your support!</p>
+    <mat-form-field floatLabel="always">
+      <mat-label>Donate Gas</mat-label>
+      <input matInput type="number" [(ngModel)]="gasDonationAmount" step="0.000000000000000001" placeholder="0.000000" class="right-align">
+      <span matTextPrefix>GAS</span>
+    </mat-form-field>
+    <button mat-button (click)="doDonateGas()">Donate Gas</button>
+    <mat-divider></mat-divider>
+    <mat-form-field floatLabel="always">
+      <mat-label>Donate EVE</mat-label>
+      <input matInput type="number" [(ngModel)]="eveDonationAmount" step="0.000000000000000001" placeholder="0.000000" class="right-align">
+      <span matTextPrefix>EVE</span>
+    </mat-form-field>
+    <button mat-button (click)="doDonateEve()">Donate EVE</button>
+  </mat-card-content>
+  <mat-card-footer>
+    <p *ngIf="debugText !== '---'">{{debugText}}</p>
+    <p *ngIf="errorText !== '---'">{{errorText}}</p>
+    <p *ngIf="finalText !== '---'">{{finalText}}</p>
+    <p *ngIf="hashText !== '---'">{{hashText}}</p>
+  </mat-card-footer>
+</mat-card>
+<footer>
+  <p>Developed by Maslow Team. Sumo Podenco v10.0</p>
+</footer>

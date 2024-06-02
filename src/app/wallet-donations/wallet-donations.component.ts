@@ -20,12 +20,12 @@ export class WalletDonationsComponent implements OnInit{
   eveDonationAmount: number = 0.01;
 
   constructor(private wallet: EveWalletService)
-  { 
-  } 
+  {
+  }
 
   ngOnInit(): void
   {
-    this.walletData = this.wallet.getWalletInfo();  
+    this.walletData = this.wallet.getWalletInfo();
   }
 
   clearDebugUI()
@@ -57,7 +57,7 @@ export class WalletDonationsComponent implements OnInit{
   doDonateEve()
   {
     this.clearDebugUI();
-    
+
     console.log("About to donate  " + this.eveDonationAmount + " EVE tokens to my wallet");
     let donationWalletAdress = '0x51Dc9419BdC4fD0220e496149CAe464c597E9f35';
     this.debugText = 'Donating ' + this.eveDonationAmount + ' EVE tokens to ' + donationWalletAdress;

@@ -50,9 +50,42 @@ mat-toolbar {
   }
 }
 
-.wallet-card {
+.wallet-card,
+.donation-card,
+.trader-card {
   margin: 2em auto;
   max-width: 600px;
+}
+
+mat-card-footer {
+  display: flex;
+  flex-direction: column;
+  padding: 0 2em;
+  p {
+    margin: .5em 0;
+  }
+}
+
+mat-divider + mat-form-field {
+  margin-top: 1em;
+}
+
+.trader-card mat-divider {
+  margin: 1em 0;
+}
+
+mat-form-field + [mat-button] {
+  margin-left: 1em;
+}
+
+::-webkit-outer-spin-button,
+::-webkit-inner-spin-button {
+  display: none;
+}
+
+input.right-align {
+  text-align: right;
+  -moz-appearance: textfield;
 }
 
 mat-grid-list {
