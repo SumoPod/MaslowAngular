@@ -1,5 +1,8 @@
-{{data.quantity}} - {{data.name}} at {{data.price / 1e18}} EVE each <br>
-Amount to buy: <input #buyInput type="number" min="0" [max]="data.quantity" value="0" (input)="validateMax($event, data.quantity)"><br>
-Total to pay: {{ totalValue }} EVE<br>
-<button (click)="doSellItems()">Buy</button>
--------------------------------
+<p>{{data.quantity}} - {{data.name}} at {{data.price / 1e18}} EVE each.</p>
+<mat-form-field floatLabel="always">
+  <mat-label>Amount to buy</mat-label>
+  <input #buyInput matInput type="number" min="0" [max]="data.quantity" value="0" (input)="validateMax($event, data.quantity)" step="1" placeholder="0" class="right-align">
+  <span matTextPrefix>EVE</span>
+</mat-form-field>
+<button mat-button (click)="doSellItems()">Buy</button>
+<p>Total to pay: {{ totalValue }} EVE.</p>

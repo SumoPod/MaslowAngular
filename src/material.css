@@ -51,7 +51,8 @@ mat-toolbar {
 }
 
 .wallet-card,
-.donation-card {
+.donation-card,
+.trader-card {
   margin: 2em auto;
   max-width: 600px;
 }
@@ -67,6 +68,10 @@ mat-card-footer {
 
 mat-divider + mat-form-field {
   margin-top: 1em;
+}
+
+.trader-card mat-divider {
+  margin: 1em 0;
 }
 
 mat-form-field + [mat-button] {
