@@ -1,23 +1,34 @@
-<!-- Sellable from the station pov. -->
-<!-- But the web user buys them -->
-<h2>Items to Buy</h2>
-<h3>This is that you pay money to get our items.</h3>
-<table>
-  <tbody>
-    <tr *ngFor="let item of buyableItems">
+<mat-toolbar>
+  <mat-toolbar-row>
+    <a mat-stroked-button [routerLink]="['/home']" color="accent"><mat-icon>home</mat-icon> Home</a>
+    <h1 class="Title">&nbsp;Trade Machine</h1>
+  </mat-toolbar-row>
+</mat-toolbar>
+<h2>Hello Survivor!</h2>
+<mat-card class="trader-card">
+  <mat-card-header>
+    <mat-card-title>Items to Buy</mat-card-title>
+    <mat-card-subtitle>Here you pay money to get our items.</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <ng-container *ngFor="let item of buyableItems">
+      <mat-divider></mat-divider>
       <app-sellable-item [data]="item"></app-sellable-item>
-    </tr>
-  </tbody>
-</table>
--------------------------------------------------------<br>
-<!-- Sellable from the station pov. -->
-<!-- But the web user sells them -->
-<h2>Items to Sell</h2>
-<h3>This is that you get money for your items.</h3>
-<table>
-  <tbody>
-    <tr *ngFor="let item of sellableItems">
+    </ng-container>
+  </mat-card-content>
+</mat-card>
+<mat-card class="trader-card">
+  <mat-card-header>
+    <mat-card-title>Items to Sell</mat-card-title>
+    <mat-card-subtitle>Here you get paid money for your items.</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <ng-container *ngFor="let item of sellableItems">
+      <mat-divider></mat-divider>
       <app-buyable-item [data]="item"></app-buyable-item>
-    </tr>
-  </tbody>
-</table>
+    </ng-container>
+  </mat-card-content>
+</mat-card>
+<footer>
+  <p>Developed by Maslow Team. Sumo Podenco v10.0</p>
+</footer>

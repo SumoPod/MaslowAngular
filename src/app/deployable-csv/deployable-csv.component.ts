@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Inventory } from '../eve-wallet-service/Interfaces/deployable-data.model';
 import { map } from 'rxjs';
 import { SmartDeployable } from '../eve-wallet-service/Interfaces/smart-deployable.model';
@@ -10,8 +10,7 @@ import { EveApiService } from '../eve-wallet-service/eve-api.service';
   templateUrl: './deployable-csv.component.html',
   styleUrl: './deployable-csv.component.css'
 })
-export class DeployableCsvComponent {
-
+export class DeployableCsvComponent implements OnInit {
 
   readonly price:number = 1;
   public systemDeployables: SmartDeployable[] = [];
@@ -19,9 +18,8 @@ export class DeployableCsvComponent {
   public pData: InfoICareAbout[] = [];
   csv: string = "Name,Owner,System,Worth\n";
   jsonData: { name: string; owner: string, system: string, worth: number; }[] = [];
-  constructor(private eveApi: EveApiService) {
 
-   }
+  constructor(private eveApi: EveApiService) {}
 
   ngOnInit()
   {

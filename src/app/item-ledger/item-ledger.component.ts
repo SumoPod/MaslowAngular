@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ItemData } from '../eve-wallet-service/Interfaces/item-data.model';
 import { EveApiService } from '../eve-wallet-service/eve-api.service';
@@ -11,7 +10,7 @@ import { EveApiService } from '../eve-wallet-service/eve-api.service';
 export class ItemLedgerComponent implements OnInit {
   allItems: { key: string, itemData: ItemData }[] = [];
 
-  constructor(private http: HttpClient, private eveApi: EveApiService) {
+  constructor(private eveApi: EveApiService) {
 
   }
 

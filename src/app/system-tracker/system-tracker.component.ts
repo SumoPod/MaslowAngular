@@ -1,12 +1,11 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { map } from 'rxjs';
-import { DetailedDeployableInfo, Inventory } from '../eve-wallet-service/Interfaces/deployable-data.model';
+import { Inventory } from '../eve-wallet-service/Interfaces/deployable-data.model';
 import { SmartDeployable } from '../eve-wallet-service/Interfaces/smart-deployable.model';
 import { EveApiService } from '../eve-wallet-service/eve-api.service';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatSort, Sort, MatSortModule } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
 
 export class InfoICareAbout {
   public id: string;
@@ -65,8 +64,6 @@ export class SystemTrackerComponent implements OnInit {
         .subscribe((info) => {
           let worth = this.calculateInventoryValue(info.inventory);
           this.pData.data = [...this.pData.data, new InfoICareAbout(deployable.id, info.name, info.ownerName, info.solarSystem.solarSystemName, worth, info.ownerId)];
-          // this.pData.push(new InfoICareAbout(deployable.id, info.name, info.ownerName, info.solarSystem.solarSystemName, worth, info.ownerId));
-          // this.sortDeployables();
         });
     }
   }
@@ -78,23 +75,4 @@ export class SystemTrackerComponent implements OnInit {
       return acc + (item.quantity * this.price);
     }, 0);
   }
-
-  // sortDeployables()
-  // {
-  //   // Sort pdata by worth
-  //   this.pData.sort((a, b) => {
-  //     if (a.deployableName.startsWith("Maslow"))
-  //     {
-  //       return -1; // "Maslow" comes first
-  //     }
-  //     else if (b.deployableName.startsWith("Maslow"))
-  //     {
-  //       return 1; // "Maslow" comes first
-  //     }
-  //     else
-  //     {
-  //       return b.worth - a.worth; // sort by worth
-  //     }
-  //   });
-  // }
 }
