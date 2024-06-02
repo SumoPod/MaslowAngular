@@ -3,6 +3,7 @@ import { EveWalletService } from './eve-wallet.service';
 import { CarbonaceousOreTypeId, MaslowPyramidID, WorldAddress } from './eve-wallet-constants';
 import { VEL_TRADER_ABI } from './ABIs/IItemSeller.abi';
 import { TransactionReceipt } from 'web3-types/lib/commonjs/eth_types';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -15,17 +16,17 @@ export class MaslowService {
 
   getPriceData( stationID: string, typeID: string ): Promise<any>
   {
-    return this.getVelContract().methods.velorumtest7__getItemPriceData(stationID,typeID).call();
+    return this.getVelContract().methods.velorumtest22__getItemPriceData(stationID,typeID).call();
   }
 
   purchaseItem( stationID: string, typeID: string, quantity: number ): Promise<TransactionReceipt>
   {
-    return this.getVelContract().methods.velorumtest7__purchaseItem(stationID,typeID,quantity).send({from: this.wallet.activeWallet.address});
+    return this.getVelContract().methods.velorumtest22__purchaseItem(stationID,typeID,quantity).send({from: this.wallet.activeWallet.address});
   }
 
   sellItem( stationID: string, typeID: string, quantity: number ): Promise<TransactionReceipt>
   {
-    return this.getVelContract().methods.velorumtest7__sellItem(stationID,typeID,quantity).send({from: this.wallet.activeWallet.address});
+    return this.getVelContract().methods.velorumtest22__sellItem(stationID,typeID,quantity).send({from: this.wallet.activeWallet.address});
   }
 
   // Contracts getters.
