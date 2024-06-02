@@ -48,7 +48,7 @@ export class EveWalletService {
       console.error('Error:', error);
     });
   }
-  
+
   changeActiveWallet(walletAddress: string)
   {
     // Clear data from previous wallet.
@@ -58,7 +58,7 @@ export class EveWalletService {
     // Then get new wallet data.
     this.getUpdateWalletInfo();
   }
-  
+
   getUpdateWalletInfo()
   {
     this.getChainId();
@@ -75,6 +75,7 @@ export class EveWalletService {
     ).subscribe((response) => {
       // Handle the response here
       this.activeWallet.username = response.name;
+      this.activeWallet.image = response.image;
     });
   }
 
@@ -92,9 +93,9 @@ export class EveWalletService {
   {
     this.web3.eth.getBalance(this.activeWallet.address).then((value: bigint) => {
       this.activeWallet.gasBalance = Number(value);
-    });  
+    });
   }
-  
+
   getChainId()
   {
     (window as any).ethereum.request({ method: 'eth_chainId' }).then((chainId: string) => {
@@ -107,7 +108,7 @@ export class EveWalletService {
 
   //-- Chain Operations.
 
-  
+
   transferGas(gasToTransfer: string /*all decimals*/, toAddress: string, gasLimit: number = 210000): Promise<TransactionReceipt>
   {
     return this.web3.eth.sendTransaction({
@@ -117,7 +118,7 @@ export class EveWalletService {
       gas: gasLimit
     })
   }
-  
+
   // Should find a way for each token. Currently, only EVE.
   // Amount with all decimals.
   approveEVE( toAddress:string, amount: number)

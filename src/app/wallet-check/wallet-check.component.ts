@@ -15,11 +15,16 @@ export class WalletCheckComponent{
   public eveTokenBalance: number;
 
   walletData: EveWalletData;
+  loading: boolean = true;
 
   constructor(private wallet: EveWalletService){}
 
   ngOnInit()
   {
-    this.walletData = this.wallet.getWalletInfo();  
+    window.setTimeout(() => {
+      this.walletData = this.wallet.getWalletInfo();
+      console.log(this.walletData);
+      this.loading = false;
+    }, 2000);
   }
 }

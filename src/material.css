@@ -50,6 +50,11 @@ mat-toolbar {
   }
 }
 
+.wallet-card {
+  margin: 2em auto;
+  max-width: 600px;
+}
+
 mat-grid-list {
   height: 100vh;
   margin: 0 2em;
