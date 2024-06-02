@@ -22,6 +22,7 @@ export class VendingMachineComponent implements OnInit{
       this.web3 = new Web3((window as any).ethereum);
     }
   }
+  
   ngOnInit(): void {
     if ((window as any).ethereum) {
       console.log('EIP-1193 compatible wallet detected');

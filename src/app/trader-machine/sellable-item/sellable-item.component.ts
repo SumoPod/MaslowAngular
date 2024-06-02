@@ -34,7 +34,7 @@ export class SellableItemComponent {
 
   doSellItems()
   {
-    this.maslow.wallet.approveEVE(VelTraderContractAddress_v22, this.totalValue * 1e18)
+    this.maslow.wallet.approveEVE(VelTraderContractAddress_v22, this.totalValue)
     .then(() => {
       this.maslow.purchaseItem(MaslowPyramidID, this.data.itemId, this.myInput?.nativeElement.value);
     });
@@ -54,16 +54,15 @@ export class SellableItemComponent {
     let cantidad = this.data.quantity
     let totalCost = 0;
 
-    for (let qty = 0; qty < quantity; qty++) {
-    let spreadPercentage = ( cantidad) / this.data.targetQuantity;
-    let finalPrice = this.data.price * 2 * (1 - spreadPercentage);
-    
-    totalCost += finalPrice
+    for (let qty = 0; qty < quantity; ++qty)
+    {
+      let spreadPercentage = ( cantidad) / this.data.targetQuantity;
+      let finalPrice = this.data.price * 2 * (1 - spreadPercentage);
+      
+      totalCost += finalPrice;
+      cantidad--;
+    }
 
-    cantidad--
-  }
-
-  return totalCost
-    
+    return totalCost
   }
 }

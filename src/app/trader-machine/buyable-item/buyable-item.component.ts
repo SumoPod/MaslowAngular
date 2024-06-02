@@ -38,7 +38,6 @@ export class BuyableItemComponent {
     // Purchase items in the abi
 
     this.maslow.sellItem(MaslowPyramidID, this.data.itemId, this.sellInput?.nativeElement.value);
-    
   }
 
   validateMax(inputEvent: any, max: number)
@@ -54,15 +53,14 @@ export class BuyableItemComponent {
     let cantidad = this.data.SSUQuantity
     let totalCost = 0;
 
-    for (let qty = 0; qty < quantity; qty++) {
-    let spreadPercentage = ( cantidad + 1) / this.data.targetQuantity;
-    let finalPrice = this.data.price * 2 * (1 - spreadPercentage);
-    
-    totalCost += finalPrice
-
-    cantidad++
-  }
-  return totalCost
-    
+    for (let qty = 0; qty < quantity; ++qty)
+    {
+      let spreadPercentage = ( cantidad + 1) / this.data.targetQuantity;
+      let finalPrice = this.data.price * 2 * (1 - spreadPercentage);
+      
+      totalCost += finalPrice;
+      ++cantidad;
+    }
+    return totalCost
   }
 }
