@@ -22,7 +22,6 @@ export class EveWalletService {
     {
       this.web3 = new Web3((window as any).ethereum);
       this.getWallets();
-      this.dumpWalletInfo();
     }
   }
 
@@ -47,9 +46,8 @@ export class EveWalletService {
   getWallets()
   {
     (window as any).ethereum.request({ method: 'eth_requestAccounts' }).then((accounts: string[]) => {
-      console.log('Wallets:', accounts);
+      console.log('Available Wallets:', accounts);
       this.walletAddresses = accounts;
-      console.log('Active Wallet:', this.activeWallet);
       this.changeActiveWallet(accounts[0]);
     }).catch((error: any) => {
       console.error('Error:', error);
@@ -58,6 +56,7 @@ export class EveWalletService {
 
   changeActiveWallet(walletAddress: string)
   {
+    console.log("Switching to wallet:", walletAddress)
     // Clear data from previous wallet.
     this.activeWallet = new EveWalletData();
     this.activeWallet.address = walletAddress;
@@ -91,7 +90,7 @@ export class EveWalletService {
     let tokenContract = new this.web3.eth.Contract(ERC20_ABI, EVETokenContractAddress);
 
     tokenContract.methods.balanceOf(this.activeWallet.address).call().then((value: any) => {
-      console.log('EVE Token Balance:', Number(value));
+      console.log('EVE Token Balance:', Number(value)/1e18);
       this.activeWallet.eveTokenBalance = Number(value);
     });
   }

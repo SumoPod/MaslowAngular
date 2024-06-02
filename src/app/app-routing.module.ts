@@ -22,7 +22,7 @@ const appRoutes: Routes = [
   { path: 'ws/:charId/:deployableId', component: WebSocketComponent },
   { path: 'items', component: ItemLedgerComponent },
   { path: 'ranking', component: UserRankingComponent },
-  { path: 'wallet', component: WalletCheckComponent },
+  { path: 'wallet', component: WalletCheckComponent, canActivate: [ValidWalletGuard] },
   { path: 'donate', component: WalletDonationsComponent, canActivate: [ValidWalletGuard]},
   { path: 'vending', component: VendingMachineComponent, canActivate: [ValidWalletGuard] },
   { path: 'rankingCsv', component: RankingCsvComponent },
