@@ -11,6 +11,8 @@ export interface BuyableItem {
   name: string;
   price: number; // with all decimals
   quantity: number; // How many in player inventory to be sold.
+  SSUQuantity: number; // How many in SSU inventory
+  targetQuantity: number;
 }
 
 @Component({
@@ -28,7 +30,7 @@ export class BuyableItemComponent {
 
   get totalValue(): number {
     if(! this.sellInput ) return 0;
-    return this.data ? this.data.price * this.sellInput?.nativeElement.value / 1e18: 0;
+    return this.data ? this.calculatePrice(this.sellInput?.nativeElement.value): 0;
   }
 
   doBuyItems()
@@ -36,6 +38,7 @@ export class BuyableItemComponent {
     // Purchase items in the abi
 
     this.maslow.sellItem(MaslowPyramidID, this.data.itemId, this.sellInput?.nativeElement.value);
+    
   }
 
   validateMax(inputEvent: any, max: number)
@@ -44,5 +47,22 @@ export class BuyableItemComponent {
     {
       inputEvent.target.value = max;
     }
+  }
+
+  calculatePrice(quantity: number)
+  {
+    let cantidad = this.data.SSUQuantity
+    let totalCost = 0;
+
+    for (let qty = 0; qty < quantity; qty++) {
+    let spreadPercentage = ( cantidad + 1) / this.data.targetQuantity;
+    let finalPrice = this.data.price * 2 * (1 - spreadPercentage);
+    
+    totalCost += finalPrice
+
+    cantidad++
+  }
+  return totalCost
+    
   }
 }

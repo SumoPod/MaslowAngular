@@ -36,22 +36,26 @@ export class TraderMachineComponent implements OnInit{
     // Get from contract available items and prices
     this.maslowService.getPriceData(MaslowPyramidID, CarbonaceousOreTypeId)
     .then((data: any) => {
+      console.log(data)
       this.sellableItems.push({
         itemId: CarbonaceousOreTypeId,
         typeId: '77811',
         name: getNameFromID(CarbonaceousOreTypeId),
-        price: Number( data.price),
-        quantity: 0 // Read from json.
+        price: Number( data[1]),
+        quantity: 0, // Read from json.
+        SSUQuantity: 0, //Read from json
+        targetQuantity: Number(data[2])
       });
       // Same for buyables
       this.buyableItems.push({
         itemId: CarbonaceousOreTypeId,
         typeId: '77811',
         name: getNameFromID(CarbonaceousOreTypeId),
-        price: Number( data.price), // It's the same for buy/sell.
-        quantity: 0 // Read from json
+        price: Number( data[1]), // It's the same for buy/sell.
+        quantity: 0, // Read from json
+        SSUQuantity: 0, //Read from json
+        targetQuantity: Number(data[2])
       });
-
       // Start ws connection
       this.startWSConnection();
     }).catch((error: any) => {
@@ -83,6 +87,15 @@ export class TraderMachineComponent implements OnInit{
       buyableItem.quantity = inventoryItem ? inventoryItem.quantity : 0;
     }
 
+    for (let i = 0; i < this.sellableItems.length; ++i)
+      {
+        let sellableItem = this.sellableItems[i];
+        // Find the item in the inventory with the same id
+        let inventoryItem = inventory.find((element) => element.itemId == sellableItem.itemId);
+  
+        sellableItem.SSUQuantity = inventoryItem ? inventoryItem.quantity : 0;
+      }
+  
     // Access player ephemeral inventory
     let ephemeralInventory:EphemeralInventory = data.smartDeployable.inventory.ephemeralInventoryList.find((element) => element.ownerId == this.maslowService.wallet.activeWallet.address);
 

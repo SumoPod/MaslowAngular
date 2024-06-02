@@ -1,5 +1,5 @@
 {{data.quantity}} - {{data.name}} at {{data.price / 1e18}} EVE each <br>
 Amount to buy: <input #buyInput type="number" min="0" [max]="data.quantity" value="0" (input)="validateMax($event, data.quantity)"><br>
-Total to pay: {{ totalValue }} EVE<br>
+Total to pay: {{ totalValue/1e18 }} EVE<br>
 <button (click)="doSellItems()">Buy</button>
 -------------------------------
