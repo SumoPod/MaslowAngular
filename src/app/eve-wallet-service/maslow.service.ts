@@ -24,7 +24,7 @@ export class MaslowService {
     return this.getVelContract().methods.velorumtest22__purchaseItem(stationID,typeID,quantity).send({from: this.wallet.activeWallet.address});
   }
 
-  sellItem( stationID: string, typeID: string, quantity: number ): Promise<TransactionReceipt>
+  sellItem( stationID: string, typeID: string, quantity: number): Promise<TransactionReceipt>
   {
     return this.getVelContract().methods.velorumtest22__sellItem(stationID,typeID,quantity).send({from: this.wallet.activeWallet.address});
   }

@@ -14,7 +14,7 @@ export class EveWalletService {
 
   walletAddresses: string[]; // All accounts in the wallet.
 
-  activeWallet: EveWalletData; // The currently active wallet's info.
+  activeWallet: EveWalletData = null; // The currently active wallet's info.
 
   constructor( private http: HttpClient)
   {
@@ -31,10 +31,10 @@ export class EveWalletService {
     console.log(this.activeWallet);
   }
 
-  isWalletValid()
+  isValid()
   {
     // Should check chain and FoF.
-    let isValid = this.activeWallet.address != null && this.activeWallet.chain == WorldChainId;
+    let isValid = this.activeWallet?.address != null && this.activeWallet.chain == WorldChainId;
     return isValid;
   }
 
@@ -114,8 +114,6 @@ export class EveWalletService {
   }
 
   //-- Chain Operations.
-
-
   transferGas(gasToTransfer: string /*all decimals*/, toAddress: string, gasLimit: number = 210000): Promise<TransactionReceipt>
   {
     return this.web3.eth.sendTransaction({

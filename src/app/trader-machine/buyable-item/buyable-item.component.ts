@@ -36,7 +36,6 @@ export class BuyableItemComponent {
   doBuyItems()
   {
     // Purchase items in the abi
-
     this.maslow.sellItem(MaslowPyramidID, this.data.itemId, this.sellInput?.nativeElement.value);
   }
 
