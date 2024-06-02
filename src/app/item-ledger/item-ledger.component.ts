@@ -8,13 +8,11 @@ import { EveApiService } from '../eve-wallet-service/eve-api.service';
   templateUrl: './item-ledger.component.html',
   styleUrl: './item-ledger.component.css'
 })
-export class ItemLedgerComponent implements OnInit{
-
+export class ItemLedgerComponent implements OnInit {
   allItems: { key: string, itemData: ItemData }[] = [];
 
-  constructor(private http: HttpClient, private eveApi: EveApiService)
-  {
-    
+  constructor(private http: HttpClient, private eveApi: EveApiService) {
+
   }
 
   ngOnInit(): void {

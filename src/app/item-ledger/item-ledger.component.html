@@ -1,5 +1,15 @@
-<div class="flex-container">
-  <div *ngFor="let item of allItems">
+<mat-toolbar>
+  <mat-toolbar-row>
+    <a mat-stroked-button [routerLink]="['/home']" color="accent"><mat-icon>home</mat-icon> Home</a>
+    <h1 class="Title">&nbsp;Item List</h1>
+  </mat-toolbar-row>
+</mat-toolbar>
+<h2>Current items</h2>
+<mat-grid-list cols="4" gutterSize="1em" rowHeight="72px">
+  <mat-grid-tile *ngFor="let item of allItems">
     <app-item-detail [data]="item"></app-item-detail>
-  </div>
-</div>
+  </mat-grid-tile>
+</mat-grid-list>
+<footer>
+  <p>Developed by Maslow Team. Sumo Podenco v10.0</p>
+</footer>

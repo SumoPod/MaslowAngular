@@ -53,6 +53,13 @@ mat-toolbar {
 mat-grid-list {
   height: 100vh;
   margin: 0 2em;
+  app-item-detail {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    position: relative;
+  }
   mat-card {
     display: flex;
     flex-direction: column;

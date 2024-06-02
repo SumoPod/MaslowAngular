@@ -1,7 +1,7 @@
-<div class="container">
-  <img [src]="imgSrc" alt="Image" class="my-image">
-  <div class="text">
-    <p>{{topText}}</p>
-    <p>{{ text }}</p>
-  </div>
-</div>
+<mat-card>
+  <mat-card-header>
+    <img mat-card-avatar [src]="imgSrc">
+    <mat-card-title>{{topText}}</mat-card-title>
+    <mat-card-subtitle>{{text}}</mat-card-subtitle>
+  </mat-card-header>
+</mat-card>
