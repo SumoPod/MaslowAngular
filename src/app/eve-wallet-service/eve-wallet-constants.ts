@@ -8,6 +8,7 @@ export const VelTraderContractAddress_v3 = '0xC52C1B857266e6479B412AB6B1C270d017
 export const VelTraderContractAddress_v7 = '0x113BD5002A8b24d7113dB3E721cae943524ea43b';
 export const VelTraderContractAddress_v22 = '0xBe65CD67E9056397B4E5fBd0D35aBFb157f1bb6f';
 export const VelTraderContractAddress_v23 = '0x3116895F05474b2311342540Bb4F3C985fe72185';
+export const VelTraderContractAddress_v24 = '0x2790cd3E730AF39515d5719ED850d57B97Df8fb2';
 // Smart Objects
 export const MaslowPyramidID = '45228697695947564033082854924954193006092773360381611920298456273008413001782';
 

@@ -2,7 +2,7 @@ import { Component, ElementRef, input, Input, ViewChild } from '@angular/core';
 import { ERC20_ABI } from '../../eve-wallet-service/ABIs/ERC20.abi';
 import { VEL_TRADER_ABI } from '../../eve-wallet-service/ABIs/IItemSeller.abi';
 import { Web3 } from 'web3';
-import { EVETokenContractAddress, MaslowPyramidID, VelTraderContractAddress_v23, VelTraderContractAddress_v7, WorldAddress } from '../../eve-wallet-service/eve-wallet-constants';
+import { EVETokenContractAddress, MaslowPyramidID, VelTraderContractAddress_v24, VelTraderContractAddress_v7, WorldAddress } from '../../eve-wallet-service/eve-wallet-constants';
 import { MaslowService } from '../../eve-wallet-service/maslow.service';
 
 export interface SellableItem {
@@ -34,7 +34,7 @@ export class SellableItemComponent {
 
   doSellItems()
   {
-    this.maslow.wallet.approveEVE(VelTraderContractAddress_v23, this.totalValue)
+    this.maslow.wallet.approveEVE(VelTraderContractAddress_v24, this.totalValue)
     .then(() => {
       this.maslow.purchaseItem(MaslowPyramidID, this.data.itemId, this.myInput?.nativeElement.value);
     });

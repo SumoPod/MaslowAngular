@@ -2,6 +2,10 @@
     <mat-card-content margin="10px">
     {{data.name}} {{data.quantity}}
     <img mat-card-avatar [src]="src" >
+    <div class="info-container">
+        <span>{{totalValueBuy/ 1e18}}</span>
+        <span>{{totalValueSell/ 1e18}}</span>
+    </div>
     <div class="button-container">
     <button (click)="doBuyItems()">Buy</button>
     <input #valueInput matInput type="number" min="0" [max]="data.quantity" value="0" (input)="validateMax($event, data.quantity)" step="1" placeholder="0" class="right-align">
