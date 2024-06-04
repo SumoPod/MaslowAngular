@@ -3,9 +3,9 @@
     {{data.name}} {{data.quantity}}
     <img mat-card-avatar [src]="src" >
     <div class="button-container">
-    <button>Buy</button>
-    <input #buyInput matInput type="number" min="0" [max]="data.quantity" value="0" (input)="validateMax($event, data.quantity)" step="1" placeholder="0" class="right-align">
-    <button>Sell</button>
+    <button (click)="doBuyItems()">Buy</button>
+    <input #valueInput matInput type="number" min="0" [max]="data.quantity" value="0" (input)="validateMax($event, data.quantity)" step="1" placeholder="0" class="right-align">
+    <button (click)="doSellItems()">Sell</button>
     </div>
     </mat-card-content>
 </mat-card>

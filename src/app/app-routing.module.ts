@@ -27,7 +27,8 @@ const appRoutes: Routes = [
   { path: 'vending', component: VendingMachineComponent, canActivate: [ValidWalletGuard] },
   { path: 'rankingCsv', component: RankingCsvComponent },
   { path: 'deployCsv', component: DeployableCsvComponent },
-  { path: 'trade', component: TraderMachineComponent, canActivate: [ValidWalletGuard] },
+  // { path: 'trade', component: TraderMachineComponent, canActivate: [ValidWalletGuard] },
+  { path: 'trade', component: TraderMachineComponent  },
   { path: '**', component: HomeComponent }
 ];
 

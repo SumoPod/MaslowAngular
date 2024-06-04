@@ -2,7 +2,7 @@ import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import Web3 from 'web3';
 import { ERC20_ABI } from '../../eve-wallet-service/ABIs/ERC20.abi';
 import { VEL_TRADER_ABI } from '../../eve-wallet-service/ABIs/IItemSeller.abi';
-import { EVETokenContractAddress, getNameFromID, MaslowPyramidID, WorldAddress } from '../../eve-wallet-service/eve-wallet-constants';
+import { EVETokenContractAddress, getNameFromID, MaslowPyramidID, VelTraderContractAddress_v23, WorldAddress } from '../../eve-wallet-service/eve-wallet-constants';
 import { MaslowService } from '../../eve-wallet-service/maslow.service';
 import { EveApiService } from '../../eve-wallet-service/eve-api.service';
 
@@ -24,7 +24,7 @@ export interface BuyableItem {
 export class BuyableItemComponent {
 
   @Input() data: BuyableItem;
-  @ViewChild('sellInput') sellInput: ElementRef;
+  @ViewChild('valueInput') valueInput: ElementRef;
   
   itemId: string;
   name: string;
@@ -35,9 +35,15 @@ export class BuyableItemComponent {
 
   constructor( private maslow: MaslowService, private eveApi: EveApiService) {}
 
-  get totalValue(): number {
-    if(! this.sellInput ) return 0;
-    return this.data ? this.calculatePrice(this.sellInput?.nativeElement.value): 0;
+  get totalValueBuy(): number {
+    if(! this.valueInput ) return 0;
+    return this.data ? this.calculatePriceBuy(this.valueInput?.nativeElement.value): 0;
+  }
+
+  get totalValueSell(): number {
+
+    if(! this.valueInput ) return 0;
+    return this.data ? this.calculatePriceSell(this.valueInput?.nativeElement.value): 0;
   }
 
   ngOnInit(): void{
@@ -52,12 +58,19 @@ export class BuyableItemComponent {
 
   }
 
-  doBuyItems()
+  doSellItems()
   {
     // Purchase items in the abi
-    this.maslow.sellItem(MaslowPyramidID, this.data.itemId, this.sellInput?.nativeElement.value);
+    this.maslow.sellItem(MaslowPyramidID, this.data.itemId, this.valueInput?.nativeElement.value);
   }
 
+  doBuyItems()
+  {
+    this.maslow.wallet.approveEVE(VelTraderContractAddress_v23, this.totalValueBuy)
+    .then(() => {
+      this.maslow.purchaseItem(MaslowPyramidID, this.data.itemId, this.valueInput?.nativeElement.value);
+    });
+  }
   validateMax(inputEvent: any, max: number)
   {
     if (inputEvent.target.value > max)
@@ -66,19 +79,37 @@ export class BuyableItemComponent {
     }
   }
 
-  calculatePrice(quantity: number)
+  calculatePriceBuy(quantity: number)
   {
+    console.log(this.data.price)
     let cantidad = this.data.SSUQuantity
     let totalCost = 0;
 
     for (let qty = 0; qty < quantity; ++qty)
     {
-      let spreadPercentage = ( cantidad + 1) / this.data.targetQuantity;
+      let spreadPercentage = ( cantidad) / this.data.targetQuantity;
+      let finalPrice = this.data.price * 2 * (1 - spreadPercentage);
+      
+      totalCost += finalPrice;
+      --cantidad;
+    }
+    return totalCost
+  }
+
+  calculatePriceSell(quantity: number)
+  {
+    let cantidad = this.data.quantity
+    let totalCost = 0;
+
+    for (let qty = 0; qty < quantity; ++qty)
+    {
+      let spreadPercentage = ( cantidad) / this.data.targetQuantity;
       let finalPrice = this.data.price * 2 * (1 - spreadPercentage);
       
       totalCost += finalPrice;
       ++cantidad;
     }
+
     return totalCost
   }
   getImg(){
