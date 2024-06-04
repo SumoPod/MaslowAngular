@@ -54,7 +54,7 @@ mat-toolbar {
 .donation-card,
 .trader-card {
   margin: 2em auto;
-  max-width: 600px;
+  max-width: 1200px;
 }
 
 mat-card-footer {

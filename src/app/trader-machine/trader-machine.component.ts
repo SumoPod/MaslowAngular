@@ -3,9 +3,10 @@ import { SellableItem } from './sellable-item/sellable-item.component';
 import { WebSocketMessage } from '../eve-wallet-service/Interfaces/web-socket.model';
 import { BuyableItem } from './buyable-item/buyable-item.component';
 import { EphemeralInventory } from '../eve-wallet-service/Interfaces/deployable-data.model';
-import { CarbonaceousOreTypeId, MaslowPyramidID, VelTraderContractAddress_v3, getNameFromID } from '../eve-wallet-service/eve-wallet-constants';
+import { CarbonaceousOreTypeId, MaslowPyramidID, VelTraderContractAddress_v3, getNameFromID, getTypeFromID } from '../eve-wallet-service/eve-wallet-constants';
 import { MaslowService } from '../eve-wallet-service/maslow.service';
 import { EveApiService } from '../eve-wallet-service/eve-api.service';
+import { ItemData } from '../eve-wallet-service/Interfaces/item-data.model';
 
 @Component({
   selector: 'app-trader-machine',
@@ -21,6 +22,8 @@ export class TraderMachineComponent implements OnInit, OnDestroy{
   
   numberOfOre: number;
   errorText: any;
+
+  allItems: {key: string, itemData: ItemData[]}[] = [];
 
   constructor( private maslowService: MaslowService, private eveApi: EveApiService) {
   }
@@ -38,30 +41,25 @@ export class TraderMachineComponent implements OnInit, OnDestroy{
   {
     // Hardcoded values because the contract doesn't support this yet.
     // Get from contract available items and prices
-    this.maslowService.getPriceData(MaslowPyramidID, CarbonaceousOreTypeId)
+    this.maslowService.getAllItems()
     .then((data: any) => {
+
       console.log(data)
-      this.sellableItems.push({
-        itemId: CarbonaceousOreTypeId,
-        typeId: '77811',
-        name: getNameFromID(CarbonaceousOreTypeId),
-        price: Number( data[1]),
-        quantity: 0, // Read from json.
-        SSUQuantity: 0, //Read from json
-        targetQuantity: Number(data[2])
-      });
+      for (let i = 0; i < data.length; i++){
       // Same for buyables
       this.buyableItems.push({
-        itemId: CarbonaceousOreTypeId,
-        typeId: '77811',
-        name: getNameFromID(CarbonaceousOreTypeId),
-        price: Number( data[1]), // It's the same for buy/sell.
+        itemId: data[i].inventoryItemId,
+        typeId: getTypeFromID(data[i].inventoryItemId.toString()),
+        name: getNameFromID(data[i].inventoryItemId.toString()),
+        price: Number( data[i].price), // It's the same for buy/sell.
         quantity: 0, // Read from json
         SSUQuantity: 0, //Read from json
-        targetQuantity: Number(data[2])
+        targetQuantity: Number(data[i].targetQuantity),
       });
       // Start ws connection
       this.startWSConnection();
+
+    }
     }).catch((error: any) => {
       console.error(error);
     });
@@ -80,14 +78,13 @@ export class TraderMachineComponent implements OnInit, OnDestroy{
   {
     // Access smartdeployable inventory
     let inventory = data.smartDeployable.inventory.storageItems;
-
     // Iterate the stored items and look for the ones in the station-buyable items to update the quantity
     for (let i = 0; i < this.buyableItems.length; ++i)
     {
       let buyableItem = this.buyableItems[i];
       // Find the item in the inventory with the same id
       let inventoryItem = inventory.find((element) => element.itemId == buyableItem.itemId);
-
+      
       buyableItem.quantity = inventoryItem ? inventoryItem.quantity : 0;
     }
 
@@ -168,5 +165,13 @@ export class TraderMachineComponent implements OnInit, OnDestroy{
     .catch((error) => {
       console.error('Purchase Error:', error);
     });
+  }
+
+  doGetAllItems(){
+    this.maslowService.getAllItems()
+    .then((response) => {
+      console.log(response)
+      this.allItems = Object.entries(response).map(([key]) => ({ key, itemData: response[key] }));
+    })
   }
 }

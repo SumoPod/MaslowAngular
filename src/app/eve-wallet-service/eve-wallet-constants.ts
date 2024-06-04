@@ -6,7 +6,7 @@ export const EVETokenContractAddress = '0xec79573FAC3b9C103819beBBD00143dfD67059
 export const VelTraderContractAddress_v3 = '0xC52C1B857266e6479B412AB6B1C270d0173e13d8';
 export const VelTraderContractAddress_v7 = '0x113BD5002A8b24d7113dB3E721cae943524ea43b';
 export const VelTraderContractAddress_v22 = '0xBe65CD67E9056397B4E5fBd0D35aBFb157f1bb6f';
-
+export const VelTraderContractAddress_v23 = '0x3116895F05474b2311342540Bb4F3C985fe72185'
 // Smart Objects
 export const MaslowPyramidID = '45228697695947564033082854924954193006092773360381611920298456273008413001782';
 
@@ -23,10 +23,25 @@ export function getNameFromID(id: string): string
   {
     case '9540969374646031328134197690309428632894452754236413416084198707556493884019':
       return 'Carb Ore';
+    case '54949089622078329307676094148632864879426651785510047822079265544250486580483':
+      return 'Common Ore'
     case '45228697695947564033082854924954193006092773360381611920298456273008413001782':
       return 'Maslow Pyramid';
     case '0xec79573FAC3b9C103819beBBD00143dfD67059DA':
       return 'EVE Token';
+    default:
+      return 'Unknown';
+  }
+}
+
+export function getTypeFromID(id: string): string 
+{
+  switch (id)
+  {
+    case '9540969374646031328134197690309428632894452754236413416084198707556493884019':
+      return '77811';
+    case '54949089622078329307676094148632864879426651785510047822079265544250486580483':
+      return '77800';
     default:
       return 'Unknown';
   }

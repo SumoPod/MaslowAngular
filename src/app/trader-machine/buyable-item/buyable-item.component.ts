@@ -2,12 +2,13 @@ import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import Web3 from 'web3';
 import { ERC20_ABI } from '../../eve-wallet-service/ABIs/ERC20.abi';
 import { VEL_TRADER_ABI } from '../../eve-wallet-service/ABIs/IItemSeller.abi';
-import { EVETokenContractAddress, MaslowPyramidID, WorldAddress } from '../../eve-wallet-service/eve-wallet-constants';
+import { EVETokenContractAddress, getNameFromID, MaslowPyramidID, WorldAddress } from '../../eve-wallet-service/eve-wallet-constants';
 import { MaslowService } from '../../eve-wallet-service/maslow.service';
+import { EveApiService } from '../../eve-wallet-service/eve-api.service';
 
 export interface BuyableItem {
   itemId: string; // BlockChain Id
-  typeId: string; // Eve Id.
+  typeId: string; // Eve Id
   name: string;
   price: number; // with all decimals
   quantity: number; // How many in player inventory to be sold.
@@ -25,12 +26,30 @@ export class BuyableItemComponent {
   @Input() data: BuyableItem;
   @ViewChild('sellInput') sellInput: ElementRef;
   
-  constructor( private maslow: MaslowService) {
-  }
+  itemId: string;
+  name: string;
+  price: number;
+  quantity: number;
+  targetQuantity: number;
+  src: string;
+
+  constructor( private maslow: MaslowService, private eveApi: EveApiService) {}
 
   get totalValue(): number {
     if(! this.sellInput ) return 0;
     return this.data ? this.calculatePrice(this.sellInput?.nativeElement.value): 0;
+  }
+
+  ngOnInit(): void{
+    
+  
+      
+      this.itemId = this.data.itemId;
+      this.name = this.data.name;
+      this.price = this.data.price;
+      this.targetQuantity = this.data.targetQuantity;
+      this.getImg();
+
   }
 
   doBuyItems()
@@ -65,4 +84,13 @@ export class BuyableItemComponent {
   return totalCost
     
   }
+  getImg(){
+    this.eveApi.getItem(this.data.typeId)
+    .subscribe((response) => {
+      this.src = response.metadata.image
+    })
+
+  }
+
+  
 }

@@ -5,29 +5,21 @@
   </mat-toolbar-row>
 </mat-toolbar>
 <h2>Hello Survivor!</h2>
-<mat-card class="trader-card">
+
   <mat-card-header>
     <mat-card-title>Items to Buy</mat-card-title>
     <mat-card-subtitle>Here you pay money to get our items.</mat-card-subtitle>
   </mat-card-header>
-  <mat-card-content>
-    <ng-container *ngFor="let item of buyableItems">
-      <mat-divider></mat-divider>
-      <app-sellable-item [data]="item"></app-sellable-item>
-    </ng-container>
-  </mat-card-content>
-</mat-card>
+  <mat-grid-list cols="3" rowHeight="200px">
+    
+    <mat-grid-tile *ngFor="let item of buyableItems">
+    <app-buyable-item [data]="item"></app-buyable-item>
+    </mat-grid-tile>
+
+  </mat-grid-list>
+
 <mat-card class="trader-card">
-  <mat-card-header>
-    <mat-card-title>Items to Sell</mat-card-title>
-    <mat-card-subtitle>Here you get paid money for your items.</mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-content>
-    <ng-container *ngFor="let item of sellableItems">
-      <mat-divider></mat-divider>
-      <app-buyable-item [data]="item"></app-buyable-item>
-    </ng-container>
-  </mat-card-content>
+<button mat-button (click)="doGetAllItems()">Get All items</button>
 </mat-card>
 <footer>
   <p>Developed by Maslow Team. Sumo Podenco v10.0</p>
