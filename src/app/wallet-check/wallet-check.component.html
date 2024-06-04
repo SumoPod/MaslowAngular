@@ -4,8 +4,8 @@
     <h1 class="Title">&nbsp;Wallet Check</h1>
   </mat-toolbar-row>
 </mat-toolbar>
-<mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
-<mat-card class="wallet-card" *ngIf="!loading">
+<mat-progress-bar mode="indeterminate"></mat-progress-bar>
+<mat-card class="wallet-card">
   <mat-card-header>
     <img mat-card-avatar [src]="walletData.image">
     <mat-card-title>{{walletData.username}}</mat-card-title>

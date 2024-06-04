@@ -13,6 +13,7 @@ import { VendingMachineComponent } from './vending-machine/vending-machine.compo
 import { RankingCsvComponent } from './ranking-csv/ranking-csv.component';
 import { DeployableCsvComponent } from './deployable-csv/deployable-csv.component';
 import { TraderMachineComponent } from './trader-machine/trader-machine.component';
+import { ValidWalletGuard } from './guards/valid-wallet.guard';
 
 const appRoutes: Routes = [
   { path: 'sysTracker', component: SystemTrackerComponent },
@@ -21,34 +22,13 @@ const appRoutes: Routes = [
   { path: 'ws/:charId/:deployableId', component: WebSocketComponent },
   { path: 'items', component: ItemLedgerComponent },
   { path: 'ranking', component: UserRankingComponent },
-  { path: 'wallet', component: WalletCheckComponent },
-  { path: 'donate', component: WalletDonationsComponent },
-  { path: 'vending', component: VendingMachineComponent },
+  { path: 'wallet', component: WalletCheckComponent, canActivate: [ValidWalletGuard] },
+  { path: 'donate', component: WalletDonationsComponent, canActivate: [ValidWalletGuard]},
+  { path: 'vending', component: VendingMachineComponent, canActivate: [ValidWalletGuard] },
   { path: 'rankingCsv', component: RankingCsvComponent },
   { path: 'deployCsv', component: DeployableCsvComponent },
-  { path: 'trade', component: TraderMachineComponent },
+  { path: 'trade', component: TraderMachineComponent, canActivate: [ValidWalletGuard] },
   { path: '**', component: HomeComponent }
-  // {
-  //   path: 'recipes',
-  //   component: RecipesComponent,
-  //   canActivate: [AuthGuard],
-  //   children: [
-  //     { path: '', component: RecipeStartComponent },
-  //     { path: 'new', component: RecipeEditComponent },
-  //     {
-  //       path: ':id',
-  //       component: RecipeDetailComponent,
-  //       resolve: [RecipesResolverService]
-  //     },
-  //     {
-  //       path: ':id/edit',
-  //       component: RecipeEditComponent,
-  //       resolve: [RecipesResolverService]
-  //     }
-  //   ]
-  // },
-  // { path: 'shopping-list', component: ShoppingListComponent },
-  // { path: 'auth', component: AuthComponent }
 ];
 
 @NgModule({

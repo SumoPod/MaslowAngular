@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { TransactionReceipt, Web3 } from 'web3';
 import { EveWalletData } from './Interfaces/eve-wallet-data.interface';
 import { ERC20_ABI } from './ABIs/ERC20.abi';
-import { EVETokenContractAddress } from './eve-wallet-constants';
+import { EVETokenContractAddress, WorldChainId } from './eve-wallet-constants';
 import { HttpClient } from '@angular/common/http';
 import { SmartCharacterInfo } from './Interfaces/web-socket.model';
 
@@ -14,7 +14,7 @@ export class EveWalletService {
 
   walletAddresses: string[]; // All accounts in the wallet.
 
-  activeWallet: EveWalletData; // The currently active wallet's info.
+  activeWallet: EveWalletData = null; // The currently active wallet's info.
 
   constructor( private http: HttpClient)
   {
@@ -22,13 +22,19 @@ export class EveWalletService {
     {
       this.web3 = new Web3((window as any).ethereum);
       this.getWallets();
-      this.dumpWalletInfo();
     }
   }
 
   dumpWalletInfo()
   {
     console.log(this.activeWallet);
+  }
+
+  isValid()
+  {
+    // Should check chain and FoF.
+    let isValid = this.activeWallet?.address != null && this.activeWallet.chain == WorldChainId;
+    return isValid;
   }
 
   getWalletInfo()
@@ -40,9 +46,8 @@ export class EveWalletService {
   getWallets()
   {
     (window as any).ethereum.request({ method: 'eth_requestAccounts' }).then((accounts: string[]) => {
-      console.log('Wallets:', accounts);
+      console.log('Available Wallets:', accounts);
       this.walletAddresses = accounts;
-      console.log('Active Wallet:', this.activeWallet);
       this.changeActiveWallet(accounts[0]);
     }).catch((error: any) => {
       console.error('Error:', error);
@@ -51,6 +56,7 @@ export class EveWalletService {
 
   changeActiveWallet(walletAddress: string)
   {
+    console.log("Switching to wallet:", walletAddress)
     // Clear data from previous wallet.
     this.activeWallet = new EveWalletData();
     this.activeWallet.address = walletAddress;
@@ -84,7 +90,7 @@ export class EveWalletService {
     let tokenContract = new this.web3.eth.Contract(ERC20_ABI, EVETokenContractAddress);
 
     tokenContract.methods.balanceOf(this.activeWallet.address).call().then((value: any) => {
-      console.log('EVE Token Balance:', Number(value));
+      console.log('EVE Token Balance:', Number(value)/1e18);
       this.activeWallet.eveTokenBalance = Number(value);
     });
   }
@@ -107,8 +113,6 @@ export class EveWalletService {
   }
 
   //-- Chain Operations.
-
-
   transferGas(gasToTransfer: string /*all decimals*/, toAddress: string, gasLimit: number = 210000): Promise<TransactionReceipt>
   {
     return this.web3.eth.sendTransaction({
@@ -145,7 +149,7 @@ export class EveWalletService {
 
     return tokenContract.methods.allowance(this.activeWallet.address, spenderAddress).call();
   }
-  // TODO: Remove.
+
   getContract(contractABI: any, contractAddress: string)
   {
     return new this.web3.eth.Contract(contractABI, contractAddress);

@@ -40,6 +40,7 @@ import { BuyableItemComponent } from './trader-machine/buyable-item/buyable-item
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     DeployableCsvComponent,
     TraderMachineComponent,
     SellableItemComponent,
-    BuyableItemComponent
+    BuyableItemComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

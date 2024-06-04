@@ -1,5 +1,6 @@
 // EVE things
 export const WorldAddress = '0x8dc9cab3e97da6df615a8a24cc07baf110d63071'
+export const WorldChainId = "4541000"
 
 // Contracts
 export const EVETokenContractAddress = '0xec79573FAC3b9C103819beBBD00143dfD67059DA';
