@@ -1,15 +1,24 @@
 <mat-card class="trader-card">
     <mat-card-content margin="10px">
-    {{data.name}} {{data.quantity}}
-    <img mat-card-avatar [src]="src" >
-    <div class="info-container">
-        <span>{{totalValueBuy/ 1e18}}</span>
-        <span>{{totalValueSell/ 1e18}}</span>
-    </div>
-    <div class="button-container">
-    <button (click)="doBuyItems()">Buy</button>
-    <input #valueInput matInput type="number" min="0" [max]="data.quantity" value="0" (input)="validateMax($event, data.quantity)" step="1" placeholder="0" class="right-align">
-    <button (click)="doSellItems()">Sell</button>
-    </div>
+        
+        <h2>{{data.name}}</h2>
+
+        <div class="stock-img-container">
+            <span>{{data.SSUQuantity}}</span>
+            <img mat-card-avatar [src]="src" alt="Stock Image">
+            <span>{{data.quantity}}</span>
+        </div>
+        
+        <div class="info-container">
+            <span>Buy Value: {{totalValueBuy / 1e18 | number:'1.2-2'}}</span>
+            <span>Sell Value: {{totalValueSell / 1e18 | number:'1.2-2'}}</span>
+        </div>
+        
+        <div class="button-container">
+            <button mat-raised-button (click)="doBuyItems()">Buy</button>
+            <input #valueInput matInput type="number" min="1" (input)="validateMax($event)" step="1" placeholder="0">
+            <button mat-raised-button (click)="doSellItems()">Sell</button>
+        </div>
+    
     </mat-card-content>
 </mat-card>

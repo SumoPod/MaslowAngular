@@ -85,17 +85,8 @@ export class TraderMachineComponent implements OnInit, OnDestroy{
       // Find the item in the inventory with the same id
       let inventoryItem = inventory.find((element) => element.itemId == buyableItem.itemId);
       
-      buyableItem.quantity = inventoryItem ? inventoryItem.quantity : 0;
+      buyableItem.SSUQuantity = inventoryItem ? inventoryItem.quantity : 0;
     }
-
-    for (let i = 0; i < this.sellableItems.length; ++i)
-      {
-        let sellableItem = this.sellableItems[i];
-        // Find the item in the inventory with the same id
-        let inventoryItem = inventory.find((element) => element.itemId == sellableItem.itemId);
-  
-        sellableItem.SSUQuantity = inventoryItem ? inventoryItem.quantity : 0;
-      }
   
     // Access player ephemeral inventory
     let ephemeralInventory:EphemeralInventory = data.smartDeployable.inventory.ephemeralInventoryList.find((element) => element.ownerId == this.maslowService.wallet.activeWallet.address);
@@ -109,11 +100,11 @@ export class TraderMachineComponent implements OnInit, OnDestroy{
       {
         let ephemeralItem = ephemeralItems[i];
         // Find the item in the inventory with the same id
-        let sellableItem = this.sellableItems.find((element) => element.itemId == ephemeralItem.itemId);
+        let buyableItem = this.buyableItems.find((element) => element.itemId == ephemeralItem.itemId);
 
-        if (sellableItem)
+        if (buyableItem)
         {
-          sellableItem.quantity = ephemeralItem.quantity;
+          buyableItem.quantity = ephemeralItem.quantity;
         }
       }
     }

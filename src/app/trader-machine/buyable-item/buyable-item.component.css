@@ -1,8 +1,36 @@
-.button-container{
-    display:flex;
-    gap: 10px;
+.trader-card {
+    margin: 10px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
-.info-container{
-    display:flex;
+
+.stock-img-container {
+    display: flex;
+    align-items: center;
     gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.info-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    font-size: 1.1em;
+}
+
+.button-container {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+button {
+    flex: 1;
+}
+
+input {
+    width: 60px;
+    text-align: center;
 }

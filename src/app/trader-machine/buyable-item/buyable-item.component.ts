@@ -71,8 +71,9 @@ export class BuyableItemComponent {
       this.maslow.purchaseItem(MaslowPyramidID, this.data.itemId, this.valueInput?.nativeElement.value);
     });
   }
-  validateMax(inputEvent: any, max: number)
+  validateMax(inputEvent: any)
   {
+    let max = Math.max(this.data.quantity,this.data.SSUQuantity);
     if (inputEvent.target.value > max)
     {
       inputEvent.target.value = max;
@@ -97,12 +98,12 @@ export class BuyableItemComponent {
 
   calculatePriceSell(quantity: number)
   {
-    let cantidad = this.data.quantity
+    let cantidad = this.data.SSUQuantity
     let totalCost = 0;
 
     for (let qty = 0; qty < quantity; ++qty)
     {
-      let spreadPercentage = ( cantidad + 1) / this.data.targetQuantity;
+      let spreadPercentage = (cantidad + 1) / this.data.targetQuantity;
       let finalPrice = this.data.price * 2 * (1 - spreadPercentage);
       
       totalCost += finalPrice;

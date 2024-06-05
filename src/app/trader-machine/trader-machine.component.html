@@ -10,7 +10,7 @@
     <mat-card-title>Items to Buy</mat-card-title>
     <mat-card-subtitle>Here you pay money to get our items.</mat-card-subtitle>
   </mat-card-header>
-  <mat-grid-list cols="3" rowHeight="200px">
+  <mat-grid-list cols="4" rowHeight="200px">
     
     <mat-grid-tile *ngFor="let item of buyableItems">
     <app-buyable-item [data]="item"></app-buyable-item>
