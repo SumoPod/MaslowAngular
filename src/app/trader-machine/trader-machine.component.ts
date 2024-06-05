@@ -17,9 +17,9 @@ export class TraderMachineComponent implements OnInit, OnDestroy{
 
   sellableItems: SellableItem[] = [];
   buyableItems: BuyableItem[] = [];
- 
+
   ws: WebSocket;
-  
+
   numberOfOre: number;
   errorText: any;
 
@@ -84,10 +84,10 @@ export class TraderMachineComponent implements OnInit, OnDestroy{
       let buyableItem = this.buyableItems[i];
       // Find the item in the inventory with the same id
       let inventoryItem = inventory.find((element) => element.itemId == buyableItem.itemId);
-      
+
       buyableItem.SSUQuantity = inventoryItem ? inventoryItem.quantity : 0;
     }
-  
+
     // Access player ephemeral inventory
     let ephemeralInventory:EphemeralInventory = data.smartDeployable.inventory.ephemeralInventoryList.find((element) => element.ownerId == this.maslowService.wallet.activeWallet.address);
 
@@ -146,7 +146,7 @@ export class TraderMachineComponent implements OnInit, OnDestroy{
       console.log('Allowance:', Number(value)/1e18);
     });
   }
-  
+
   purchaseItem( smartObject: string, carbOreId: string, quantity: number)
   {
     this.maslowService.purchaseItem(smartObject, carbOreId, quantity)

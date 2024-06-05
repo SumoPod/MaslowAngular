@@ -1,24 +1,23 @@
-<mat-card class="trader-card">
-    <mat-card-content margin="10px">
-        
-        <h2>{{data.name}}</h2>
-
-        <div class="stock-img-container">
-            <span>{{data.SSUQuantity}}</span>
+<mat-card>
+    <mat-card-content>
+        <mat-card-header>
             <img mat-card-avatar [src]="src" alt="Stock Image">
-            <span>{{data.quantity}}</span>
-        </div>
-        
-        <div class="info-container">
-            <span>Buy Value: {{totalValueBuy / 1e18 | number:'1.2-2'}}</span>
-            <span>Sell Value: {{totalValueSell / 1e18 | number:'1.2-2'}}</span>
-        </div>
-        
-        <div class="button-container">
-            <button mat-raised-button (click)="doBuyItems()">Buy</button>
-            <input #valueInput matInput type="number" min="1" (input)="validateMax($event)" step="1" placeholder="0">
-            <button mat-raised-button (click)="doSellItems()">Sell</button>
-        </div>
-    
+            <mat-card-title>{{data.name}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <mat-form-field floatLabel="always">
+              <mat-label>Quantity</mat-label>
+              <input #valueInput matInput type="number" (input)="validateMax($event)" min="1" step="1" placeholder="0" class="right-align">
+            </mat-form-field>
+            <p>Available Quantity: <strong>{{data.SSUQuantity}}</strong></p>
+            <p><em>Buy Value: {{totalValueBuy / 1e18 | number:'1.2-2'}} LUX</em></p>
+            <mat-divider></mat-divider>
+            <p>You have: <strong>{{data.quantity}}</strong> available.</p>
+            <p><em>Sell Value: {{totalValueSell / 1e18 | number:'1.2-2'}} LUX</em></p>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-stroked-button (click)="doBuyItems()" matRipple [matRippleColor]="brightQuantumColor" color="accent">Buy</button>
+            <button mat-stroked-button (click)="doSellItems()" matRipple [matRippleColor]="brightQuantumColor">Sell</button>
+        </mat-card-actions>
     </mat-card-content>
 </mat-card>

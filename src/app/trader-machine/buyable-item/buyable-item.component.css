@@ -1,36 +1,29 @@
-.trader-card {
-    margin: 10px;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.stock-img-container {
+mat-card {
     display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 10px;
-    margin-bottom: 20px;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    mat-card-header {
+        flex: none;
+        font-weight: bold;
+        font-size: larger;
+        line-height: 1.5;
+    }
+    mat-card-content {
+        flex: 1 1 auto;
+    }
+    mat-card-actions {
+        margin-top: 2em;
+        flex: none;
+        justify-content: space-between;
+        gap: 1em;
+    }
 }
 
-.info-container {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    font-size: 1.1em;
+mat-divider {
+    margin: 1em 0;
 }
 
-.button-container {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-}
-
-button {
-    flex: 1;
-}
-
-input {
-    width: 60px;
-    text-align: center;
+p em {
+    color: var(--mat-card-subtitle-text-color);
 }

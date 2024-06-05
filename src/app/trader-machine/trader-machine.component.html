@@ -4,20 +4,14 @@
     <h1 class="Title">&nbsp;Trade Machine</h1>
   </mat-toolbar-row>
 </mat-toolbar>
-<h2>Hello Survivor!</h2>
-
-  <mat-card-header>
-    <mat-card-title>Items to Buy</mat-card-title>
-    <mat-card-subtitle>Here you pay money to get our items.</mat-card-subtitle>
-  </mat-card-header>
-  <mat-grid-list cols="4" rowHeight="200px">
-    
-    <mat-grid-tile *ngFor="let item of buyableItems">
+<h2>Items to Buy</h2>
+<p>Here you pay money to get our items.</p>
+<mat-grid-list cols="3" rowHeight="fit" gutterSize="2em">
+  <mat-grid-tile *ngFor="let item of buyableItems">
     <app-buyable-item [data]="item"></app-buyable-item>
-    </mat-grid-tile>
+  </mat-grid-tile>
+</mat-grid-list>
 
-  </mat-grid-list>
-
-<mat-card class="trader-card">
+<!-- <mat-card class="trader-card">
 <button mat-button (click)="doGetAllItems()">Get All items</button>
-</mat-card>
+</mat-card> -->

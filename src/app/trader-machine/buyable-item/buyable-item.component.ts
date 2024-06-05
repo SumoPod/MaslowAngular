@@ -22,10 +22,11 @@ export interface BuyableItem {
   styleUrl: './buyable-item.component.css'
 })
 export class BuyableItemComponent {
+  brightQuantumColor = 'hsla(26, 85%, 58%, 1)';
 
   @Input() data: BuyableItem;
   @ViewChild('valueInput') valueInput: ElementRef;
-  
+
   itemId: string;
   name: string;
   price: number;
@@ -47,9 +48,9 @@ export class BuyableItemComponent {
   }
 
   ngOnInit(): void{
-    
-  
-      
+
+
+
       this.itemId = this.data.itemId;
       this.name = this.data.name;
       this.price = this.data.price;
@@ -89,7 +90,7 @@ export class BuyableItemComponent {
     {
       let spreadPercentage = cantidad / this.data.targetQuantity;
       let finalPrice = this.data.price * 2 * (1 - spreadPercentage);
-      
+
       totalCost += finalPrice;
       --cantidad;
     }
@@ -105,7 +106,7 @@ export class BuyableItemComponent {
     {
       let spreadPercentage = (cantidad + 1) / this.data.targetQuantity;
       let finalPrice = this.data.price * 2 * (1 - spreadPercentage);
-      
+
       totalCost += finalPrice;
       ++cantidad;
     }
@@ -120,5 +121,5 @@ export class BuyableItemComponent {
 
   }
 
-  
+
 }
