@@ -6,11 +6,16 @@
 </mat-toolbar>
 <h2>Items to Buy</h2>
 <p>Here you pay money to get our items.</p>
-<mat-grid-list cols="3" rowHeight="fit" gutterSize="2em">
+<div class="wrapper">
+  <ng-container *ngFor="let item of buyableItems">
+    <app-buyable-item [data]="item"></app-buyable-item>
+  </ng-container>
+</div>
+<!-- <mat-grid-list cols="4" rowHeight="400px" gutterSize="2em">
   <mat-grid-tile *ngFor="let item of buyableItems">
     <app-buyable-item [data]="item"></app-buyable-item>
   </mat-grid-tile>
-</mat-grid-list>
+</mat-grid-list> -->
 
 <!-- <mat-card class="trader-card">
 <button mat-button (click)="doGetAllItems()">Get All items</button>

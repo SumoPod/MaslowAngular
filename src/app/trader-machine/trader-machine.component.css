@@ -11,8 +11,17 @@ mat-grid-list {
   height: 600px;
 }
 
+.wrapper {
+  display: flex;
+  margin: 2em 3em;
+  flex-wrap: wrap;
+  gap: 1em;
+}
+
 app-buyable-item {
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  border-radius: 5px;
+  width: 300px;
 }
