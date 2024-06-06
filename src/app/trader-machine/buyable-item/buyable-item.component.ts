@@ -36,6 +36,8 @@ export class BuyableItemComponent {
 
   constructor( private maslow: MaslowService, private eveApi: EveApiService) {}
 
+  readonly FIXED_FEE = 1e17;
+
   get totalValueBuy(): number {
     if(! this.valueInput ) return 0;
     return this.data ? this.calculatePriceBuy(this.valueInput?.nativeElement.value): 0;
@@ -48,15 +50,7 @@ export class BuyableItemComponent {
   }
 
   ngOnInit(): void{
-
-
-
-      this.itemId = this.data.itemId;
-      this.name = this.data.name;
-      this.price = this.data.price;
-      this.targetQuantity = this.data.targetQuantity;
       this.getImg();
-
   }
 
   doSellItems()
@@ -72,6 +66,7 @@ export class BuyableItemComponent {
       this.maslow.purchaseItem(MaslowPyramidID, this.data.itemId, this.valueInput?.nativeElement.value);
     });
   }
+  
   validateMax(inputEvent: any)
   {
     let max = Math.max(this.data.quantity,this.data.SSUQuantity);
@@ -94,6 +89,8 @@ export class BuyableItemComponent {
       totalCost += finalPrice;
       --cantidad;
     }
+    totalCost += this.FIXED_FEE;
+
     return totalCost
   }
 
@@ -111,15 +108,16 @@ export class BuyableItemComponent {
       ++cantidad;
     }
 
+    totalCost += this.FIXED_FEE;
+
     return totalCost
   }
-  getImg(){
+
+  getImg()
+  {
     this.eveApi.getItem(this.data.typeId)
     .subscribe((response) => {
       this.src = response.metadata.image
     })
-
   }
-
-
 }
