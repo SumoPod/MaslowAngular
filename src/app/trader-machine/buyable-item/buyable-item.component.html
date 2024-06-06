@@ -10,10 +10,10 @@
               <input #valueInput matInput type="number" (input)="validateMax($event)" min="1" step="1" placeholder="0" class="right-align">
             </mat-form-field>
             <p>Available Quantity: <strong>{{data.SSUQuantity}}</strong></p>
-            <p><em>Buy Value: {{totalValueBuy / 1e18 | number:'1.2-2'}} LUX</em></p>
+            <p><em>Buy Value: {{totalValueBuy / 1e18 | number:'1.2-2'}} EVE</em></p>
             <mat-divider></mat-divider>
             <p>You have: <strong>{{data.quantity}}</strong> available.</p>
-            <p><em>Sell Value: {{totalValueSell / 1e18 | number:'1.2-2'}} LUX</em></p>
+            <p><em>Sell Value: {{totalValueSell / 1e18 | number:'1.2-2'}} EVE</em></p>
         </mat-card-content>
         <mat-card-actions>
             <button mat-stroked-button (click)="doBuyItems()" matRipple [matRippleColor]="brightQuantumColor" color="accent">Buy</button>

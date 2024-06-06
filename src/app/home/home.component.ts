@@ -1,4 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
+import { EveWalletService } from '../eve-wallet-service/eve-wallet.service';
 
 @Component({
   selector: 'app-home',
@@ -7,7 +8,8 @@ import { Component, HostListener, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit{
   brightQuantumColor = 'hsla(26, 85%, 58%, 1)';
-  constructor() {}
+
+  constructor( private eveWallet: EveWalletService) {}
 
   ngOnInit()
   {
