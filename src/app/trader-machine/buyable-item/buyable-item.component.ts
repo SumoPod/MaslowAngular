@@ -2,7 +2,7 @@ import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import Web3 from 'web3';
 import { ERC20_ABI } from '../../eve-wallet-service/ABIs/ERC20.abi';
 import { VEL_TRADER_ABI } from '../../eve-wallet-service/ABIs/IItemSeller.abi';
-import { EVETokenContractAddress, getNameFromID, MaslowPyramidID, VelTraderContractAddress_v24, WorldAddress } from '../../eve-wallet-service/eve-wallet-constants';
+import { EVETokenContractAddress, getNameFromID, MaslowPyramidID, VelTraderContractAddress_v42, WorldAddress } from '../../eve-wallet-service/eve-wallet-constants';
 import { MaslowService } from '../../eve-wallet-service/maslow.service';
 import { EveApiService } from '../../eve-wallet-service/eve-api.service';
 
@@ -67,7 +67,7 @@ export class BuyableItemComponent {
 
   doBuyItems()
   {
-    this.maslow.wallet.approveEVE(VelTraderContractAddress_v24, this.totalValueBuy)
+    this.maslow.wallet.approveEVE(VelTraderContractAddress_v42, this.totalValueBuy)
     .then(() => {
       this.maslow.purchaseItem(MaslowPyramidID, this.data.itemId, this.valueInput?.nativeElement.value);
     });
