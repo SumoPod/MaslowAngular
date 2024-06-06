@@ -9,11 +9,12 @@ import { EveApiService } from '../../eve-wallet-service/eve-api.service';
 })
 export class ItemDetailComponent {
 
-  @Input() data: { key: string, itemData: ItemData };
+  @Input() data: { key: string, itemData: ItemData, chainId: number };
 
   topText:string;
   text:string;
   imgSrc:string;
+  chainId:number;
 
   constructor( private eveApi: EveApiService) { }
 
@@ -21,6 +22,7 @@ export class ItemDetailComponent {
   {
     this.topText = this.data.key;
     this.text = this.data.itemData.name;
+    this.chainId = this.data.itemData.chainId;
 
     this.eveApi.getItem( this.data.key )
     .subscribe((response) => {

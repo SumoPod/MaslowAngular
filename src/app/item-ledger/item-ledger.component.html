@@ -5,7 +5,7 @@
   </mat-toolbar-row>
 </mat-toolbar>
 <h2>Current items</h2>
-<mat-grid-list cols="4" gutterSize="1em" rowHeight="72px">
+<mat-grid-list cols="4" gutterSize="1em" rowHeight="120px">
   <mat-grid-tile *ngFor="let item of allItems">
     <app-item-detail [data]="item"></app-item-detail>
   </mat-grid-tile>

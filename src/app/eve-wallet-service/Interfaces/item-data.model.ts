@@ -3,6 +3,7 @@ export interface ItemData {
     description: string;
     image: string;
     attributes: Attribute[];
+    chainId?: number;
 }
 
 export interface Attribute {

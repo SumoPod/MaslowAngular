@@ -4,4 +4,7 @@
     <mat-card-title>{{topText}}</mat-card-title>
     <mat-card-subtitle>{{text}}</mat-card-subtitle>
   </mat-card-header>
+  <mat-card-content *ngIf="data.chainId !== undefined">
+    <p>{{data.chainId}}</p>
+  </mat-card-content>
 </mat-card>
